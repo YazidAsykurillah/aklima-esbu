@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('page_title')
-    Master Data :: Bentuk Badan Usaha
+    Master Data :: Asesor
 @endsection
 
 @section('page_header_title')
-<h2 class="pageheader-title">Master Data : Bentuk Badan Usaha</h2>
+<h2 class="pageheader-title">Master Data : Asesor</h2>
 @endsection
 
 @section('page_breadcrumb')
@@ -13,7 +13,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('home') }}" class="breadcrumb-link">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Master Data Bentuk Badan Usaha</li>
+            <li class="breadcrumb-item active" aria-current="page">Master Data Asesor</li>
         </ol>
     </nav>
 </div>
@@ -22,7 +22,7 @@
 @section('content')
 <div class="card">
     <div class="card-header d-flex">
-        <h4 class="card-header-title">Bentuk Badan Usaha</h4>
+        <h4 class="card-header-title">Asesor</h4>
         <div class="toolbar ml-auto">
             <a href="#" class="btn btn-primary btn-sm ">
                 <i class="fas fa-sync"></i> Sinkronisasi
@@ -36,12 +36,28 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">UID</th>
-                        <th scope="col">Nama Bentuk Badan Usaha</th>
-                        <th scope="col">Nama Singkat</th>
+                        <th scope="col">uid_asesor</th>
+                        <th scope="col">nik</th>
+                        <th scope="col">nama_asesor</th>
+                        <th scope="col">alamat</th>
+                        <th scope="col">email</th>
+                        <th scope="col">nomor_handphone</th>
+                        <th scope="col">is_active</th>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td>"4"</td>
+                        <td>"987456321"</td>
+                        <td>Coba Asessor</td>
+                        <td>Jalan</td>
+                        <td>@man</td>
+                        <td>"123456"</td>
+                        <td>1</td>
+                        
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
@@ -51,19 +67,7 @@
 @section('additional_scripts')
 <script type="text/javascript">
     $(document).ready(function(){
-        
-        var table =  $('#table').DataTable({
-            processing :true,
-            serverSide : true,
-            ajax : '{!! url('bentuk-badan-usaha/datatables') !!}',
-            columns :[
-                {data: 'rownum', name: 'rownum', searchable:false},
-                { data: 'uid_bentuk_badan_usaha', name: 'uid_bentuk_badan_usaha' },
-                { data: 'nama_bentuk_badan_usaha', name: 'nama_bentuk_badan_usaha' },
-                { data: 'nama_singkat', name: 'nama_singkat' },
-            ]
-        });
+        var table =  $('#table').DataTable({});
     });
-    
 </script>
 @endsection

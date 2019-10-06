@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBentukBadanUsahasTable extends Migration
+class CreateServiceIntegratorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateBentukBadanUsahasTable extends Migration
      */
     public function up()
     {
-        Schema::create('bentuk_badan_usaha', function (Blueprint $table) {
+        Schema::create('service_integrators', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('uid_bentuk_badan_usaha')->unique();
-            $table->string('nama_bentuk_badan_usaha');
-            $table->string('nama_singkat');
+            $table->string('username')->nullable();
+            $table->string('x_lsbu_key');
+            $table->string('token')->nullable();
+            $table->date('expired')->nullable();
+            $table->boolean('is_active')->default(FALSE);
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateBentukBadanUsahasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bentuk_badan_usaha');
+        Schema::dropIfExists('service_integrators');
     }
 }

@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
 
-use App\BentukBadanUsaha;
-class BentukBadanUsahaController extends Controller
+use App\Bidang;
+
+class BidangController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,19 +24,20 @@ class BentukBadanUsahaController extends Controller
     public function datatables(Request $request)
     {
         \DB::statement(\DB::raw('set @rownum=0'));
-        $bentuk_badan_usaha = BentukBadanUsaha::select([
+        $bidang = Bidang::select([
             \DB::raw('@rownum  := @rownum  + 1 AS rownum'),
-            'bentuk_badan_usaha.*',
+            'bidang.*',
         ])->get();
 
-        $data_bentuk_badan_usaha = Datatables::of($bentuk_badan_usaha);
+        $data_bidang = Datatables::of($bidang);
 
         if ($keyword = $request->get('search')['value']) {
-            $data_bentuk_badan_usaha->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+            $data_bidang->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
         }
 
-        return $data_bentuk_badan_usaha->make(true);
+        return $data_bidang->make(true);
     }
+
     /**
      * Show the form for creating a new resource.
      *

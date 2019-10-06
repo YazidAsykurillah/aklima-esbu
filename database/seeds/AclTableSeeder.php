@@ -40,8 +40,11 @@ class AclTableSeeder extends Seeder
         //Block table permissions
         DB::table('permissions')->delete();
         $permissions = [
-            //Master Data
+            //Access Master Data
             [ 'slug'=>'access-master-data', 'description'=>'View Master Data Menu'],
+
+            //Access Application Configuration
+            [ 'slug'=>'access-configuration', 'description'=>'View Configuration Menu'],
 
         ];
         DB::table('permissions')->insert($permissions);

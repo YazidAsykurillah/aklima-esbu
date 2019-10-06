@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('page_title')
-    Master Data :: Bentuk Badan Usaha
+    Master Data :: Kota
 @endsection
 
 @section('page_header_title')
-<h2 class="pageheader-title">Master Data : Bentuk Badan Usaha</h2>
+<h2 class="pageheader-title">Master Data : Kota</h2>
 @endsection
 
 @section('page_breadcrumb')
@@ -13,7 +13,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('home') }}" class="breadcrumb-link">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Master Data Bentuk Badan Usaha</li>
+            <li class="breadcrumb-item active" aria-current="page">Master Data Kota</li>
         </ol>
     </nav>
 </div>
@@ -22,7 +22,7 @@
 @section('content')
 <div class="card">
     <div class="card-header d-flex">
-        <h4 class="card-header-title">Bentuk Badan Usaha</h4>
+        <h4 class="card-header-title">Kota</h4>
         <div class="toolbar ml-auto">
             <a href="#" class="btn btn-primary btn-sm ">
                 <i class="fas fa-sync"></i> Sinkronisasi
@@ -36,12 +36,27 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">UID</th>
-                        <th scope="col">Nama Bentuk Badan Usaha</th>
-                        <th scope="col">Nama Singkat</th>
+                        <th scope="col">provinsi_uid</th>
+                        <th scope="col">kode_provinsi</th>
+                        <th scope="col">nama_provinsi</th>
+                        <th scope="col">uid_kota</th>
+                        <th scope="col">kode_kota</th>
+                        <th scope="col">nama_kota</th>
+                        <th scope="col">is_active</th>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td>11</td>
+                        <td>11</td>
+                        <td>Aceh</td>
+                        <td>1105</td>
+                        <td>1105</td>
+                        <td>KAB. ACEH BARAT</td>
+                        <td>1</td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
@@ -51,19 +66,7 @@
 @section('additional_scripts')
 <script type="text/javascript">
     $(document).ready(function(){
-        
-        var table =  $('#table').DataTable({
-            processing :true,
-            serverSide : true,
-            ajax : '{!! url('bentuk-badan-usaha/datatables') !!}',
-            columns :[
-                {data: 'rownum', name: 'rownum', searchable:false},
-                { data: 'uid_bentuk_badan_usaha', name: 'uid_bentuk_badan_usaha' },
-                { data: 'nama_bentuk_badan_usaha', name: 'nama_bentuk_badan_usaha' },
-                { data: 'nama_singkat', name: 'nama_singkat' },
-            ]
-        });
+        var table =  $('#table').DataTable({});
     });
-    
 </script>
 @endsection

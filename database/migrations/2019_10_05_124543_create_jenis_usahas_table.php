@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBentukBadanUsahasTable extends Migration
+class CreateJenisUsahasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateBentukBadanUsahasTable extends Migration
      */
     public function up()
     {
-        Schema::create('bentuk_badan_usaha', function (Blueprint $table) {
+        Schema::create('jenis_usaha', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('uid_bentuk_badan_usaha')->unique();
-            $table->string('nama_bentuk_badan_usaha');
-            $table->string('nama_singkat');
+            $table->integer('uid_jenis_usaha')->unique();
+            $table->string('kode_jenis_usaha');
+            $table->string('nama_jenis_usaha');
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateBentukBadanUsahasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bentuk_badan_usaha');
+        Schema::dropIfExists('jenis_usaha');
     }
 }

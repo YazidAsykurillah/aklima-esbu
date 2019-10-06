@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('page_title')
-    Master Data :: Bentuk Badan Usaha
+    Master Data :: Bidang
 @endsection
 
 @section('page_header_title')
-<h2 class="pageheader-title">Master Data : Bentuk Badan Usaha</h2>
+<h2 class="pageheader-title">Master Data : Bidang</h2>
 @endsection
 
 @section('page_breadcrumb')
@@ -13,7 +13,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('home') }}" class="breadcrumb-link">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Master Data Bentuk Badan Usaha</li>
+            <li class="breadcrumb-item active" aria-current="page">Master Data Bidang</li>
         </ol>
     </nav>
 </div>
@@ -22,7 +22,7 @@
 @section('content')
 <div class="card">
     <div class="card-header d-flex">
-        <h4 class="card-header-title">Bentuk Badan Usaha</h4>
+        <h4 class="card-header-title">Bidang</h4>
         <div class="toolbar ml-auto">
             <a href="#" class="btn btn-primary btn-sm ">
                 <i class="fas fa-sync"></i> Sinkronisasi
@@ -37,8 +37,9 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">UID</th>
-                        <th scope="col">Nama Bentuk Badan Usaha</th>
-                        <th scope="col">Nama Singkat</th>
+                        <th scope="col">Kode Bidang</th>
+                        <th scope="col">Nama Bidang</th>
+                        <th scope="col">Is Active</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -51,19 +52,18 @@
 @section('additional_scripts')
 <script type="text/javascript">
     $(document).ready(function(){
-        
         var table =  $('#table').DataTable({
             processing :true,
             serverSide : true,
-            ajax : '{!! url('bentuk-badan-usaha/datatables') !!}',
+            ajax : '{!! url('bidang/datatables') !!}',
             columns :[
                 {data: 'rownum', name: 'rownum', searchable:false},
-                { data: 'uid_bentuk_badan_usaha', name: 'uid_bentuk_badan_usaha' },
-                { data: 'nama_bentuk_badan_usaha', name: 'nama_bentuk_badan_usaha' },
-                { data: 'nama_singkat', name: 'nama_singkat' },
+                { data: 'uid_bidang', name: 'uid_bidang' },
+                { data: 'kode_bidang', name: 'kode_bidang' },
+                { data: 'nama_bidang', name: 'nama_bidang' },
+                { data: 'is_active', name: 'is_active' },
             ]
         });
     });
-    
 </script>
 @endsection

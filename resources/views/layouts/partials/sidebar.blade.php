@@ -26,55 +26,70 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                     <a class="nav-link" href="#">
+                                     <a class="nav-link {{{ (Request::is('master-data/jenis-usaha') ? 'active' : '') }}}" href="{{ url('master-data/jenis-usaha') }}">
                                         <span class="ml-3"></span>Jenis Usaha
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                     <a class="nav-link" href="#">
+                                     <a class="nav-link {{{ (Request::is('master-data/bidang') ? 'active' : '') }}}" href="{{ url('master-data/bidang') }}">
                                         <span class="ml-3"></span>Bidang
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                     <a class="nav-link" href="#">
+                                     <a class="nav-link {{{ (Request::is('master-data/sub-bidang') ? 'active' : '') }}}" href="{{ url('master-data/sub-bidang') }}">
                                         <span class="ml-3"></span>Sub Bidang
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                     <a class="nav-link" href="#">
+                                     <a class="nav-link {{{ (Request::is('master-data/matriks-kualifikasi') ? 'active' : '') }}}" href="{{ url('master-data/matriks-kualifikasi') }}">
                                         <span class="ml-3"></span>Matriks Kualifikasi
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                     <a class="nav-link" href="#">
+                                     <a class="nav-link {{{ (Request::is('master-data/provinsi') ? 'active' : '') }}}" href="{{ url('master-data/provinsi') }}">
                                         <span class="ml-3"></span>Provinsi
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                     <a class="nav-link" href="#">
+                                     <a class="nav-link {{{ (Request::is('master-data/kota') ? 'active' : '') }}}" href="{{ url('master-data/kota') }}">
                                         <span class="ml-3"></span>Kota
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                     <a class="nav-link" href="#">
+                                     <a class="nav-link {{{ (Request::is('master-data/kecamatan') ? 'active' : '') }}}" href="{{ url('master-data/kecamatan') }}">
                                         <span class="ml-3"></span>Kecamatan
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                     <a class="nav-link" href="#">
+                                     <a class="nav-link {{{ (Request::is('master-data/kelurahan') ? 'active' : '') }}}" href="{{ url('master-data/kelurahan') }}">
                                         <span class="ml-3"></span>Kelurahan
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                     <a class="nav-link" href="#">
+                                     <a class="nav-link {{{ (Request::is('master-data/asesor') ? 'active' : '') }}}" href="{{ url('master-data/asesor') }}">
                                         <span class="ml-3"></span>Asesor
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                     <a class="nav-link" href="#">
+                                     <a class="nav-link {{{ (Request::is('master-data/badan-usaha') ? 'active' : '') }}}" href="{{ url('master-data/badan-usaha') }}">
                                         <span class="ml-3"></span>Badan Usaha
                                     </a>
                                 </li>                   
+                            </ul>
+                        </div>
+                    </li>
+                    @endif
+
+                    @if(\Auth::user()->can('access-configuration'))
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#configuration" aria-controls="configuration"><i class="fa fa-fw fa-cogs"></i>Configurations</a>
+                        <div id="configuration" class="{{{ (Request::is('configuration/*') ? '' : 'collapse') }}} submenu" style="">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                     <a class="nav-link {{{ (Request::is('configuration/service-integrator') ? 'active' : '') }}}" href="{{ url('configuration/service-integrator') }}">
+                                        <span class="ml-3"></span>Service Integrator
+                                    </a>
+                                </li>                
                             </ul>
                         </div>
                     </li>

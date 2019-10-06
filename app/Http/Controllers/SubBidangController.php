@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
 
-use App\BentukBadanUsaha;
-class BentukBadanUsahaController extends Controller
+use App\SubBidang;
+
+class SubBidangController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,19 +25,27 @@ class BentukBadanUsahaController extends Controller
     public function datatables(Request $request)
     {
         \DB::statement(\DB::raw('set @rownum=0'));
-        $bentuk_badan_usaha = BentukBadanUsaha::select([
+        $sub_bidang = SubBidang::with(['bidang', 'jenis_usaha'])->select([
             \DB::raw('@rownum  := @rownum  + 1 AS rownum'),
-            'bentuk_badan_usaha.*',
+            'sub_bidang.*',
         ])->get();
 
-        $data_bentuk_badan_usaha = Datatables::of($bentuk_badan_usaha);
+        $data_sub_bidang = Datatables::of($sub_bidang)
+            ->addColumn('nama_bidang', function($sub_bidang){
+                return $sub_bidang->bidang->nama_bidang;
+            })
+            ->addColumn('nama_jenis_usaha', function($sub_bidang){
+                return $sub_bidang->jenis_usaha->nama_jenis_usaha;
+            })
+            ;
 
         if ($keyword = $request->get('search')['value']) {
-            $data_bentuk_badan_usaha->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+            $data_sub_bidang->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
         }
 
-        return $data_bentuk_badan_usaha->make(true);
+        return $data_sub_bidang->make(true);
     }
+
     /**
      * Show the form for creating a new resource.
      *
