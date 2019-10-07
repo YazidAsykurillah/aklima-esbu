@@ -36,21 +36,13 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">uid_provinsi</th>
-                        <th scope="col">kode_provinsi</th>
-                        <th scope="col">nama_provinsi</th>
-                        <th scope="col">is_active</th>
+                        <th scope="col">uid provinsi</th>
+                        <th scope="col">Kode provinsi</th>
+                        <th scope="col">Nama provinsi</th>
+                        <th scope="col">is active</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td>11</td>
-                        <td>11</td>
-                        <td>Aceh</td>
-                        <td>1</td>
-                    </tr>
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
     </div>
@@ -60,7 +52,18 @@
 @section('additional_scripts')
 <script type="text/javascript">
     $(document).ready(function(){
-        var table =  $('#table').DataTable({});
+        var table =  $('#table').DataTable({
+            processing :true,
+            serverSide : true,
+            ajax : '{!! url('provinsi/datatables') !!}',
+            columns :[
+                {data: 'rownum', name: 'rownum', searchable:false},
+                { data: 'uid_provinsi', name: 'uid_provinsi' },
+                { data: 'kode_provinsi', name: 'kode_provinsi' },
+                { data: 'nama_provinsi', name: 'nama_provinsi' },
+                { data: 'is_active', name: 'is_active' },
+            ]
+        });
     });
 </script>
 @endsection

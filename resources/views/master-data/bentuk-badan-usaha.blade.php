@@ -55,7 +55,12 @@
         var table =  $('#table').DataTable({
             processing :true,
             serverSide : true,
-            ajax : '{!! url('bentuk-badan-usaha/datatables') !!}',
+            ajax: {
+                "url": "{{url('bentuk-badan-usaha/datatables')}}",
+                'headers': {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+            },
             columns :[
                 {data: 'rownum', name: 'rownum', searchable:false},
                 { data: 'uid_bentuk_badan_usaha', name: 'uid_bentuk_badan_usaha' },

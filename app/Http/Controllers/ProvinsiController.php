@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
 
-use App\MatriksKualifikasi;
+use App\Provinsi;
 
-class MatriksKualifikasiController extends Controller
+class ProvinsiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,34 +19,25 @@ class MatriksKualifikasiController extends Controller
     {
         //
     }
-    
+
     //return datatables object
     public function datatables(Request $request)
     {
         \DB::statement(\DB::raw('set @rownum=0'));
-        $matriks_kualifikasi = MatriksKualifikasi::with(['jenis_usaha', 'bidang', 'sub_bidang'])->select([
+        $provinsi = Provinsi::select([
             \DB::raw('@rownum  := @rownum  + 1 AS rownum'),
-            'matriks_kualifikasi.*',
+            'provinsi.*',
         ])->get();
 
-        $data_matriks_kualifikasi = Datatables::of($matriks_kualifikasi)
-            ->addColumn('nama_jenis_usaha', function($matriks_kualifikasi){
-                return $matriks_kualifikasi->jenis_usaha->nama_jenis_usaha;
-            })
-            ->addColumn('nama_bidang', function($matriks_kualifikasi){
-                return $matriks_kualifikasi->bidang->nama_bidang;
-            })
-            ->addColumn('nama_sub_bidang', function($matriks_kualifikasi){
-                return $matriks_kualifikasi->sub_bidang->nama_sub_bidang;
-            })
-            ;
+        $data_provinsi = Datatables::of($provinsi);
 
         if ($keyword = $request->get('search')['value']) {
-            $data_matriks_kualifikasi->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+            $data_provinsi->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
         }
 
-        return $data_matriks_kualifikasi->make(true);
+        return $data_provinsi->make(true);
     }
+
     /**
      * Show the form for creating a new resource.
      *

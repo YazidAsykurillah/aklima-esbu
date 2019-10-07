@@ -36,18 +36,18 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">uid_matriks_kualifikasi</th>
-                        <th scope="col">jenis_usaha_uid</th>
-                        <th scope="col">bidang_uid</th>
-                        <th scope="col">sub_bidang_uid</th>
-                        <th scope="col">kualifikasi</th>
-                        <th scope="col">modal_disetor_min</th>
-                        <th scope="col">modal_disetor_maks</th>
-                        <th scope="col">pjt_jumlah</th>
-                        <th scope="col">pjt_level</th>
-                        <th scope="col">tt_jumlah</th>
-                        <th scope="col">tt_level</th>
-                        <th scope="col">batas_nilai_1_pekerjaan</th>
+                        <th scope="col">UID Matriks Kualifikasi</th>
+                        <th scope="col">Nama Jenis Usaha</th>
+                        <th scope="col">Nama Bidang</th>
+                        <th scope="col">Nama Sub Bidang</th>
+                        <th scope="col">Kualifikasi</th>
+                        <th scope="col">Modal Disetor Min</th>
+                        <th scope="col">Modal Disetor Maks</th>
+                        <th scope="col">Jumlah PJT</th>
+                        <th scope="col">Level PJT</th>
+                        <th scope="col">Jumlah TT</th>
+                        <th scope="col">Level TT</th>
+                        <th scope="col">Batas Nilai 1 Pekerjaan</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -67,9 +67,9 @@
             columns :[
                 {data: 'rownum', name: 'rownum', searchable:false},
                 { data: 'uid_matriks_kualifikasi', name: 'uid_matriks_kualifikasi' },
-                { data: 'jenis_usaha_uid', name: 'jenis_usaha_uid' },
-                { data: 'bidang_uid', name: 'bidang_uid' },
-                { data: 'sub_bidang_uid', name: 'sub_bidang_uid' },
+                { data: 'nama_jenis_usaha', name: 'jenis_usaha.nama_jenis_usaha' },
+                { data: 'nama_bidang', name: 'bidang.nama_bidang' },
+                { data: 'nama_sub_bidang', name: 'sub_bidang.nama_sub_bidang' },
                 { data: 'kualifikasi', name: 'kualifikasi' },
                 { data: 'modal_disetor_min', name: 'modal_disetor_min' },
                 { data: 'modal_disetor_maks', name: 'modal_disetor_maks' },

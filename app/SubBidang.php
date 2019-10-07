@@ -17,12 +17,12 @@ class SubBidang extends Model
     //Relation to Bidang
     public function bidang()
     {
-    	return $this->belongsTo('App\Bidang', 'uid_bidang', 'uid_bidang');
+    	return $this->belongsTo('App\Bidang', 'uid_bidang', 'uid_bidang')->withDefault();
     }
 
     //Relation to Jenis Usaha
     public function jenis_usaha()
     {
-    	return $this->belongsTo('App\JenisUsaha', 'uid_jenis_usaha', 'uid_jenis_usaha');
+    	return $this->belongsTo('App\JenisUsaha', 'uid_jenis_usaha', 'uid_jenis_usaha')->withDefault();
     }
 }

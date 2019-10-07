@@ -42,7 +42,11 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('matriks-kualifikasi/datatables', 'MatriksKualifikasiController@datatables');
 	Route::resource('matriks-kualifikasi', 'MatriksKualifikasiController');
 
-	//Master Data controller
+	//Provinsi
+	Route::get('provinsi/datatables', 'ProvinsiController@datatables');
+	Route::resource('provinsi', 'ProvinsiController');
+
+	//Master Data controllers
 	Route::get('master-data/bentuk-badan-usaha', 'MasterDataController@renderBentukBadanUsahaView');
 	Route::get('master-data/jenis-usaha', 'MasterDataController@renderJenisUsahaView');
 	Route::get('master-data/bidang', 'MasterDataController@renderBidangView');

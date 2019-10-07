@@ -14,6 +14,11 @@
         <style>
             html, body {
                 background-color: #fff;
+                background-image: url("assets/images/front-background.jpg");
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-position: center; 
+                background-size: cover;
                 color: #636b6f;
                 font-family: 'Raleway', sans-serif;
                 font-weight: 100;
@@ -46,11 +51,11 @@
             }
 
             .title {
-                font-size: 84px;
+                font-size: 100px;
             }
 
             .links > a {
-                color: #636b6f;
+                color: #fff;
                 padding: 0 25px;
                 font-size: 12px;
                 font-weight: 600;
@@ -61,6 +66,7 @@
 
             .m-b-md {
                 margin-bottom: 30px;
+                color: #fff;
             }
         </style>
     </head>
@@ -80,12 +86,6 @@
             <div class="content">
                 <div class="title m-b-md">
                     {{ config('app.name') }}
-                </div>
-
-                <div class="links">
-                    <a href="#">Link 1</a>
-                    <a href="#">Link 2</a>
-                    <a href="#">Link 3</a>
                 </div>
             </div>
         </div>
