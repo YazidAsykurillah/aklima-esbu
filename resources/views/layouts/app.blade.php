@@ -57,6 +57,24 @@
                 <!-- ============================================================== -->
                 <!-- end pageheader -->
                 <!-- ============================================================== -->
+                <!--Flash Session message-->
+                <div class="row">
+                  <div class="col-md-12">
+                    @if(Session::has('successMessage'))
+                      <div class="alert alert-success alert-dismissible" role="alert" id="alert-success">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <strong>Success...!</strong> <span id="success-info"> {{ Session::get('successMessage') }}</span>
+                      </div>
+                    @endif
+                    @if(Session::has('errorMessage'))
+                      <div class="alert alert-error alert-dismissible" role="alert" id="alert-error">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <strong>Error...!</strong> <span id="error-info"> {{ Session::get('errorMessage') }}</span>
+                      </div>
+                    @endif
+                  </div>
+                </div>
+              <!--//Flash Session message-->
                 @yield('content')
                 
             </div>

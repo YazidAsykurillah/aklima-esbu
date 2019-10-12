@@ -15,8 +15,6 @@ class CreateServiceIntegratorsTable extends Migration
     {
         Schema::create('service_integrators', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('username')->nullable();
-            $table->string('x_lsbu_key');
             $table->string('token')->nullable();
             $table->date('expired')->nullable();
             $table->boolean('is_active')->default(FALSE);

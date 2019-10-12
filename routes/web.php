@@ -46,6 +46,9 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('provinsi/datatables', 'ProvinsiController@datatables');
 	Route::resource('provinsi', 'ProvinsiController');
 
+	//Permohonan Resource Controller
+	Route::resource('permohonan', 'PermohonanController');
+
 	//Master Data controllers
 	Route::get('master-data/bentuk-badan-usaha', 'MasterDataController@renderBentukBadanUsahaView');
 	Route::get('master-data/jenis-usaha', 'MasterDataController@renderJenisUsahaView');
@@ -61,10 +64,9 @@ Route::group(['middleware' => 'auth'], function(){
 
 
 	//Configuration
-		//X-LSBU-Key
+		Route::post('configuration/service-integrator/generate-token', 'ConfigurationController@generateToken');
+		Route::post('configuration/service-integrator/test-connection', 'ConfigurationController@testConnection');
 		Route::get('configuration/service-integrator', 'ConfigurationController@renderServiceIntegratorView');
-		//Token
-		Route::get('configuration/token', 'ConfigurationController@renderTokenView');
 
 });
 

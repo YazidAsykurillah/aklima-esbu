@@ -108,6 +108,10 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'gatrik_base_uri'=>env('GATRIK_BASE_URI','https://103.87.161.195'),
+    
+    'x_lsbu_key'=>env('X_LSBU_KEY','lsbu-dummy'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
