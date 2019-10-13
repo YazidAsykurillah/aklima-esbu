@@ -132,7 +132,8 @@ class JenisUsahaController extends Controller
             $body = $response->getBody();
             $contents = $body->getContents();
             $decode = json_decode($contents);
-            \DB::table('jenis_usaha')->delete();
+            
+            JenisUsaha::truncate();
             foreach($decode->result as $res){
                 JenisUsaha::create(
                     [

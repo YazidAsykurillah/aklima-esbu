@@ -135,7 +135,7 @@ class BidangController extends Controller
             $contents = $body->getContents();
             $decode = json_decode($contents);
             //Empty table bidang
-            \DB::table('bidang')->delete();
+            Bidang::truncate();
             foreach($decode->result as $res){
                 Bidang::create(
                     [

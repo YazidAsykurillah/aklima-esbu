@@ -41,6 +41,12 @@ class MatriksKualifikasiController extends Controller
             ->addColumn('nama_sub_bidang', function($matriks_kualifikasi){
                 return $matriks_kualifikasi->sub_bidang->nama_sub_bidang;
             })
+            ->editColumn('modal_disetor_min', function($matriks_kualifikasi){
+                return number_format($matriks_kualifikasi->modal_disetor_min);
+            })
+            ->editColumn('modal_disetor_maks', function($matriks_kualifikasi){
+                return number_format($matriks_kualifikasi->modal_disetor_maks);
+            })
             ;
 
         if ($keyword = $request->get('search')['value']) {
@@ -144,7 +150,7 @@ class MatriksKualifikasiController extends Controller
             $contents = $body->getContents();
             $decode = json_decode($contents);
             //Empty table matriks_kualifikasi
-            \DB::table('matriks_kualifikasi')->delete();
+            MatriksKualifikasi::truncate();
             foreach($decode->result as $res){
                 MatriksKualifikasi::create(
                     [

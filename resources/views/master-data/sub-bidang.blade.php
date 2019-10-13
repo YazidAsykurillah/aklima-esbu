@@ -98,7 +98,7 @@
         //Synchronize handler
         $('#btn-synchronize').on('click', function(event){
             event.preventDefault();
-            $('#btn-synchronize').prop('disabled', true);
+            $('#btn-synchronize').prop('disabled', true).html('<i class="fas fa-hourglass"></i> Processing');
             var _token = "{{ csrf_token() }}";
             $.ajax({
                 method: 'POST', // Type of response and matches what we said in the route
@@ -109,7 +109,7 @@
                     if(response.response == 1){
                         $('#synchModal').modal('hide');
                         table.ajax.reload();
-                        $('#btn-synchronize').prop('disabled', false);
+                        $('#btn-synchronize').prop('disabled', true).html('Sinkronisasi');
                         alertify.notify(response.message, 'success', 5, function(){  console.log('dismissed'); });
                     } 
                 },

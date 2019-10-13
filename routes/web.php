@@ -48,6 +48,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::resource('matriks-kualifikasi', 'MatriksKualifikasiController');
 
 	//Provinsi
+	Route::post('provinsi/synchronize', 'ProvinsiController@synchronize');
 	Route::get('provinsi/datatables', 'ProvinsiController@datatables');
 	Route::resource('provinsi', 'ProvinsiController');
 

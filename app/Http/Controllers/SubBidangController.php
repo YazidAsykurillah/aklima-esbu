@@ -143,7 +143,7 @@ class SubBidangController extends Controller
             $contents = $body->getContents();
             $decode = json_decode($contents);
             //Empty table sub_bidang
-            \DB::table('sub_bidang')->delete();
+            SubBidang::truncate();
             foreach($decode->result as $res){
                 SubBidang::create(
                     [

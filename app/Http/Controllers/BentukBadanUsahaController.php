@@ -133,8 +133,8 @@ class BentukBadanUsahaController extends Controller
             $body = $response->getBody();
             $contents = $body->getContents();
             $decode = json_decode($contents);
-            //Empty table bentuk_badan_usaha
-            \DB::table('bentuk_badan_usaha')->delete();
+            //Truncate Badan Usaha Model
+            BentukBadanUsaha::truncate();
             foreach($decode->result as $res){
                 BentukBadanUsaha::create(
                     [
