@@ -20,12 +20,12 @@ class CreateMatriksKualifikasisTable extends Migration
             $table->integer('bidang_uid');
             $table->integer('sub_bidang_uid');
             $table->string('kualifikasi');
-            $table->decimal('modal_disetor_min', 20, 2);
-            $table->decimal('modal_disetor_maks', 20, 2);
+            $table->decimal('modal_disetor_min', 50, 2);
+            $table->decimal('modal_disetor_maks', 50, 2);
             $table->integer('pjt_jumlah');
-            $table->integer('pjt_level');
+            $table->string('pjt_level');
             $table->integer('tt_jumlah');
-            $table->integer('tt_level');
+            $table->string('tt_level');
             $table->string('batas_nilai_1_pekerjaan');
             $table->timestamps();
         });

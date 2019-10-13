@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::resource('sub-bidang', 'SubBidangController');
 
 	//MatriksKualifikasiController resource
+	Route::post('matriks-kualifikasi/synchronize', 'MatriksKualifikasiController@synchronize');
 	Route::get('matriks-kualifikasi/datatables', 'MatriksKualifikasiController@datatables');
 	Route::resource('matriks-kualifikasi', 'MatriksKualifikasiController');
 
