@@ -19,6 +19,9 @@
     <link rel="stylesheet" href="{{ url('assets/vendor/fonts/flag-icon-css/flag-icon.min.css') }}">
     <!--Jquery Datatables-->
     <link rel="stylesheet" href="{{ url('assets/vendor/datatables/css/dataTables.bootstrap4.min.css') }}">
+    <!--Alertify-->
+    <link rel="stylesheet" href="{{ url('assets/vendor/alertify/css/alertify.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/vendor/alertify/css/themes/default.css') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ url('css/my-style.css') }}">
     @yield('additional_styles')
@@ -115,6 +118,9 @@
     <script src="{{ url('assets/vendor/charts/c3charts/C3chartjs.js') }}"></script>
     <script src="{{ url('assets/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ url('assets/vendor/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
+
+    <!--Alertify-->
+    <script src="{{ url('assets/vendor/alertify/alertify.js') }}"></script>
     @yield('additional_scripts')
 </body>
  

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
 use App\SubBidang;
 
@@ -111,4 +113,58 @@ class SubBidangController extends Controller
     {
         //
     }
+
+    public function synchronize(Request $request)
+    {
+        $token = getCurrentActiveToken()['token'];
+        
+        $ajaxResponse['response']= NULL;
+        $ajaxResponse['message']= NULL;
+        $ajaxResponse['result']= NULL;
+
+
+        $client = new Client([
+            // Base URI is used with relative requests
+            'base_uri' => config('app.gatrik_base_uri'),
+            'verify'=>false,
+            'headers'=>[
+                'Content-Type'=>'multipart/form-data',
+                'Enctype'=>'multipart/form-data',
+                'X-Lsbu-Key'=>config('app.x_lsbu_key'),
+                'Token'=> $token
+            ]
+            
+        ]);
+
+        try{
+            $response = $client->post('/Service/Ref/Sub-Bidang');
+            $code = $response->getStatusCode(); // 200
+            $body = $response->getBody();
+            $contents = $body->getContents();
+            $decode = json_decode($contents);
+            //Empty table sub_bidang
+            \DB::table('sub_bidang')->delete();
+            foreach($decode->result as $res){
+                SubBidang::create(
+                    [
+                        'uid_sub_bidang'=>$res->uid_sub_bidang, 
+                        'kode_sub_bidang'=>$res->kode_sub_bidang, 
+                        'nama_sub_bidang'=>$res->nama_sub_bidang,
+                        'uid_bidang'=>$res->uid_bidang,
+                        'uid_jenis_usaha'=>$res->uid_jenis_usaha,
+                        'is_active'=>$res->is_active,
+                    ]
+                );
+            }
+
+            $ajaxResponse['response'] = $decode->response;
+            $ajaxResponse['message'] = $decode->message;
+            $ajaxResponse['result'] = $decode->result;
+            return $ajaxResponse;
+        }
+        catch(GuzzleException $e){
+            return $e;
+        }
+    }
+
 }

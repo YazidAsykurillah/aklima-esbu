@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
 use App\BentukBadanUsaha;
 class BentukBadanUsahaController extends Controller
@@ -101,4 +103,56 @@ class BentukBadanUsahaController extends Controller
     {
         //
     }
+
+
+    public function synchronize(Request $request)
+    {
+        $token = getCurrentActiveToken()['token'];
+        
+        $ajaxResponse['response']= NULL;
+        $ajaxResponse['message']= NULL;
+        $ajaxResponse['result']= NULL;
+
+
+        $client = new Client([
+            // Base URI is used with relative requests
+            'base_uri' => config('app.gatrik_base_uri'),
+            'verify'=>false,
+            'headers'=>[
+                'Content-Type'=>'multipart/form-data',
+                'Enctype'=>'multipart/form-data',
+                'X-Lsbu-Key'=>config('app.x_lsbu_key'),
+                'Token'=> $token
+            ]
+            
+        ]);
+
+        try{
+            $response = $client->post('/Service/Ref/Bentuk-Badan-Usaha');
+            $code = $response->getStatusCode(); // 200
+            $body = $response->getBody();
+            $contents = $body->getContents();
+            $decode = json_decode($contents);
+            //Empty table bentuk_badan_usaha
+            \DB::table('bentuk_badan_usaha')->delete();
+            foreach($decode->result as $res){
+                BentukBadanUsaha::create(
+                    [
+                        'uid_bentuk_badan_usaha'=>$res->uid_bentuk_badan_usaha, 
+                        'nama_bentuk_badan_usaha'=>$res->nama_bentuk_badan_usaha, 
+                        'nama_singkat'=>$res->nama_singkat
+                    ]
+                );
+            }
+
+            $ajaxResponse['response'] = $decode->response;
+            $ajaxResponse['message'] = $decode->message;
+            $ajaxResponse['result'] = $decode->result;
+            return $ajaxResponse;
+        }
+        catch(GuzzleException $e){
+            return $e;
+        }
+    }
+    
 }

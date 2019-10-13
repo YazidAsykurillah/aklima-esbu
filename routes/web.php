@@ -23,18 +23,22 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => 'auth'], function(){
 
 	//Bentuk Badan Usaha controller resource
+	Route::post('bentuk-badan-usaha/synchronize', 'BentukBadanUsahaController@synchronize');
 	Route::get('bentuk-badan-usaha/datatables','BentukBadanUsahaController@datatables');
 	Route::resource('bentuk-badan-usaha', 'BentukBadanUsahaController');
 
 	//Jenis Usaha controller resource
+	Route::post('jenis-usaha/synchronize', 'JenisUsahaController@synchronize');
 	Route::get('jenis-usaha/datatables', 'JenisUsahaController@datatables');
 	Route::resource('jenis-usaha', 'JenisUsahaController');
 
 	//Bidang Controller resource
+	Route::post('bidang/synchronize', 'BidangController@synchronize');
 	Route::get('bidang/datatables','BidangController@datatables');
 	Route::resource('bidang', 'BidangController');
 
 	//SubBidangController resource
+	Route::post('sub-bidang/synchronize', 'SubBidangController@synchronize');
 	Route::get('sub-bidang/datatables', 'SubBidangController@datatables');
 	Route::resource('sub-bidang', 'SubBidangController');
 
