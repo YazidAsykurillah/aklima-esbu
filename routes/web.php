@@ -52,6 +52,21 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('provinsi/datatables', 'ProvinsiController@datatables');
 	Route::resource('provinsi', 'ProvinsiController');
 
+	//Kota
+	Route::post('kota/synchronize', 'KotaController@synchronize');
+	Route::get('kota/datatables', 'KotaController@datatables');
+	Route::resource('kota', 'KotaController');
+
+	//Kecamatan
+	Route::post('kecamatan/synchronize', 'KecamatanController@synchronize');
+	Route::get('kecamatan/datatables', 'KecamatanController@datatables');
+	Route::resource('kecamatan', 'KecamatanController');
+
+	//Kelurahan
+	Route::post('kelurahan/synchronize', 'KelurahanController@synchronize');
+	Route::get('kelurahan/datatables', 'KelurahanController@datatables');
+	Route::resource('kelurahan', 'KelurahanController');
+
 	//Permohonan Resource Controller
 	Route::resource('permohonan', 'PermohonanController');
 

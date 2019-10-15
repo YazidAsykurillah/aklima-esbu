@@ -126,8 +126,10 @@ class JenisUsahaController extends Controller
             
         ]);
 
+        $response = $client->post('/Service/Ref/Jenis-Usaha');
+        
         try{
-            $response = $client->post('/Service/Ref/Jenis-Usaha');
+            
             $code = $response->getStatusCode(); // 200
             $body = $response->getBody();
             $contents = $body->getContents();

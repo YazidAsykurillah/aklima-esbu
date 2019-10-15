@@ -8,8 +8,9 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
-use App\BentukBadanUsaha;
-class BentukBadanUsahaController extends Controller
+use App\Kecamatan;
+
+class KecamatanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,19 +26,24 @@ class BentukBadanUsahaController extends Controller
     public function datatables(Request $request)
     {
         \DB::statement(\DB::raw('set @rownum=0'));
-        $bentuk_badan_usaha = BentukBadanUsaha::select([
+        $kecamatan = Kecamatan::with(['kota'])->select([
             \DB::raw('@rownum  := @rownum  + 1 AS rownum'),
-            'bentuk_badan_usaha.*',
+            'kecamatan.*',
         ])->get();
 
-        $data_bentuk_badan_usaha = Datatables::of($bentuk_badan_usaha);
+        $data_kecamatan = Datatables::of($kecamatan)
+            ->addColumn('nama_kota', function($kecamatan){
+                return $kecamatan->kota->nama_kota;
+            })
+        ;
 
         if ($keyword = $request->get('search')['value']) {
-            $data_bentuk_badan_usaha->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+            $data_kecamatan->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
         }
 
-        return $data_bentuk_badan_usaha->make(true);
+        return $data_kecamatan->make(true);
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -104,7 +110,6 @@ class BentukBadanUsahaController extends Controller
         //
     }
 
-
     public function synchronize(Request $request)
     {
         $token = getCurrentActiveToken()['token'];
@@ -126,23 +131,21 @@ class BentukBadanUsahaController extends Controller
             ]
             
         ]);
-
-        $response = $client->post('/Service/Ref/Bentuk-Badan-Usaha');
-
+        $response = $client->post('/Service/Ref/Kecamatan');
         try{
             
             $code = $response->getStatusCode(); // 200
             $body = $response->getBody();
             $contents = $body->getContents();
             $decode = json_decode($contents);
-            //Truncate Badan Usaha Model
-            BentukBadanUsaha::truncate();
+            //Empty table matriks_kualifikasi
+            Kecamatan::truncate();
             foreach($decode->result as $res){
-                BentukBadanUsaha::create(
+                Kecamatan::create(
                     [
-                        'uid_bentuk_badan_usaha'=>$res->uid_bentuk_badan_usaha, 
-                        'nama_bentuk_badan_usaha'=>$res->nama_bentuk_badan_usaha, 
-                        'nama_singkat'=>$res->nama_singkat
+                        'uid_kecamatan'=>$res->uid_kecamatan,
+                        'kota_uid'=>$res->kota_uid,
+                        'nama'=>$res->nama,
                     ]
                 );
             }
@@ -156,5 +159,5 @@ class BentukBadanUsahaController extends Controller
             return $e;
         }
     }
-    
+
 }

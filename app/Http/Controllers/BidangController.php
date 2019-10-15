@@ -127,9 +127,10 @@ class BidangController extends Controller
             ]
             
         ]);
-
+        $response = $client->post('/Service/Ref/Bidang');
+        
         try{
-            $response = $client->post('/Service/Ref/Bidang');
+            
             $code = $response->getStatusCode(); // 200
             $body = $response->getBody();
             $contents = $body->getContents();

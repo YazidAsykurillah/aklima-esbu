@@ -142,9 +142,10 @@ class MatriksKualifikasiController extends Controller
             ]
             
         ]);
-
+        $response = $client->post('/Service/Ref/Matriks-Kualifikasi');
+        
         try{
-            $response = $client->post('/Service/Ref/Matriks-Kualifikasi');
+            
             $code = $response->getStatusCode(); // 200
             $body = $response->getBody();
             $contents = $body->getContents();

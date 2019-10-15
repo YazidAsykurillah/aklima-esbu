@@ -109,16 +109,22 @@
                     if(response.response == 1){
                         $('#synchModal').modal('hide');
                         table.ajax.reload();
-                        $('#btn-synchronize').prop('disabled', true).html('Sinkronisasi');
                         alertify.notify(response.message, 'success', 5, function(){  console.log('dismissed'); });
+                        resetSynchronizeButton();
                     } 
                 },
                 error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
                     console.log(JSON.stringify(jqXHR));
                     console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                    alertify.notify(jqXHR.responseJSON.message, textStatus, 5, function(){  console.log('dismissed'); });
+                    resetSynchronizeButton();
                 }
             });
         });
+
+        function resetSynchronizeButton(){
+            $('#btn-synchronize').prop('disabled', false).html('Sinkronisasi');
+        }
 
     });
 </script>
