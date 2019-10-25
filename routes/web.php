@@ -67,6 +67,16 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('kelurahan/datatables', 'KelurahanController@datatables');
 	Route::resource('kelurahan', 'KelurahanController');
 
+	//Asesor
+	Route::post('asesor/synchronize', 'AsesorController@synchronize');
+	Route::get('asesor/datatables', 'AsesorController@datatables');
+	Route::resource('asesor', 'AsesorController');
+
+	//BadanUsaha
+	Route::post('badan-usaha/synchronize', 'BadanUsahaController@synchronize');
+	Route::get('badan-usaha/datatables', 'BadanUsahaController@datatables');
+	Route::resource('badan-usaha', 'BadanUsahaController');
+
 	//Permohonan Resource Controller
 	Route::resource('permohonan', 'PermohonanController');
 

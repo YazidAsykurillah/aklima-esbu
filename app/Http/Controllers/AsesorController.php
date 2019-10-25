@@ -8,9 +8,9 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
-use App\Kelurahan;
+use App\Asesor;
 
-class KelurahanController extends Controller
+class AsesorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,18 +27,14 @@ class KelurahanController extends Controller
     public function datatables(Request $request)
     {
         \DB::statement(\DB::raw('set @rownum=0'));
-        $kelurahan = Kelurahan::with(['kecamatan'])->select([
+        $asesor = Asesor::select([
             \DB::raw('@rownum  := @rownum  + 1 AS rownum'),
-            'kelurahan.*'
+            'asesor.*'
         ]);
 
-        return Datatables::eloquent($kelurahan)
-            ->addColumn('nama_kecamatan', function($kelurahan){
-                return $kelurahan->kecamatan->nama;
-            })
+        return Datatables::eloquent($asesor)
             ->make(true);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -126,7 +122,7 @@ class KelurahanController extends Controller
             ]
             
         ]);
-        $response = $client->post('/Service/Ref/Kelurahan');
+        $response = $client->post('/Service/Ref/Asesor');
         try{
             
             $code = $response->getStatusCode(); // 200
@@ -134,14 +130,17 @@ class KelurahanController extends Controller
             $contents = $body->getContents();
             $decode = json_decode($contents);
             //Truncate moodel model
-            Kelurahan::truncate();
+            Asesor::truncate();
             foreach($decode->result as $res){
-                Kelurahan::create(
+                Asesor::create(
                     [
-                        'uid_kelurahan'=>$res->uid_kelurahan,
-                        'kecamatan_uid'=>$res->kecamatan_uid,
-                        'nama'=>$res->nama,
-                        'jenis'=>$res->jenis,
+                        'uid_asesor'=>$res->uid_asesor,
+                        'nik'=>$res->nik,
+                        'nama_asesor'=>$res->nama_asesor,
+                        'alamat'=>$res->alamat,
+                        'email'=>$res->email,
+                        'nomor_handphone'=>$res->nomor_handphone,
+                        'is_active'=>$res->is_active,
                     ]
                 );
             }
@@ -155,5 +154,4 @@ class KelurahanController extends Controller
             return $e;
         }
     }
-
 }

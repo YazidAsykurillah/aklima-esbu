@@ -8,9 +8,9 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
-use App\Kelurahan;
+use App\BadanUsaha;
 
-class KelurahanController extends Controller
+class BadanUsahaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,18 +23,23 @@ class KelurahanController extends Controller
     }
 
     //return datatables object
-    
     public function datatables(Request $request)
     {
         \DB::statement(\DB::raw('set @rownum=0'));
-        $kelurahan = Kelurahan::with(['kecamatan'])->select([
+        $badan_usaha = BadanUsaha::with(['bentuk_badan_usaha', 'kelurahan', 'kecamatan', 'kota'])->select([
             \DB::raw('@rownum  := @rownum  + 1 AS rownum'),
-            'kelurahan.*'
+            'badan_usaha.*'
         ]);
 
-        return Datatables::eloquent($kelurahan)
-            ->addColumn('nama_kecamatan', function($kelurahan){
-                return $kelurahan->kecamatan->nama;
+        return Datatables::eloquent($badan_usaha)
+            ->addColumn('nama_bentuk_badan_usaha', function($badan_usaha){
+                return $badan_usaha->bentuk_badan_usaha->nama_bentuk_badan_usaha;
+            })
+            ->addColumn('nama_kecamatan', function($badan_usaha){
+                return $badan_usaha->kecamatan->nama;
+            })
+            ->addColumn('nama_kelurahan', function($badan_usaha){
+                return $badan_usaha->kelurahan->nama;
             })
             ->make(true);
     }
@@ -126,7 +131,7 @@ class KelurahanController extends Controller
             ]
             
         ]);
-        $response = $client->post('/Service/Ref/Kelurahan');
+        $response = $client->post('/Service/Badan-Usaha/Tarik');
         try{
             
             $code = $response->getStatusCode(); // 200
@@ -134,14 +139,28 @@ class KelurahanController extends Controller
             $contents = $body->getContents();
             $decode = json_decode($contents);
             //Truncate moodel model
-            Kelurahan::truncate();
+            BadanUsaha::truncate();
             foreach($decode->result as $res){
-                Kelurahan::create(
+                BadanUsaha::create(
                     [
-                        'uid_kelurahan'=>$res->uid_kelurahan,
+                        'uid_badan_usaha'=>$res->uid_badan_usaha,
+                        'bentuk_badan_usaha_uid'=>$res->bentuk_badan_usaha_uid,
+                        'nama_badan_usaha'=>$res->nama_badan_usaha,
+                        'alamat_badan_usaha'=>$res->alamat_badan_usaha,
+                        'kelurahan_uid'=>$res->kelurahan_uid,
                         'kecamatan_uid'=>$res->kecamatan_uid,
-                        'nama'=>$res->nama,
-                        'jenis'=>$res->jenis,
+                        'kota_uid'=>$res->kota_uid,
+                        'no_telp_kantor'=>$res->no_telp_kantor,
+                        'no_hp_kantor'=>$res->no_hp_kantor,
+                        'no_fax'=>$res->no_fax,
+                        'website'=>$res->website,
+                        'nik_penanggung_jawab'=>$res->nik_penanggung_jawab,
+                        'nama_penanggung_jawab'=>$res->nama_penanggung_jawab,
+                        'jenis_kewarganegaraan'=>$res->jenis_kewarganegaraan,
+                        'kewarganegaraan'=>$res->kewarganegaraan,
+                        'passport'=>$res->passport,
+                        'no_telepon_penanggung_jawab'=>$res->no_telepon_penanggung_jawab,
+                        'email_perusahaan'=>$res->email_perusahaan,
                     ]
                 );
             }
@@ -155,5 +174,6 @@ class KelurahanController extends Controller
             return $e;
         }
     }
+
 
 }

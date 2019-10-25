@@ -36,6 +36,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Kecamatan UID</th>
+                        <th scope="col">Nama Kecamatan</th>
                         <th scope="col">UID Kelurahan</th>
                         <th scope="col">Nama</th>
                         <th scope="col">Jenis</th>
@@ -79,7 +80,8 @@
             ajax : '{!! url('kelurahan/datatables') !!}',
             columns :[
                 {data: 'rownum', name: 'rownum', searchable:false},
-                { data: 'kecamatan_uid', name: 'kecamatan_uid' },
+                { data: 'kecamatan_uid', name: 'kecamatan_uid', orderable:false },
+                { data: 'nama_kecamatan', name: 'kecamatan.nama', orderable:false },
                 { data: 'uid_kelurahan', name: 'uid_kelurahan' },
                 { data: 'nama', name: 'nama' },
                 { data: 'jenis', name: 'jenis' },

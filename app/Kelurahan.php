@@ -16,7 +16,7 @@ class Kelurahan extends Model
 
     public function kecamatan()
     {
-    	return $this->belongsTo('App\Kecamatan', 'kecamatan_uid', 'uid_kecamatan');
+    	return $this->belongsTo('App\Kecamatan', 'kecamatan_uid');
     }
 
     

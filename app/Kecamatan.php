@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Kecamatan extends Model
 {
     protected $table = 'kecamatan';
-    protected $primaryKey = 'kota_uid';
+    protected $primaryKey = 'uid_kecamatan';
     protected $fillable = [
-    	'uid_kecamatan', 'kota_uid', 'nama'
+    	'kota_uid', 'uid_kecamatan', 'nama'
     ];
 
     public function kota()
