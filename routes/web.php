@@ -78,6 +78,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::resource('badan-usaha', 'BadanUsahaController');
 
 	//Permohonan Resource Controller
+	Route::get('permohonan/datatables', 'PermohonanController@datatables');
 	Route::resource('permohonan', 'PermohonanController');
 
 	//Master Data controllers
@@ -92,6 +93,10 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('master-data/kelurahan', 'MasterDataController@renderKelurahanView');
 	Route::get('master-data/asesor', 'MasterDataController@renderAsesorView');
 	Route::get('master-data/badan-usaha', 'MasterDataController@renderBadanUsahaView');
+
+	//Service Controllers
+	Route::post('service/tarik-pendaftaran', 'ServiceController@runTarikPendaftaran');
+	Route::get('service/tarik-pendaftaran', 'ServiceController@renderTarikPendaftaranView');
 
 
 	//Configuration

@@ -35,19 +35,5 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                Change Password
-            </div>
-            <div class="card-body">
-                <p class="card-text">
-                    <i class="fa fa-info-circle"></i> Anda baru pertama kali masuk, silahkan ubah password dengan klik tombol berikut
-                </p>
-                <a href="#" class="btn btn-primary">Ubah Password</a>
-            </div>
-        </div>
-    </div>
-</div>
+
 @endsection

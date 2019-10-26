@@ -46,6 +46,9 @@ class AclTableSeeder extends Seeder
             //Access Application Configuration
             [ 'slug'=>'access-configuration', 'description'=>'View Configuration Menu'],
 
+            //Access Application Service
+            [ 'slug'=>'access-service', 'description'=>'View Service Menu'],
+
         ];
         DB::table('permissions')->insert($permissions);
         //ENDBlock table permissions

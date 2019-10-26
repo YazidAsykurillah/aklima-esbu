@@ -17,7 +17,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#permohonan" aria-controls="permohonan"><i class="fa fa-fw fa-cogs"></i>Permohonan</a>
-                        <div id="permohonan" class="collapse submenu" style="">
+                        <div id="permohonan" class="{{{ (Request::is('permohonan*') ? '' : 'collapse') }}} submenu" style="">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                      <a class="nav-link" href="{{ url('permohonan/?status=0') }}">
@@ -141,7 +141,20 @@
                         </div>
                     </li>
                     @endif
-
+                    @if(\Auth::user()->can('access-service'))
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#service" aria-controls="service"><i class="fa fa-fw fa-cogs"></i>Services</a>
+                        <div id="service" class="{{{ (Request::is('service/*') ? '' : 'collapse') }}} submenu" style="">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                     <a class="nav-link {{{ (Request::is('service/tarik-pendaftaran') ? 'active' : '') }}}" href="{{ url('service/tarik-pendaftaran') }}">
+                                        <span class=""></span>Tarik Pendaftaran
+                                    </a>
+                                </li>                
+                            </ul>
+                        </div>
+                    </li>
+                    @endif
                     @if(\Auth::user()->can('access-configuration'))
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#configuration" aria-controls="configuration"><i class="fa fa-fw fa-cogs"></i>Configurations</a>
@@ -156,6 +169,7 @@
                         </div>
                     </li>
                     @endif
+                    
                 </ul>
             </div>
         </nav>
