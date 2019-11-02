@@ -112,6 +112,8 @@ return [
     
     'x_lsbu_key'=>env('X_LSBU_KEY','lsbu-dummy'),
 
+    'gatrik_api_mode'=>env('GATRIK_API_MODE', 'enabled'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

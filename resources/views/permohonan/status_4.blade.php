@@ -64,7 +64,13 @@
             },
             columns :[
                 {data: 'rownum', name: 'rownum', searchable:false},
-                { data: 'uid_permohonan', name: 'uid_permohonan' },
+                { data: 'uid_permohonan', name: 'uid_permohonan', render:function(data, type, row, meta){
+                    var link = '';
+                        link+= '<a href="{{ url('permohonan')}}/'+data+'">';
+                        link+=    data;
+                        link+= '</a>';
+                    return link;
+                }},
                 { data: 'nama_jenis_usaha', name: 'jenis_usaha.nama_jenis_usaha', orderable:false },
                 { data: 'jenis_sertifikasi', name: 'jenis_sertifikasi', orderable:false },
                 { data: 'perpanjangan_ke', name: 'perpanjangan_ke', orderable:false },

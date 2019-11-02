@@ -17,70 +17,76 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#permohonan" aria-controls="permohonan"><i class="fa fa-fw fa-cogs"></i>Permohonan</a>
-                        <div id="permohonan" class="{{{ (Request::is('permohonan*') ? '' : 'collapse') }}} submenu" style="">
+                        <div id="permohonan" class="{{{ (Request::is('permohonan*') ? 'show' : 'collapse') }}} submenu" style="">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
-                                     <a class="nav-link" href="{{ url('permohonan/?status=0') }}">
+                                     <a class="nav-link {{{ (Request::query('status') == 'all' ? 'active' : '') }}}" href="{{ url('permohonan/?status=all') }}">
+                                        <span class=""></span>All
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                     <a class="nav-link {{{ (Request::query('status') == '0' ? 'active' : '') }}}" href="{{ url('permohonan/?status=0') }}">
                                         <span class=""></span>Menunggu Dokumen
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                     <a class="nav-link" href="{{ url('permohonan/?status=1') }}">
+                                     <a class="nav-link {{{ (Request::query('status') == '1' ? 'active' : '') }}}" href="{{ url('permohonan/?status=1') }}">
                                         <span class=""></span>Front Desk
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                     <a class="nav-link" href="{{ url('permohonan/?status=2') }}">
+                                     <a class="nav-link {{{ (Request::query('status') == '2' ? 'active' : '') }}}"  href="{{ url('permohonan/?status=2') }}">
                                         <span class=""></span>Dokumen lengkap dan proses upload
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                     <a class="nav-link" href="{{ url('permohonan/?status=4') }}">
+                                     <a class="nav-link {{{ (Request::query('status') == '4' ? 'active' : '') }}}" href="{{ url('permohonan/?status=4') }}">
                                         <span class=""></span>Verifikator
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                     <a class="nav-link" href="{{ url('permohonan/?status=5') }}">
+                                     <a class="nav-link {{{ (Request::query('status') == '5' ? 'active' : '') }}}" href="{{ url('permohonan/?status=5') }}">
                                         <span class=""></span>Auditor
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                     <a class="nav-link" href="{{ url('permohonan/?status=6') }}">
+                                     <a class="nav-link {{{ (Request::query('status') == '6' ? 'active' : '') }}}" href="{{ url('permohonan/?status=6') }}">
                                         <span class=""></span>Validator
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                     <a class="nav-link" href="{{ url('permohonan/?status=7') }}">
+                                     <a class="nav-link {{{ (Request::query('status') == '7' ? 'active' : '') }}}" href="{{ url('permohonan/?status=7') }}">
                                         <span class=""></span>Evaluator
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                     <a class="nav-link" href="{{ url('permohonan/?status=10') }}">
+                                     <a class="nav-link {{{ (Request::query('status') == '10' ? 'active' : '') }}}" href="{{ url('permohonan/?status=10') }}">
                                         <span class=""></span>Top Approval
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                     <a class="nav-link" href="{{ url('permohonan/?status=11') }}">
+                                     <a class="nav-link {{{ (Request::query('status') == '11' ? 'active' : '') }}}" href="{{ url('permohonan/?status=11') }}">
                                         <span class=""></span>SBU sudah diregistrasi
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                     <a class="nav-link" href="{{ url('permohonan/?status=12') }}">
+                                     <a class="nav-link {{{ (Request::query('status') == '12' ? 'active' : '') }}}" href="{{ url('permohonan/?status=12') }}">
                                         <span class=""></span>SBU sudah dicetak
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                     <a class="nav-link" href="{{ url('permohonan/?status=14') }}">
+                                     <a class="nav-link {{{ (Request::query('status') == '14' ? 'active' : '') }}}" href="{{ url('permohonan/?status=14') }}">
                                         <span class=""></span>SBU sudah diterima pemohon
                                     </a>
                                 </li>
+                                
                             </ul>
                         </div>
                     </li>
                     @if(\Auth::user()->can('access-master-data'))
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#master-data" aria-controls="master-data"><i class="fa fa-fw fa-database"></i>Master Data / Referensi</a>
-                        <div id="master-data" class="{{{ (Request::is('master-data/*') ? '' : 'collapse') }}} submenu" style="">
+                        <div id="master-data" class="{{{ (Request::is('master-data/*') ? 'show' : 'collapse') }}} submenu" style="">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link {{{ (Request::is('master-data/bentuk-badan-usaha') ? 'active' : '') }}}" href="{{ url('master-data/bentuk-badan-usaha')}}">
@@ -144,7 +150,7 @@
                     @if(\Auth::user()->can('access-service'))
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#service" aria-controls="service"><i class="fa fa-fw fa-cogs"></i>Services</a>
-                        <div id="service" class="{{{ (Request::is('service/*') ? '' : 'collapse') }}} submenu" style="">
+                        <div id="service" class="submenu {{{ (Request::is('service/*') ? 'show' : 'collapse') }}}" style="">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                      <a class="nav-link {{{ (Request::is('service/tarik-pendaftaran') ? 'active' : '') }}}" href="{{ url('service/tarik-pendaftaran') }}">
@@ -158,7 +164,7 @@
                     @if(\Auth::user()->can('access-configuration'))
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#configuration" aria-controls="configuration"><i class="fa fa-fw fa-cogs"></i>Configurations</a>
-                        <div id="configuration" class="{{{ (Request::is('configuration/*') ? '' : 'collapse') }}} submenu" style="">
+                        <div id="configuration" class="{{{ (Request::is('configuration/*') ? 'show' : 'collapse') }}} submenu" style="">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                      <a class="nav-link {{{ (Request::is('configuration/service-integrator') ? 'active' : '') }}}" href="{{ url('configuration/service-integrator') }}">

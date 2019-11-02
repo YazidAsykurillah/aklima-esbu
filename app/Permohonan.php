@@ -24,4 +24,10 @@ class Permohonan extends Model
     {
     	return $this->belongsTo('App\BadanUsaha', 'badan_usaha_uid', 'uid_badan_usaha')->withDefault();
     }
+
+    //Relation with Identitas Badan Usaha
+    public function identitas_badan_usaha()
+    {
+        return $this->hasOne('App\IdentitasBadanUsaha', 'permohonan_uid')->withDefault();
+    }
 }

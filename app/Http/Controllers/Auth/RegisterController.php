@@ -53,9 +53,6 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'name' => 'required|string|max:255',
             'password' => 'required|string|min:8|alpha_num|confirmed',
-            'bentuk_badan_usaha' => 'required',
-            'nama_badan_usaha' => 'required',
-            'npwp_badan_usaha' => 'required',
             'captcha' => 'required|captcha'
         ]);
     }
@@ -73,9 +70,6 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'name' => $data['name'],
             'password' => Hash::make($data['password']),
-            'bentuk_badan_usaha'=>$data['bentuk_badan_usaha'],
-            'nama_badan_usaha'=>$data['nama_badan_usaha'],
-            'npwp_badan_usaha'=>$data['npwp_badan_usaha'],
         ]);
     }
 }

@@ -18,9 +18,14 @@ class PermohonanController extends Controller
      */
     public function index(Request $request)
     {
+        
         if($request->has('status')){
             $status = $request->status;
-            if($status == 0){
+            if($status == "all"){
+                return view('permohonan.status_all')
+                    ->with('status', $status);
+            }
+            elseif($status == 0){
                 return view('permohonan.status_0')
                     ->with('status', $status);
             }
@@ -134,7 +139,9 @@ class PermohonanController extends Controller
      */
     public function show($id)
     {
-        //
+        $permohonan = Permohonan::findOrFail($id);
+        return view('permohonan.show')
+            ->with('permohonan', $permohonan);
     }
 
     /**

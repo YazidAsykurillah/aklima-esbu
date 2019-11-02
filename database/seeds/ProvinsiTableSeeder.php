@@ -11,6 +11,6 @@ class ProvinsiTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('provinsi')->delete();
+    	
     }
 }

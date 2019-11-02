@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('page_title')
-    Permohonan :: Auditor
+    Permohonan :: All
 @endsection
 
 @section('page_header_title')
-<h2 class="pageheader-title">Permohonan : Auditor</h2>
+<h2 class="pageheader-title">Permohonan : All</h2>
 @endsection
 
 @section('page_breadcrumb')
@@ -13,7 +13,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('home') }}" class="breadcrumb-link">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Permohonan Auditor</li>
+            <li class="breadcrumb-item active" aria-current="page">Permohonan All</li>
         </ol>
     </nav>
 </div>
@@ -22,7 +22,7 @@
 @section('content')
 <div class="card">
     <div class="card-header d-flex">
-        <h4 class="card-header-title">Auditor</h4>
+        <h4 class="card-header-title">All</h4>
         <div class="toolbar ml-auto">
            
         </div>

@@ -98,6 +98,9 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::post('service/tarik-pendaftaran', 'ServiceController@runTarikPendaftaran');
 	Route::get('service/tarik-pendaftaran', 'ServiceController@renderTarikPendaftaranView');
 
+	//Identitas Badan Usaha
+	Route::resource('identitas-badan-usaha', 'IdentitasBadanUsahaController');
+
 
 	//Configuration
 		Route::post('configuration/service-integrator/generate-token', 'ConfigurationController@generateToken');

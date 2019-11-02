@@ -11,6 +11,13 @@ use App\Permohonan;
 
 class ServiceController extends Controller
 {
+    protected $gatrik_api_mode;
+
+    public function __construct()
+    {
+        $this->gatrik_api_mode = config('app.gatrik_api_mode');
+    }
+
     public function renderTarikPendaftaranView(Request $request)
     {
     	return view('service.tarik_pendaftaran');
@@ -18,6 +25,10 @@ class ServiceController extends Controller
 
     public function runTarikPendaftaran(Request $request)
     {
+        if($this->gatrik_api_mode == 'disabled'){
+            return $this->runTarikPendaftaranDummy();
+        }
+        
     	$token = getCurrentActiveToken()['token'];
         
         $ajaxResponse['response']= NULL;
@@ -45,8 +56,19 @@ class ServiceController extends Controller
             $contents = $body->getContents();
             $decode = json_decode($contents);
             //Truncate moodel model
-            Permohonan::truncate();
-            
+            //Permohonan::truncate();
+            \DB::table('permohonan')->where('status', '=', 0)->delete();
+            foreach($decode->result as $res){
+                Permohonan::create(
+                    [
+                        'uid_permohonan'=>$res->uid_permohonan,
+                        'jenis_usaha_uid'=>$res->jenis_usaha_uid,
+                        'jenis_sertifikasi'=>$res->jenis_sertifikasi,
+                        'perpanjangan_ke'=>$res->perpanjangan_ke,
+                        'badan_usaha_uid'=>$res->badan_usaha_uid,
+                    ]
+                );
+            }
 
             $ajaxResponse['response'] = $decode->response;
             $ajaxResponse['message'] = $decode->message;
@@ -56,5 +78,24 @@ class ServiceController extends Controller
         catch(GuzzleException $e){
             return $e;
         }
+    }
+
+    protected function runTarikPendaftaranDummy()
+    {
+        $ajaxResponse['response']= NULL;
+        $ajaxResponse['message']= NULL;
+        $ajaxResponse['result']= NULL;   
+        try {
+            Permohonan::truncate();
+            $command = \Artisan::call('db:seed', [
+                '--class' => 'PermohonanTableSeeder'
+            ]);
+            $ajaxResponse['response'] = '1';
+            $ajaxResponse['message'] = "Dummy insert succeed";
+            return $ajaxResponse;
+        } catch (Exception $e) {
+            return $e;
+        }
+        
     }
 }
