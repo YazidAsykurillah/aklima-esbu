@@ -20,7 +20,8 @@ class CreatePermohonanTable extends Migration
             $table->integer('jenis_sertifikasi')->nullable();
             $table->integer('perpanjangan_ke')->nullable();
             $table->bigInteger('badan_usaha_uid')->nullable();
-            $table->integer('status')->default(0);
+            $table->enum('status', ['0','1', '2', '4', '5', '6', '7', '10', '11', '12', '14'])
+                    ->nullable()->default(NULL);
             $table->timestamps();
         });
     }

@@ -57,7 +57,7 @@ class ServiceController extends Controller
             $decode = json_decode($contents);
             //Truncate moodel model
             //Permohonan::truncate();
-            \DB::table('permohonan')->where('status', '=', 0)->delete();
+            \DB::table('permohonan')->where('status', '=', NULL)->delete();
             foreach($decode->result as $res){
                 Permohonan::create(
                     [
@@ -80,7 +80,7 @@ class ServiceController extends Controller
         }
     }
 
-    protected function runTarikPendaftaranDummy()
+    /*protected function runTarikPendaftaranDummy()
     {
         $ajaxResponse['response']= NULL;
         $ajaxResponse['message']= NULL;
@@ -90,6 +90,23 @@ class ServiceController extends Controller
             $command = \Artisan::call('db:seed', [
                 '--class' => 'PermohonanTableSeeder'
             ]);
+            $ajaxResponse['response'] = '1';
+            $ajaxResponse['message'] = "Dummy insert succeed";
+            return $ajaxResponse;
+        } catch (Exception $e) {
+            return $e;
+        }
+        
+    }*/
+
+    protected function runTarikPendaftaranDummy()
+    {
+        $ajaxResponse['response']= NULL;
+        $ajaxResponse['message']= NULL;
+        $ajaxResponse['result']= NULL;   
+        try {
+            Permohonan::truncate();
+            factory(Permohonan::class, 50)->create();
             $ajaxResponse['response'] = '1';
             $ajaxResponse['message'] = "Dummy insert succeed";
             return $ajaxResponse;

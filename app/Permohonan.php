@@ -30,4 +30,10 @@ class Permohonan extends Model
     {
         return $this->hasOne('App\IdentitasBadanUsaha', 'permohonan_uid')->withDefault();
     }
+
+    //Relation with Persyaratan Administratif
+    public function persyaratan_administratif()
+    {
+        return $this->hasOne('App\PersyaratanAdministratif', 'uid_permohonan')->withDefault();
+    }
 }

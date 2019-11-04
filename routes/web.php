@@ -78,6 +78,8 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::resource('badan-usaha', 'BadanUsahaController');
 
 	//Permohonan Resource Controller
+	Route::get('permohonan/{uid_permohonan}/persyaratan-administratif', 'PermohonanController@fetchPersyaratanAdministratif');
+	Route::get('permohonan/{uid_permohonan}/identitas-badan-usaha', 'PermohonanController@getIdentitasBadanUsaha');
 	Route::get('permohonan/datatables', 'PermohonanController@datatables');
 	Route::resource('permohonan', 'PermohonanController');
 
@@ -100,6 +102,9 @@ Route::group(['middleware' => 'auth'], function(){
 
 	//Identitas Badan Usaha
 	Route::resource('identitas-badan-usaha', 'IdentitasBadanUsahaController');
+
+	//Persyaratan Administratif
+	Route::resource('persyaratan-administratif', 'PersyaratanAdministratifController');
 
 
 	//Configuration

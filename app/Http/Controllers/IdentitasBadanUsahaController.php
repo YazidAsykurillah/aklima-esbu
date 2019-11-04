@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreIdentitasBadanUsahaRequest;
+
 use Datatables;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
@@ -46,7 +48,7 @@ class IdentitasBadanUsahaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreIdentitasBadanUsahaRequest $request)
     {
         if($this->gatrik_api_mode == 'disabled'){
             return $this->runStoreDummy($request);
@@ -72,6 +74,12 @@ class IdentitasBadanUsahaController extends Controller
             ],
             'form_params' => [
                 'uid_permohonan' => $permohonan->uid_permohonan,
+                'file_surat_permohonan_sbu'=>$request->file_surat_permohonan_sbu,
+                'nomor_surat'=>$request->nomor_surat,
+                'perihal'=>$request->perihal,
+                'tanggal_surat'=>$request->tanggal_surat,
+                'nama_penandatangan_surat'=>$request->nama_penandatangan_surat,
+                'jabatan_penandatangan_surat'=>$request->jabatan_penandatangan_surat,
             ]
         ]);
         $response = $client->post('/Service/Permohonan/Identitas-Badan-Usaha/Tarik');
@@ -121,11 +129,6 @@ class IdentitasBadanUsahaController extends Controller
             $uid_verifikasi_ibu = $max_uid_verifikasi_ibu+1;
             $permohonan_uid  = $permohonan->uid_permohonan;
             $file_surat_permohonan_sbu = config('app.url');
-            $nomor_surat = $request->nomor_surat;
-            $perihal = $request->perihal;
-            $tanggal_surat = Carbon::now()->format('Y-m-d');
-            $nama_penandatangan_surat = $request->nama_penandatangan_surat;
-            $jabatan_penandatangan_surat = $request->jabatan_penandatangan_surat;
 
             IdentitasBadanUsaha::where('permohonan_uid', '=', $permohonan_uid)->delete();
             IdentitasBadanUsaha::create(
@@ -133,15 +136,15 @@ class IdentitasBadanUsahaController extends Controller
                     'uid_verifikasi_ibu'=>$uid_verifikasi_ibu,
                     'permohonan_uid'=>$permohonan_uid,
                     'file_surat_permohonan_sbu'=>$file_surat_permohonan_sbu,
-                    'nomor_surat'=>$nomor_surat,
-                    'perihal'=>$perihal,
-                    'tanggal_surat'=>$tanggal_surat,
-                    'nama_penandatangan_surat'=>$nama_penandatangan_surat,
-                    'jabatan_penandatangan_surat'=>$jabatan_penandatangan_surat,
+                    'nomor_surat'=>$request->nomor_surat,
+                    'perihal'=>$request->perihal,
+                    'tanggal_surat'=>$request->tanggal_surat,
+                    'nama_penandatangan_surat'=>$request->nama_penandatangan_surat,
+                    'jabatan_penandatangan_surat'=>$request->jabatan_penandatangan_surat,
                 ]
             );
             $ajaxResponse['response']= 1;
-            $ajaxResponse['message']= "Insert IdentitasBadanUsaha has been succeed";
+            $ajaxResponse['message']= "[DUMMY] Data Identitas Badan Usaha Berhasil Disimpan";
             $ajaxResponse['result']= NULL;
             return $ajaxResponse;
         } catch (Exception $e) {

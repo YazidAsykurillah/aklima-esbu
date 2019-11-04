@@ -40,6 +40,7 @@
                         <th scope="col">Nama Badan Usaha</th>
                         <th scope="col">Bentuk Badan Usaha</th>
                         <th scope="col">Alamat Badan Usaha</th>
+                        <th scope="col">Status</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -77,6 +78,7 @@
                 { data: 'nama_badan_usaha', name: 'badan_usaha.nama_badan_usaha', orderable:false },
                 { data: 'bentuk_badan_usaha', name: 'badan_usaha.bentuk_badan_usaha.nama_bentuk_badan_usaha', orderable:false },
                 { data: 'alamat_badan_usaha', name: 'badan_usaha.alamat_badan_usaha', orderable:false },
+                {data: 'status', name: 'status', searchable:true},
                 { data: 'jenis_usaha_uid', name: 'jenis_usaha_uid', visible:false },
                 { data: 'badan_usaha_uid', name: 'badan_usaha_uid', visible:false },
                 

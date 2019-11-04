@@ -108,6 +108,9 @@ class PermohonanController extends Controller
             ->addColumn('alamat_badan_usaha', function($permohonan){
                 return $permohonan->badan_usaha->alamat_badan_usaha;
             })
+            ->editColumn('status', function($permohonan){
+                return translate_status_permohonan($permohonan->status);
+            })
             ->make(true);
     }
     /**
@@ -134,12 +137,12 @@ class PermohonanController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $uid_permohonan
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($uid_permohonan)
     {
-        $permohonan = Permohonan::findOrFail($id);
+        $permohonan = Permohonan::findOrFail($uid_permohonan);
         return view('permohonan.show')
             ->with('permohonan', $permohonan);
     }
@@ -177,4 +180,18 @@ class PermohonanController extends Controller
     {
         //
     }
+
+    public function getIdentitasBadanUsaha($uid_permohonan)
+    {
+        $permohonan = Permohonan::findOrFail($uid_permohonan);
+        return response()->json($permohonan->identitas_badan_usaha);
+    }
+
+    public function fetchPersyaratanAdministratif($uid_permohonan)
+    {
+        $permohonan = Permohonan::findOrFail($uid_permohonan);
+        return response()->json($permohonan->persyaratan_administratif);
+    }
+
+
 }

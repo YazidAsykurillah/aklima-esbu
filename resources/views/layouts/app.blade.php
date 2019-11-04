@@ -22,6 +22,8 @@
     <!--Alertify-->
     <link rel="stylesheet" href="{{ url('assets/vendor/alertify/css/alertify.css') }}">
     <link rel="stylesheet" href="{{ url('assets/vendor/alertify/css/themes/default.css') }}">
+    <!--Datepicker-->
+    <link rel="stylesheet" href="{{ url('assets/vendor/datepicker/tempusdominus-bootstrap-4.css') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ url('css/my-style.css') }}">
     @yield('additional_styles')
@@ -121,6 +123,9 @@
 
     <!--Alertify-->
     <script src="{{ url('assets/vendor/alertify/alertify.js') }}"></script>
+    <!--Datepicker-->
+    <script src="{{ url('assets/vendor/datepicker/moment.js') }}"></script>
+    <script src="{{ url('assets/vendor/datepicker/tempusdominus-bootstrap-4.js') }}"></script>
     @yield('additional_scripts')
 </body>
  
