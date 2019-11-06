@@ -28,12 +28,12 @@ class Permohonan extends Model
     //Relation with Identitas Badan Usaha
     public function identitas_badan_usaha()
     {
-        return $this->hasOne('App\IdentitasBadanUsaha', 'permohonan_uid')->withDefault();
+        return $this->hasOne('App\IdentitasBadanUsaha', 'permohonan_uid');
     }
 
     //Relation with Persyaratan Administratif
     public function persyaratan_administratif()
     {
-        return $this->hasOne('App\PersyaratanAdministratif', 'uid_permohonan')->withDefault();
+        return $this->hasOne('App\PersyaratanAdministratif', 'uid_permohonan');
     }
 }

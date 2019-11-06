@@ -4,7 +4,7 @@
             <div class="card-header d-flex">
                 <h4 class="card-header-title">Persyaratan Administratif</h4>
                 <div class="toolbar ml-auto">
-                   <a href="#" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#addPAModal">
+                   <a href="#" class="btn btn-primary btn-xs"  data-toggle="modal" data-target="#addPAModal">
                         <i class="fas fa-plus-circle"></i> Tambah
                     </a>
                 </div>
@@ -453,8 +453,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary" id="btn-add-pa">Tambah</button>
+                    <button class="btn btn-secondary btn-xs" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary btn-xs" id="btn-add-pa">Tambah</button>
                 </div>
             </form>
         </div>

@@ -101,6 +101,8 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('service/tarik-pendaftaran', 'ServiceController@renderTarikPendaftaranView');
 
 	//Identitas Badan Usaha
+	Route::post('identitas-badan-usaha/edit', 'IdentitasBadanUsahaController@updateData');
+	Route::post('identitas-badan-usaha/pull-from-gatrik', 'IdentitasBadanUsahaController@pullFromGatrik');
 	Route::resource('identitas-badan-usaha', 'IdentitasBadanUsahaController');
 
 	//Persyaratan Administratif

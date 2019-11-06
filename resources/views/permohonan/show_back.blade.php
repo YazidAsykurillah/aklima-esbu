@@ -96,19 +96,13 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/js/jquery-editable-poshytip.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-        //Prepare all datetime picker instances
+    //Block Identitas Badan Usaha
         if ($("#tanggal_surat").length) {
             $('#tanggal_surat').datetimepicker({
                 format: 'YYYY-MM-DD'
             });
-        }
-        if ($("#tanggal_surat_edit").length) {
-            $('#tanggal_surat_edit').datetimepicker({
-                format: 'YYYY-MM-DD'
-            });
-        }
 
-    //Block Identitas Badan Usaha
+        }
         //Handler Tambah Identitas Badan Usaha
         $('#form-tambah-identitas-badan-usaha').on('submit', function(event){
             event.preventDefault();
@@ -152,54 +146,6 @@
             });
         });
         //ENDHandler Tambah Identitas Badan Usaha
-
-        //Handler Edit Identitas Badan Usaha
-        $('#form-edit-identitas-badan-usaha').on('submit', function(event){
-            event.preventDefault();
-            var editIBUData = new FormData($(this)[0]);
-            editIBUData.append('uid_permohonan','{{ $permohonan->uid_permohonan }}');
-            $('#btn-edit-ibu').prop('disabled', true).html('<i class="fas fa-hourglass"></i> Processing');
-            $.ajax({
-                method: 'POST',
-                url: '{{ url('identitas-badan-usaha/edit') }}', 
-                data: editIBUData,
-                processData: false,
-                contentType: false,
-                success: function(response){
-                    console.log(response);
-                    if(response.response == 1){
-                        $('#editIBUModal').modal('hide');
-                        alertify.notify(response.message, 'success', 5, function(){  console.log('dismissed'); });
-                        getIdentitasBadanUsaha();
-                        $('#btn-edit-ibu').prop('disabled', false).html('Edit');
-                        $("#form-edit-identitas-badan-usaha")[0].reset();
-                    } else{
-                        $('#editIBUModal').modal('hide');
-                        alertify.notify(response.message, 'error', 5, function(){  console.log('dismissed'); });
-                        getIdentitasBadanUsaha();
-                        $('#btn-edit-ibu').prop('disabled', false).html('Edit');
-                        $("#form-edit-identitas-badan-usaha")[0].reset();
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown){
-                    let objResponse = jqXHR.responseJSON;
-                    let message = objResponse.message;
-                    let errors = objResponse.errors;
-                    let error_template = message;
-                    console.log(message);
-                    console.log(errors);
-                        if(errors){
-                            $.each( errors, function( key, value ) {
-                                console.log(value);
-                                error_template += '<li>'+ value[0] + '</li>'; //showing only the first error.
-                            });
-                        }
-                    alertify.notify(error_template, textStatus, 10, function(){});
-                    $('#btn-edit-ibu').prop('disabled', false).html('Edit');
-                }
-            });
-        });
-        //ENDHandler Edit Identitas Badan Usaha
 
         //Handler Pull Identitas Badan Usaha
         $('#form-pull-identitas-badan-usaha').on('submit', function(event){
@@ -259,7 +205,7 @@
                 type: 'GET',
                 url: '{{ url('permohonan') }}/{{ $permohonan->uid_permohonan }}/identitas-badan-usaha', 
                 success: function (response) {
-                    // console.log(response);
+                    console.log(response);
                     $('#ibu_holder_uid_verifikasi_ibu').html(response.uid_verifikasi_ibu);
                     $('#ibu_holder_file_surat_permohonan_sbu').html(response.file_surat_permohonan_sbu);
                     $('#ibu_holder_nomor_surat').html(response.nomor_surat);
@@ -363,7 +309,7 @@
                 type: 'GET',
                 url: '{{ url('permohonan') }}/{{ $permohonan->uid_permohonan }}/persyaratan-administratif', 
                 success: function (response) {
-                    // console.log(response);
+                    console.log(response);
                     $('#pa_holder_uid_verifikasi_pa').html(response.uid_verifikasi_pa);
                     $('#pa_holder_file_akta_pendirian_bu').html(response.file_akta_pendirian_bu);
                     $('#pa_holder_nama_notaris').html(response.nama_notaris);

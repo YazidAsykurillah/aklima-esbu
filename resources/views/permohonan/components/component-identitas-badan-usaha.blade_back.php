@@ -7,9 +7,6 @@
                     <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#addIBUModal">
                         <i class="fas fa-plus-circle"></i> Tambah
                     </a>
-                    <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#editIBUModal">
-                        <i class="fas fa-edit"></i> Edit
-                    </a>
                     <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#pullIBUModal">
                         <i class="fas fa-sync"></i> Tarik
                     </a>
@@ -112,59 +109,6 @@
     </div>
 </div>
 <!--ENDModal Tambah Identitas Badan Usaha-->
-
-<!--Modal Edit Identitas Badan Usaha-->
-<div class="modal fade" id="editIBUModal" tabindex="-1" role="dialog" aria-labelledby="editIBUModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <form id="form-edit-identitas-badan-usaha" method="post" enctype="multipart/form-data">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editIBUModalLabel">Edit Identitas Badan Usaha</h5>
-                    <a href="#" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </a>
-                </div>
-                <div class="modal-body">
-                    @csrf
-                    <div class="custom-file mb-3">
-                        <label class="custom-file-label" for="file_surat_permohonan_sbu_edit">File Surat Permohonan SBU</label>
-                        <input type="file" class="custom-file-input" id="file_surat_permohonan_sbu_edit" name="file_surat_permohonan_sbu_edit">
-                    </div>
-                    <div class="form-group">
-                        <label for="nomor_surat_edit" class="col-form-label">Nomor Surat</label>
-                        <input id="nomor_surat_edit" name="nomor_surat_edit" type="text" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label for="perihal_edit" class="col-form-label">Perihal</label>
-                        <input id="perihal_edit" name="perihal_edit" type="text" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label for="tanggal_surat_edit" class="col-form-label">Tanggal Surat</label>
-                        <div class="input-group date" id="tanggal_surat_edit" data-target-input="nearest">
-                            <input type="text" id="tanggal_surat_edit" name="tanggal_surat_edit" class="form-control datetimepicker-input" data-target="#tanggal_surat_edit" />
-                            <div class="input-group-append" data-target="#tanggal_surat_edit" data-toggle="datetimepicker">
-                                <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="nama_penandatangan_surat_edit" class="col-form-label">Nama Penandatangan Surat</label>
-                        <input id="nama_penandatangan_surat_edit" name="nama_penandatangan_surat_edit" type="text" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label for="jabatan_penandatangan_surat_edit" class="col-form-label">Jabatan Penandatangan Surat</label>
-                        <input id="jabatan_penandatangan_surat_edit" name="jabatan_penandatangan_surat_edit" type="text" class="form-control" />
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary btn-xs" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary btn-xs" id="btn-edit-ibu">Edit</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!--ENDModal Edit Identitas Badan Usaha-->
 
 <!--Modal Tarik Identitas Badan Usaha-->
 <div class="modal fade" id="pullIBUModal" tabindex="-1" role="dialog" aria-labelledby="pullIBUModalLabel" aria-hidden="true">
