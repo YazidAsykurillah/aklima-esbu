@@ -4,7 +4,7 @@
             <div class="card-header d-flex">
                 <h4 class="card-header-title">Persyaratan Administratif</h4>
                 <div class="toolbar ml-auto">
-                   <a href="#" class="btn btn-primary btn-xs"  data-toggle="modal" data-target="#addPAModal">
+                   <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#addPAModal">
                         <i class="fas fa-plus-circle"></i> Tambah
                     </a>
                 </div>

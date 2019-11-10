@@ -72,6 +72,24 @@
                             <td style="width: 5%;">:</td>
                             <td style="">{{ $permohonan->badan_usaha->alamat_badan_usaha }}</td>
                         </tr>
+                        <tr>
+                            <td style="width: 30%;">Status</td>
+                            <td style="width: 5%;">:</td>
+                            <td style="">
+                                {{ translate_status_permohonan($permohonan->status) }}
+                            </td>
+                        </tr>
+                        @if($permohonan->status =='11')
+                        <tr>
+                            <td style="width: 30%;"></td>
+                            <td style="width: 5%;"></td>
+                            <td style="">
+                                <a href="{{ url('permohonan/'.$permohonan->uid_permohonan.'/print-certificate') }}" class="btn btn-primary btn-xs" id="btn-print-certificate">
+                                    <i class="fa fa-print"></i> Cetak Sertifikat
+                                </a>
+                            </td>
+                        </tr>
+                        @endif
                     </table>
                 </div>
             </div>
@@ -88,6 +106,70 @@
 @include('permohonan.components.component-persyaratan-administratif')
 <!--ENDComponent Persyaratan Administratif-->
 
+<!--Row Change Next Status-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                @if($permohonan->status == '0')
+                    <a href="#" class="btn btn-primary btn-sm btn-block btn-change-status" data-next-status="1">
+                        Frontdesk
+                    </a>
+                @elseif($permohonan->status == '1')
+                    <a href="#" class="btn btn-primary btn-sm btn-block btn-change-status" data-next-status="2">
+                        Dokumen Lengkap dan Proses Upload
+                    </a>
+                @elseif($permohonan->status == '2')
+                    <a href="#" class="btn btn-primary btn-sm btn-block btn-change-status" data-next-status="4">
+                        Verifikator
+                    </a>
+                @elseif($permohonan->status == '4')
+                    <a href="#" class="btn btn-primary btn-sm btn-block btn-change-status" data-next-status="5">
+                        Auditor
+                    </a>
+                @elseif($permohonan->status == '5')
+                    <a href="#" class="btn btn-primary btn-sm btn-block btn-change-status" data-next-status="6">
+                        Validator
+                    </a>
+                @elseif($permohonan->status == '6')
+                    <a href="#" class="btn btn-primary btn-sm btn-block btn-change-status" data-next-status="7">
+                        Evaluator
+                    </a>
+                @else
+                    Undefined
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+<!--ENDRow Change Next Status-->
+
+<!--Modal Change Status-->
+<div class="modal fade" id="changeStatusModal" tabindex="-1" role="dialog" aria-labelledby="changeStatusModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form id="form-change-status" method="post" action="{{ url('permohonan/change-status') }}" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changeStatusModalLabel">Ubah Status Permohonan</h5>
+                    <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <p id="change_status_confirmation_text"></p>
+                    <input type="hidden" name="permohonan_next_status" id="permohonan_next_status" />
+                    <input type="hidden" name="permohonan_id_to_change" id="permohonan_id_to_change" value="{{ $permohonan->uid_permohonan }}" />
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary btn-xs" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary btn-xs" id="btn-update-status">OK</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--ENDModal Change Status-->
 
 
 @endsection
@@ -414,7 +496,19 @@
             });
         }
     //ENDBlock Tambah Persyaratan Administratif
-        
+    
+    //Handler Change status
+        $('.btn-change-status').on('click', function(event){
+            event.preventDefault();
+            var permohonan_next_status = $(this).attr('data-next-status');
+            var text_next_status = $(this).text();
+            $('#change_status_confirmation_text').html("Ubah status permohonan ke "+text_next_status);
+            $('#permohonan_next_status').val(permohonan_next_status);
+            $('#changeStatusModal').modal('show');
+
+        });
+    //ENDHandler Change status
+
 
     });
 </script>

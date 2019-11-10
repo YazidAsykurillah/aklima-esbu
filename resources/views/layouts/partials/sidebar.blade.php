@@ -161,6 +161,7 @@
                         </div>
                     </li>
                     @endif
+                    
                     @if(\Auth::user()->can('access-configuration'))
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#configuration" aria-controls="configuration"><i class="fa fa-fw fa-cogs"></i>Configurations</a>

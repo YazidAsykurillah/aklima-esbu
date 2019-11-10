@@ -13,4 +13,9 @@ class JenisUsaha extends Model
     protected $fillable = [
     	'uid_jenis_usaha', 'kode_jenis_usaha', 'nama_jenis_usaha', 'is_active'
     ];
+
+    public function matriks_kualifikasi()
+    {
+    	return $this->hasMany('App\MatriksKualifikasi','jenis_usaha_uid');
+    }
 }

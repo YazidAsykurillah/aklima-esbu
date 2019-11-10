@@ -29,10 +29,21 @@ class AclTableSeeder extends Seeder
         $role_user = [
         	//Super Admin
         	['role_id'=>1, 'user_id'=>1],
-        	//Administrator
+
+        	//Administrators
         	['role_id'=>2, 'user_id'=>2],
-        	//Front Desk
-        	['role_id'=>3, 'user_id'=>3],
+
+            //Front Desks
+            ['role_id'=>3, 'user_id'=>4],
+
+            //Verifikators
+            ['role_id'=>4, 'user_id'=>4],
+
+            //Auditors
+            ['role_id'=>5, 'user_id'=>3],
+
+            //Validators
+            ['role_id'=>6, 'user_id'=>3],
         ];
         DB::table('role_user')->insert($role_user);
         //ENDBlock table role_user
@@ -41,13 +52,13 @@ class AclTableSeeder extends Seeder
         DB::table('permissions')->delete();
         $permissions = [
             //Access Master Data
-            [ 'slug'=>'access-master-data', 'description'=>'View Master Data Menu'],
+            [ 'id'=>1 ,'slug'=>'access-master-data', 'description'=>'View Master Data Menu'],
 
             //Access Application Configuration
-            [ 'slug'=>'access-configuration', 'description'=>'View Configuration Menu'],
+            [ 'id'=>2 ,'slug'=>'access-configuration', 'description'=>'View Configuration Menu'],
 
             //Access Application Service
-            [ 'slug'=>'access-service', 'description'=>'View Service Menu'],
+            [ 'id'=>3 ,'slug'=>'access-service', 'description'=>'View Service Menu'],
 
         ];
         DB::table('permissions')->insert($permissions);

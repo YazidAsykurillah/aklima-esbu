@@ -171,6 +171,8 @@ return [
 
         Yajra\Datatables\DatatablesServiceProvider::class,
 
+        Barryvdh\DomPDF\ServiceProvider::class,
+
     ],
 
     /*
@@ -224,6 +226,8 @@ return [
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
 
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
+
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

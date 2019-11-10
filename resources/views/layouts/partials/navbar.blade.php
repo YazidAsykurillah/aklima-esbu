@@ -14,7 +14,14 @@
                     <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                         <div class="nav-user-info">
                             <h5 class="mb-0 text-white nav-user-name"> {{\Auth::user()->name }} </h5>
-                            <span class="status"></span><span class="">{{\Auth::user()->roles->first()->name}}</span>
+                            <span class="status"></span>
+                            <span class="">Roles:</span>
+                            <ul>
+                                @foreach(\Auth::user()->roles as $role)
+                                    <li class="">{{ $role->name }}</li>
+                                @endforeach    
+                            </ul>
+                            
                         </div>
                         <a class="dropdown-item" href="#"><i class="fas fa-user mr-2"></i>Account</a>
                         <a class="dropdown-item" href="{{ route('logout') }}"

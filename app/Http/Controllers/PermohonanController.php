@@ -193,5 +193,41 @@ class PermohonanController extends Controller
         return response()->json($permohonan->persyaratan_administratif);
     }
 
+    public function changeStatus(Request $request)
+    {
+        
+        $permohonan = Permohonan::findOrFail($request->permohonan_id_to_change);
+        $next_status = $request->permohonan_next_status;
+        $permohonan->status = $next_status;
+        $permohonan->save();
+        return redirect()->back()
+            ->with('successMessage', "Status permohonan berhasil diubah");
+    }
 
+
+    public function printCertificate(Request $request, $uid_permohonan)
+    {
+        $permohonan = Permohonan::findOrFail($uid_permohonan);
+        $badan_usaha = $permohonan->badan_usaha;
+        $jenis_usaha = $permohonan->jenis_usaha;
+        $identitas_badan_usaha = $permohonan->identitas_badan_usaha;
+        $persyaratan_administratif = $permohonan->persyaratan_administratif;
+
+        $export_name = 'Permohonan-'.$permohonan->uid_permohonan.'.pdf';
+
+        
+
+        $data = [
+            'permohonan' => $permohonan,
+            'badan_usaha'=>$badan_usaha,
+            'jenis_usaha'=>$jenis_usaha,
+            'identitas_badan_usaha'=>$identitas_badan_usaha,
+            'persyaratan_administratif'=>$persyaratan_administratif,
+        ];
+
+        $pdf = \PDF::loadView('permohonan.print_certificate', $data);
+
+
+        return $pdf->stream($export_name);
+    }
 }

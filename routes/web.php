@@ -78,6 +78,8 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::resource('badan-usaha', 'BadanUsahaController');
 
 	//Permohonan Resource Controller
+	Route::get('permohonan/{uid_permohonan}/print-certificate', 'PermohonanController@printCertificate');
+	Route::post('permohonan/change-status', 'PermohonanController@changeStatus');
 	Route::get('permohonan/{uid_permohonan}/persyaratan-administratif', 'PermohonanController@fetchPersyaratanAdministratif');
 	Route::get('permohonan/{uid_permohonan}/identitas-badan-usaha', 'PermohonanController@getIdentitasBadanUsaha');
 	Route::get('permohonan/datatables', 'PermohonanController@datatables');
