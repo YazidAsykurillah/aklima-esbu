@@ -24,11 +24,9 @@
     <div class="card-header d-flex">
         <h4 class="card-header-title"></h4>
         <div class="toolbar ml-auto">
-            <div class="toolbar ml-auto">
             <a href="#" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#synchModal">
                 <i class="fas fa-sync"></i> Tarik Pendaftaran
             </a>
-        </div>
         </div>
     </div>
     <div class="card-body">

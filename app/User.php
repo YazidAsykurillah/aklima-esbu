@@ -15,8 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'username', 'dokumen_pendukung', 'bentuk_badan_usaha', 'nama_badan_usaha',
-        'npwp_badan_usaha', 'scan_npwp', 'is_registration_confirmed', 'is_default_password_has_changed'
+        'name', 'username', 'email', 'password', 'type', 'is_asesor', 'uid_asesor'
     ];
 
     /**
@@ -53,4 +52,10 @@ class User extends Authenticatable
         return false;
     }
     //----ENDAuthorization blocks---
+
+
+    public function asesor()
+    {
+        return $this->belongsTo('App\Asesor', 'uid_asesor', 'uid_asesor');
+    }
 }

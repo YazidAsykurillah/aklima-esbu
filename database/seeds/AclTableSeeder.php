@@ -20,6 +20,9 @@ class AclTableSeeder extends Seeder
         	['id'=>4, 'code'=>'VER', 'name'=>'Verifikator', 'label'=>'Penanggung Jawab Teknik kantor wilayah LSBU'],
         	['id'=>5, 'code'=>'AUD', 'name'=>'Auditor', 'label'=>'Tenaga Teknik kantor pusat LSBU'],
         	['id'=>6, 'code'=>'VAL', 'name'=>'Validator', 'label'=>'Penanggung Jawab Teknik kantor pusat LSBU'],
+
+            ['id'=>7, 'code'=>'DPP', 'name'=>'DPP', 'label'=>'Staff DPP'],
+            ['id'=>8, 'code'=>'DPD', 'name'=>'DPD', 'label'=>'Staff DPD'],
         ];
         DB::table('roles')->insert($roles);
 	    //ENDBlock table roles
@@ -34,16 +37,22 @@ class AclTableSeeder extends Seeder
         	['role_id'=>2, 'user_id'=>2],
 
             //Front Desks
-            ['role_id'=>3, 'user_id'=>4],
+            ['role_id'=>3, 'user_id'=>3],
 
             //Verifikators
             ['role_id'=>4, 'user_id'=>4],
 
             //Auditors
-            ['role_id'=>5, 'user_id'=>3],
+            ['role_id'=>5, 'user_id'=>5],
 
             //Validators
-            ['role_id'=>6, 'user_id'=>3],
+            ['role_id'=>6, 'user_id'=>6],
+
+            //DPP
+            ['role_id'=>7, 'user_id'=>7],
+
+            //DPD
+            ['role_id'=>8, 'user_id'=>8],
         ];
         DB::table('role_user')->insert($role_user);
         //ENDBlock table role_user

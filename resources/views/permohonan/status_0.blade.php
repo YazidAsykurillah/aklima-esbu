@@ -75,8 +75,8 @@
                 { data: 'jenis_sertifikasi', name: 'jenis_sertifikasi', orderable:false },
                 { data: 'perpanjangan_ke', name: 'perpanjangan_ke', orderable:false },
                 { data: 'nama_badan_usaha', name: 'badan_usaha.nama_badan_usaha', orderable:false },
-                { data: 'bentuk_badan_usaha', name: 'badan_usaha.bentuk_badan_usaha.nama_bentuk_badan_usaha', orderable:false },
-                { data: 'alamat_badan_usaha', name: 'badan_usaha.alamat_badan_usaha', orderable:false },
+                { data: 'nama_bentuk_badan_usaha', name: 'badan_usaha.bentuk_badan_usaha.nama_bentuk_badan_usaha', orderable:false },
+                { data: 'alamat_badan_usaha', name: 'badan_usaha.alamat_badan_usaha', orderable:false, searchable:false },
                 { data: 'jenis_usaha_uid', name: 'jenis_usaha_uid', visible:false },
                 { data: 'badan_usaha_uid', name: 'badan_usaha_uid', visible:false },
                 

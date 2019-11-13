@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Datatables;
+use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -95,14 +95,14 @@ class PermohonanController extends Controller
         }
         
 
-        return Datatables::eloquent($permohonan)
+        $data_permohonan =  Datatables::of($permohonan->get())
             ->addColumn('nama_jenis_usaha', function($permohonan){
                 return $permohonan->jenis_usaha->nama_jenis_usaha;
             })
             ->addColumn('nama_badan_usaha', function($permohonan){
                 return $permohonan->badan_usaha->nama_badan_usaha;
             })
-            ->addColumn('bentuk_badan_usaha', function($permohonan){
+            ->addColumn('nama_bentuk_badan_usaha', function($permohonan){
                 return $permohonan->badan_usaha->bentuk_badan_usaha->nama_bentuk_badan_usaha;
             })
             ->addColumn('alamat_badan_usaha', function($permohonan){
@@ -110,8 +110,12 @@ class PermohonanController extends Controller
             })
             ->editColumn('status', function($permohonan){
                 return translate_status_permohonan($permohonan->status);
-            })
-            ->make(true);
+            });
+        if ($keyword = $request->get('search')['value']) {
+            $data_permohonan->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        }
+
+        return $data_permohonan->make(true);
     }
     /**
      * Show the form for creating a new resource.

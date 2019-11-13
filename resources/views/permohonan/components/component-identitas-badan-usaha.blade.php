@@ -4,15 +4,18 @@
             <div class="card-header d-flex">
                 <h4 class="card-header-title">Identitas Badan Usaha</h4>
                 <div class="toolbar ml-auto">
+                    <!--Show document action if only status is Frontdesk (1) -->
+                    @if($permohonan->status == '1')
                     <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#addIBUModal">
                         <i class="fas fa-plus-circle"></i> Tambah
                     </a>
-                    <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#editIBUModal">
+                    <!-- <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#editIBUModal">
                         <i class="fas fa-edit"></i> Edit
                     </a>
                     <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#pullIBUModal">
                         <i class="fas fa-sync"></i> Tarik
-                    </a>
+                    </a> -->
+                    @endif
                 </div>
             </div>
             <div class="card-body">

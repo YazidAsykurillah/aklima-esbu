@@ -4,9 +4,12 @@
             <div class="card-header d-flex">
                 <h4 class="card-header-title">Persyaratan Administratif</h4>
                 <div class="toolbar ml-auto">
-                   <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#addPAModal">
+                    <!--Show document action if only status is Frontdesk (1) -->
+                    @if($permohonan->status == '1')
+                    <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#addPAModal">
                         <i class="fas fa-plus-circle"></i> Tambah
                     </a>
+                    @endif
                 </div>
             </div>
             <div class="card-body">

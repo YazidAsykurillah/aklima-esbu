@@ -111,38 +111,62 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
+                <!--
+                    Urutan Status
+                    Frontdesk->Verifikator->Auditor->Validator->DJK (Evaluator, Top Approval, ...dst)
+                !-->
                 @if($permohonan->status == '0')
-                    <a href="#" class="btn btn-primary btn-sm btn-block btn-change-status" data-next-status="1">
-                        Frontdesk
+                    <a href="#" class="btn btn-primary btn-sm btn-change-status" data-next-status="1">
+                        Kirim ke Frontdesk
                     </a>
                 @elseif($permohonan->status == '1')
-                    <a href="#" class="btn btn-primary btn-sm btn-block btn-change-status" data-next-status="2">
-                        Dokumen Lengkap dan Proses Upload
-                    </a>
-                @elseif($permohonan->status == '2')
-                    <a href="#" class="btn btn-primary btn-sm btn-block btn-change-status" data-next-status="4">
-                        Verifikator
+                    <a href="#" class="btn btn-primary btn-sm btn-change-status" data-next-status="4">
+                        Kirim Ke Verifikator
                     </a>
                 @elseif($permohonan->status == '4')
-                    <a href="#" class="btn btn-primary btn-sm btn-block btn-change-status" data-next-status="5">
-                        Auditor
+                    <a href="#" class="btn btn-primary btn-sm btn-change-status" data-next-status="5">
+                        Approve By Verifikator
+                    </a>
+                    <a href="#" class="btn btn-danger btn-sm btn-retur" data-next-status="1">
+                        Reject By Verifikator
                     </a>
                 @elseif($permohonan->status == '5')
-                    <a href="#" class="btn btn-primary btn-sm btn-block btn-change-status" data-next-status="6">
-                        Validator
+                    <a href="#" class="btn btn-primary btn-sm btn-change-status" data-next-status="6">
+                        Approve by Auditor
+                    </a>
+                    <a href="#" class="btn btn-danger btn-sm btn-retur" data-next-status="1">
+                        Reject By Auditor
                     </a>
                 @elseif($permohonan->status == '6')
-                    <a href="#" class="btn btn-primary btn-sm btn-block btn-change-status" data-next-status="7">
-                        Evaluator
+                    <a href="#" class="btn btn-primary btn-sm btn-change-status" data-next-status="7">
+                        Approve By Validator
+                    </a>
+                    <a href="#" class="btn btn-danger btn-sm btn-retur" data-next-status="1">
+                        Reject By Validator
                     </a>
                 @else
-                    Undefined
+                    {{ translate_status_permohonan($permohonan->status) }}
                 @endif
             </div>
         </div>
     </div>
 </div>
 <!--ENDRow Change Next Status-->
+
+<!--Log status permohonan-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-header-title">
+                    <i class="fa fa-clock"></i> Log Perubahan Status
+                </h5>
+            </div>
+            <div class="card-body">
+            </div>
+        </div>
+    </div>
+</div>
 
 <!--Modal Change Status-->
 <div class="modal fade" id="changeStatusModal" tabindex="-1" role="dialog" aria-labelledby="changeStatusModalLabel" aria-hidden="true">
@@ -502,7 +526,8 @@
             event.preventDefault();
             var permohonan_next_status = $(this).attr('data-next-status');
             var text_next_status = $(this).text();
-            $('#change_status_confirmation_text').html("Ubah status permohonan ke "+text_next_status);
+            $('#change_status_confirmation_text').html(text_next_status);
+            $('#changeStatusModalLabel').html(text_next_status);
             $('#permohonan_next_status').val(permohonan_next_status);
             $('#changeStatusModal').modal('show');
 

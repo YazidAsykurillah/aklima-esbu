@@ -34,11 +34,11 @@
                                         <span class=""></span>Front Desk
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                <!-- <li class="nav-item">
                                      <a class="nav-link {{{ (Request::query('status') == '2' ? 'active' : '') }}}"  href="{{ url('permohonan/?status=2') }}">
                                         <span class=""></span>Dokumen lengkap dan proses upload
                                     </a>
-                                </li>
+                                </li> -->
                                 <li class="nav-item">
                                      <a class="nav-link {{{ (Request::query('status') == '4' ? 'active' : '') }}}" href="{{ url('permohonan/?status=4') }}">
                                         <span class=""></span>Verifikator
@@ -176,6 +176,11 @@
                         </div>
                     </li>
                     @endif
+                    <li class="nav-item">
+                        <a class="nav-link {{{ (Request::is('user') ? 'active' : '') }}}" href="{{ url('user')}}">
+                            <i class="fa fa-fw fa-users"></i> User
+                        </a>
+                    </li>
                     
                 </ul>
             </div>

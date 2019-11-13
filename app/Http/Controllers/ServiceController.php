@@ -108,7 +108,7 @@ class ServiceController extends Controller
             Permohonan::truncate();
             factory(Permohonan::class, 50)->create();
             $ajaxResponse['response'] = '1';
-            $ajaxResponse['message'] = "Dummy insert succeed";
+            $ajaxResponse['message'] = "Permohonan berhasil ditarik [d]";
             return $ajaxResponse;
         } catch (Exception $e) {
             return $e;

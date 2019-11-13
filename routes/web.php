@@ -22,6 +22,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function(){
 
+	//User Controller
+	Route::get('user/datatables', 'UserController@datatables');
+	Route::resource('user', 'UserController');
+
 	//Bentuk Badan Usaha controller resource
 	Route::post('bentuk-badan-usaha/synchronize', 'BentukBadanUsahaController@synchronize');
 	Route::get('bentuk-badan-usaha/datatables','BentukBadanUsahaController@datatables');
