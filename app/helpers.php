@@ -60,4 +60,41 @@
 			return $result;
 		}
 	}
+
+	if(!function_exists('translate_log_from_to')){
+		function translate_log_from_to($from_to){
+			$result = "";
+			switch ($from_to) {
+				case '0-1':
+					$result = "Dikirim ke Frontdesk";
+					break;
+				case '1-4':
+					$result = "Approved by Frontdesk";
+					break;
+				case '4-5':
+					$result = "Approved by Verifikator";
+					break;
+				case '4-1':
+					$result = "Rejected by Verifikator";
+					break;
+				case '5-6':
+					$result = "Approved by Auditor";
+					break;
+				case '5-1':
+					$result = "Rejected by Auditor";
+					break;
+				case '6-7':
+					$result = "Approved by Validator";
+					break;
+				case '6-1':
+					$result = "Rejected by Validator";
+					break;
+
+				default:
+					# code...
+					break;
+			}
+			return $result;
+		}
+	}
 ?>

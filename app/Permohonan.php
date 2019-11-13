@@ -36,4 +36,9 @@ class Permohonan extends Model
     {
         return $this->hasOne('App\PersyaratanAdministratif', 'uid_permohonan');
     }
+
+    public function log_permohonan()
+    {
+        return $this->hasMany('App\LogPermohonan', 'uid_permohonan');
+    }
 }

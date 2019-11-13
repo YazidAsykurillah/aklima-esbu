@@ -116,34 +116,44 @@
                     Frontdesk->Verifikator->Auditor->Validator->DJK (Evaluator, Top Approval, ...dst)
                 !-->
                 @if($permohonan->status == '0')
-                    <a href="#" class="btn btn-primary btn-sm btn-change-status" data-next-status="1">
-                        Kirim ke Frontdesk
-                    </a>
+                    @if(\Auth::user()->can('view-permohonan-0'))
+                        <a href="#" class="btn btn-primary btn-sm btn-change-status" data-next-status="1">
+                            Kirim ke Frontdesk
+                        </a>
+                    @endif
                 @elseif($permohonan->status == '1')
-                    <a href="#" class="btn btn-primary btn-sm btn-change-status" data-next-status="4">
-                        Kirim Ke Verifikator
-                    </a>
+                    @if(\Auth::user()->can('view-permohonan-1'))
+                        <a href="#" class="btn btn-primary btn-sm btn-change-status" data-next-status="4">
+                            Kirim Ke Verifikator
+                        </a>
+                    @endif
                 @elseif($permohonan->status == '4')
-                    <a href="#" class="btn btn-primary btn-sm btn-change-status" data-next-status="5">
-                        Approve By Verifikator
-                    </a>
-                    <a href="#" class="btn btn-danger btn-sm btn-retur" data-next-status="1">
-                        Reject By Verifikator
-                    </a>
+                    @if(\Auth::user()->can('view-permohonan-4'))
+                        <a href="#" class="btn btn-primary btn-sm btn-change-status" data-next-status="5">
+                            Approve By Verifikator
+                        </a>
+                        <a href="#" class="btn btn-danger btn-sm btn-change-status" data-next-status="1">
+                            Reject By Verifikator
+                        </a>
+                    @endif
                 @elseif($permohonan->status == '5')
-                    <a href="#" class="btn btn-primary btn-sm btn-change-status" data-next-status="6">
-                        Approve by Auditor
-                    </a>
-                    <a href="#" class="btn btn-danger btn-sm btn-retur" data-next-status="1">
-                        Reject By Auditor
-                    </a>
+                    @if(\Auth::user()->can('view-permohonan-5'))
+                        <a href="#" class="btn btn-primary btn-sm btn-change-status" data-next-status="6">
+                            Approve by Auditor
+                        </a>
+                        <a href="#" class="btn btn-danger btn-sm btn-change-status" data-next-status="1">
+                            Reject By Auditor
+                        </a>
+                    @endif
                 @elseif($permohonan->status == '6')
-                    <a href="#" class="btn btn-primary btn-sm btn-change-status" data-next-status="7">
-                        Approve By Validator
-                    </a>
-                    <a href="#" class="btn btn-danger btn-sm btn-retur" data-next-status="1">
-                        Reject By Validator
-                    </a>
+                    @if(\Auth::user()->can('view-permohonan-6'))
+                        <a href="#" class="btn btn-primary btn-sm btn-change-status" data-next-status="7">
+                            Approve By Validator
+                        </a>
+                        <a href="#" class="btn btn-danger btn-sm btn-change-status" data-next-status="1">
+                            Reject By Validator
+                        </a>
+                    @endif
                 @else
                     {{ translate_status_permohonan($permohonan->status) }}
                 @endif
@@ -163,6 +173,32 @@
                 </h5>
             </div>
             <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Mode</th>
+                            <th>Remarks</th>
+                            <th>Description</th>
+                            <th>Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if($permohonan->log_permohonan)
+                            @foreach($log_permohonan as $log)
+                            <tr>
+                                <td>{{ $log->from_to }}</td>
+                                <td>{{ translate_log_from_to($log->from_to) }}</td>
+                                <td>{{ $log->description }}</td>
+                                <td>{{ $log->created_at }}</td>
+                            </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="3">Tidak ada log</td>
+                            </tr>
+                        @endif
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -182,6 +218,11 @@
                 </div>
                 <div class="modal-body">
                     <p id="change_status_confirmation_text"></p>
+                    <div class="form-group">
+                        <label for="log_description" class="col-form-label">Description</label>
+                        <textarea name="log_description" id="log_description" class="form-control"></textarea>
+                    </div>
+                    <input type="hidden" name="permohonan_original_status" id="permohonan_original_status" value="{{ $permohonan->status }}" />
                     <input type="hidden" name="permohonan_next_status" id="permohonan_next_status" />
                     <input type="hidden" name="permohonan_id_to_change" id="permohonan_id_to_change" value="{{ $permohonan->uid_permohonan }}" />
                 </div>

@@ -69,6 +69,20 @@ class AclTableSeeder extends Seeder
             //Access Application Service
             [ 'id'=>3 ,'slug'=>'access-service', 'description'=>'View Service Menu'],
 
+            //Access Permohonan
+            [ 'id'=>4 ,'slug'=>'view-permohonan', 'description'=>'View Permohonan'],
+            [ 'id'=>5 ,'slug'=>'view-permohonan-all', 'description'=>'View Permohonan All'],
+            [ 'id'=>6 ,'slug'=>'view-permohonan-0', 'description'=>'View Permohonan Status Menunggu Permohonan'],
+            [ 'id'=>7 ,'slug'=>'view-permohonan-1', 'description'=>'View Permohonan Status Front Desk'],
+            [ 'id'=>8 ,'slug'=>'view-permohonan-4', 'description'=>'View Permohonan Status Verifikator'],
+            [ 'id'=>9 ,'slug'=>'view-permohonan-5', 'description'=>'View Permohonan Status Auditor'],
+            [ 'id'=>10 ,'slug'=>'view-permohonan-6', 'description'=>'View Permohonan Status Validator'],
+            [ 'id'=>11 ,'slug'=>'view-permohonan-7', 'description'=>'View Permohonan Status Evaluator'],
+            [ 'id'=>12 ,'slug'=>'view-permohonan-10', 'description'=>'View Permohonan Status Top Approval'],
+            [ 'id'=>13 ,'slug'=>'view-permohonan-11', 'description'=>'View Permohonan Status SBU Sudah diregistrasi'],
+            [ 'id'=>14 ,'slug'=>'view-permohonan-12', 'description'=>'View Permohonan Status SBU sudah dicetak'],
+            [ 'id'=>15 ,'slug'=>'view-permohonan-14', 'description'=>'View Permohonan Status SBU Sudah diterima Pemohon'],
+
         ];
         DB::table('permissions')->insert($permissions);
         //ENDBlock table permissions
@@ -78,6 +92,53 @@ class AclTableSeeder extends Seeder
         $permission_role = [
         	//Administrator privilleges
         	['permission_id'=>1, 'role_id'=>2],
+
+            //Front Desk
+            ['permission_id'=>4, 'role_id'=>3],
+            ['permission_id'=>7, 'role_id'=>3],
+
+            //Verifikator
+            ['permission_id'=>4, 'role_id'=>4],
+            ['permission_id'=>8, 'role_id'=>4],
+
+            //Auditor
+            ['permission_id'=>4, 'role_id'=>5],
+            ['permission_id'=>9, 'role_id'=>5],
+
+            //Validator
+            ['permission_id'=>4, 'role_id'=>6],
+            ['permission_id'=>10, 'role_id'=>6],
+
+            //DPP
+            ['permission_id'=>1, 'role_id'=>7],
+            ['permission_id'=>2, 'role_id'=>7],
+            ['permission_id'=>3, 'role_id'=>7],
+            ['permission_id'=>4, 'role_id'=>7],
+            ['permission_id'=>5, 'role_id'=>7],
+            ['permission_id'=>6, 'role_id'=>7],
+            ['permission_id'=>7, 'role_id'=>7],
+            ['permission_id'=>8, 'role_id'=>7],
+            ['permission_id'=>9, 'role_id'=>7],
+            ['permission_id'=>10, 'role_id'=>7],
+            ['permission_id'=>11, 'role_id'=>7],
+            ['permission_id'=>12, 'role_id'=>7],
+            ['permission_id'=>13, 'role_id'=>7],
+            ['permission_id'=>14, 'role_id'=>7],
+            ['permission_id'=>15, 'role_id'=>7],
+
+            //DPD
+            ['permission_id'=>4, 'role_id'=>8],
+            ['permission_id'=>5, 'role_id'=>8],
+            ['permission_id'=>6, 'role_id'=>8],
+            ['permission_id'=>7, 'role_id'=>8],
+            ['permission_id'=>8, 'role_id'=>8],
+            ['permission_id'=>9, 'role_id'=>8],
+            ['permission_id'=>10, 'role_id'=>8],
+            ['permission_id'=>11, 'role_id'=>8],
+            ['permission_id'=>12, 'role_id'=>8],
+            ['permission_id'=>13, 'role_id'=>8],
+            ['permission_id'=>14, 'role_id'=>8],
+            ['permission_id'=>15, 'role_id'=>8],
         ];
         DB::table('permission_role')->insert($permission_role);
         //ENDBlock table permission_role

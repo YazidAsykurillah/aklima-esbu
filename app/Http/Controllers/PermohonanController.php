@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use App\Permohonan;
+use App\LogPermohonan;
 
 class PermohonanController extends Controller
 {
@@ -147,8 +148,10 @@ class PermohonanController extends Controller
     public function show($uid_permohonan)
     {
         $permohonan = Permohonan::findOrFail($uid_permohonan);
+        $log_permohonan = $permohonan->log_permohonan;
         return view('permohonan.show')
-            ->with('permohonan', $permohonan);
+            ->with('permohonan', $permohonan)
+            ->with('log_permohonan', $log_permohonan);
     }
 
     /**
@@ -199,15 +202,26 @@ class PermohonanController extends Controller
 
     public function changeStatus(Request $request)
     {
+        $original_status = $request->permohonan_original_status;
         
         $permohonan = Permohonan::findOrFail($request->permohonan_id_to_change);
         $next_status = $request->permohonan_next_status;
         $permohonan->status = $next_status;
         $permohonan->save();
+
+        $this->insertLogPermohonan($request->permohonan_id_to_change, $original_status, $request->permohonan_next_status, $request->log_description);
         return redirect()->back()
             ->with('successMessage', "Status permohonan berhasil diubah");
     }
 
+    protected function insertLogPermohonan($uid_permohonan, $original_status, $next_status, $description=NULL)
+    {
+        $logPermohonan = new LogPermohonan;
+        $logPermohonan->uid_permohonan = $uid_permohonan;
+        $logPermohonan->from_to = $original_status.'-'.$next_status;
+        $logPermohonan->description = $description;
+        $logPermohonan->save();
+    }
 
     public function printCertificate(Request $request, $uid_permohonan)
     {
