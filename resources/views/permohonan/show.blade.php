@@ -408,7 +408,11 @@
                 success: function (response) {
                     // console.log(response);
                     $('#ibu_holder_uid_verifikasi_ibu').html(response.uid_verifikasi_ibu);
-                    $('#ibu_holder_file_surat_permohonan_sbu').html(response.file_surat_permohonan_sbu);
+                    $('#ibu_holder_file_surat_permohonan_sbu').html(
+                        '<a href="'+response.file_surat_permohonan_sbu+'">'
+                            +response.file_surat_permohonan_sbu+
+                        '</a>'
+                    );
                     $('#ibu_holder_nomor_surat').html(response.nomor_surat);
                     $('#ibu_holder_perihal').html(response.perihal);
                     $('#ibu_holder_tanggal_surat').html(response.tanggal_surat);

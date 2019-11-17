@@ -6,15 +6,16 @@
                 <div class="toolbar ml-auto">
                     <!--Show document action if only status is Frontdesk (1) -->
                     @if($permohonan->status == '1')
+                    <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#pullIBUModal">
+                        <i class="fas fa-sync"></i> Tarik
+                    </a>
                     <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#addIBUModal">
                         <i class="fas fa-plus-circle"></i> Tambah
                     </a>
                     <!-- <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#editIBUModal">
                         <i class="fas fa-edit"></i> Edit
                     </a>
-                    <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#pullIBUModal">
-                        <i class="fas fa-sync"></i> Tarik
-                    </a> -->
+                     -->
                     @endif
                 </div>
             </div>
@@ -130,7 +131,9 @@
                 <div class="modal-body">
                     @csrf
                     <div class="custom-file mb-3">
-                        <label class="custom-file-label" for="file_surat_permohonan_sbu_edit">File Surat Permohonan SBU</label>
+                        <label class="custom-file-label" for="file_surat_permohonan_sbu_edit">
+                            File Surat Permohonan SBU
+                        </label>
                         <input type="file" class="custom-file-input" id="file_surat_permohonan_sbu_edit" name="file_surat_permohonan_sbu_edit">
                     </div>
                     <div class="form-group">

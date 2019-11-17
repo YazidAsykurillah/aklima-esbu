@@ -15,6 +15,8 @@ use App\IdentitasBadanUsaha;
 
 class IdentitasBadanUsahaController extends Controller
 {
+    protected $link_file_surat_permohonan_sbu = "";
+
     protected $gatrik_api_mode;
 
     public function __construct()
@@ -115,9 +117,21 @@ class IdentitasBadanUsahaController extends Controller
         }
     }
 
+    
+    protected function upload_file_surat_permohonan_sbu($file)
+    {
+        $path = 'files/surat-permohonan-sbu';
+        $extension = $file->getClientOriginalExtension();
+        $file_name = time().'.'.$extension;
+        $file->move($path, $file_name);
+        $this->link_file_surat_permohonan_sbu = config('app.url').'/'.$path.'/'.$file_name;
+    }
+    
     protected function runStoreDummy($request)
     {
-
+        if($request->has('file_surat_permohonan_sbu')){
+            $this->upload_file_surat_permohonan_sbu($request->file_surat_permohonan_sbu);
+        }
         $permohonan = Permohonan::findOrFail($request->uid_permohonan);
     
         $ajaxResponse['response']= NULL;
@@ -128,7 +142,7 @@ class IdentitasBadanUsahaController extends Controller
             $max_uid_verifikasi_ibu = \DB::table('identitas_badan_usaha')->max('uid_verifikasi_ibu'); 
             $uid_verifikasi_ibu = $max_uid_verifikasi_ibu+1;
             $permohonan_uid  = $permohonan->uid_permohonan;
-            $file_surat_permohonan_sbu = config('app.url');
+            $file_surat_permohonan_sbu = $this->link_file_surat_permohonan_sbu;
 
             IdentitasBadanUsaha::where('permohonan_uid', '=', $permohonan_uid)->delete();
             IdentitasBadanUsaha::create(
