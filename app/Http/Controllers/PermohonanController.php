@@ -202,16 +202,60 @@ class PermohonanController extends Controller
 
     public function changeStatus(Request $request)
     {
-        $original_status = $request->permohonan_original_status;
-        
-        $permohonan = Permohonan::findOrFail($request->permohonan_id_to_change);
-        $next_status = $request->permohonan_next_status;
-        $permohonan->status = $next_status;
-        $permohonan->save();
 
-        $this->insertLogPermohonan($request->permohonan_id_to_change, $original_status, $request->permohonan_next_status, $request->log_description);
-        return redirect()->back()
-            ->with('successMessage', "Status permohonan berhasil diubah");
+        $original_status = $request->permohonan_original_status;
+        $next_status = $request->permohonan_next_status;
+        if($original_status == '0' && $next_status == '1'){
+            return $this->call_api_proses_pendaftaran($request);
+        }else{
+            $permohonan = Permohonan::findOrFail($request->permohonan_id_to_change);
+            $permohonan->status = $next_status;
+            $permohonan->save();
+
+            $this->insertLogPermohonan($request->permohonan_id_to_change, $original_status, $request->permohonan_next_status, $request->log_description);
+            return redirect()->back()
+                ->with('successMessage', "Status permohonan berhasil diubah");    
+        }
+        
+    }
+
+    protected function call_api_proses_pendaftaran($request)
+    {
+           
+        try{
+            $token = getCurrentActiveToken()['token'];
+            $original_status = $request->permohonan_original_status;
+            $next_status = $request->permohonan_next_status;
+
+            $permohonan = Permohonan::findOrFail($request->permohonan_id_to_change);
+
+            $client = new Client([
+                // Base URI is used with relative requests
+                'base_uri' => config('app.gatrik_base_uri'),
+                'verify'=>false,
+                'headers'=>[
+                    'Content-Type'=>'multipart/form-data',
+                    'Enctype'=>'multipart/form-data',
+                    'X-Lsbu-Key'=>config('app.x_lsbu_key'),
+                    'Token'=> $token
+                ],
+                'form_params' => [
+                    'uid_permohonan' => $permohonan->uid_permohonan,
+                ]
+            ]);
+            $response = $client->post('/Service/Pendaftaran/Proses');
+            
+            $permohonan->status = $next_status;
+            $permohonan->save();
+
+            $this->insertLogPermohonan($request->permohonan_id_to_change, $original_status, $request->permohonan_next_status, $request->log_description);
+            
+            return redirect()->back()
+                ->with('successMessage', "Status permohonan berhasil diubah");            
+        }
+        catch(Exception $e){
+            return $e;
+        }
     }
 
     protected function insertLogPermohonan($uid_permohonan, $original_status, $next_status, $description=NULL)

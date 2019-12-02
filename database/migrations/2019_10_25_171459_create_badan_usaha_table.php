@@ -19,9 +19,9 @@ class CreateBadanUsahaTable extends Migration
             $table->integer('bentuk_badan_usaha_uid');
             $table->string('nama_badan_usaha');
             $table->text('alamat_badan_usaha');
-            $table->bigInteger('kelurahan_uid');
-            $table->bigInteger('kecamatan_uid');
-            $table->bigInteger('kota_uid');
+            $table->bigInteger('kelurahan_uid')->nullable();
+            $table->bigInteger('kecamatan_uid')->nullable();
+            $table->bigInteger('kota_uid')->nullable();
             $table->string('no_telp_kantor')->nullable();
             $table->string('no_hp_kantor')->nullable();
             $table->string('no_fax')->nullable();
