@@ -131,7 +131,7 @@ class BadanUsahaController extends Controller
             ]
             
         ]);
-        $response = $client->post('/Service/Badan-Usaha/Tarik');
+        $response = $client->post('Service/Badan-Usaha/Tarik');
         try{
             
             $code = $response->getStatusCode(); // 200

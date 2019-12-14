@@ -127,7 +127,7 @@ class BidangController extends Controller
             ]
             
         ]);
-        $response = $client->post('/Service/Ref/Bidang');
+        $response = $client->post('Service/Ref/Bidang');
         
         try{
             

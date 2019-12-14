@@ -36,7 +36,7 @@ class ConfigurationController extends Controller
 		]);
 
 		try{
-			$response = $client->post('/Service/Auth/Tes-Koneksi-API');
+			$response = $client->post('Service/Auth/Tes-Koneksi-API');
 			$code = $response->getStatusCode(); // 200
 			$body = $response->getBody();
 			$contents = $body->getContents();
@@ -68,7 +68,7 @@ class ConfigurationController extends Controller
 		]);
 
 		try{
-			$response = $client->post('/Service/Auth/Generate-Token');
+			$response = $client->post('Service/Auth/Generate-Token');
 			$code = $response->getStatusCode(); // 200
 			$body = $response->getBody();
 			$contents = $body->getContents();

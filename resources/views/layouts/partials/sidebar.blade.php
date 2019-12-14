@@ -154,8 +154,18 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                     <a class="nav-link {{{ (Request::is('master-data/kelurahan') ? 'active' : '') }}}" href="{{ url('master-data/kelurahan') }}">
+                                    <a class="nav-link {{{ (Request::is('master-data/kelurahan') ? 'active' : '') }}}" href="{{ url('master-data/kelurahan') }}">
                                         <span class=""></span>Kelurahan
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{{ (Request::is('master-data/lsbu-wilayah') ? 'active' : '') }}}" href="{{ url('master-data/lsbu-wilayah') }}">
+                                        <span class=""></span>LSBU Wilayah
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{{ (Request::is('master-data/lingkup-pekerjaan-lsbu') ? 'active' : '') }}}" href="{{ url('master-data/lingkup-pekerjaan-lsbu') }}">
+                                        <span class=""></span>Lingkup Pekerjaan LSBU
                                     </a>
                                 </li>
                                 <li class="nav-item">

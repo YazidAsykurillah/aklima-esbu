@@ -243,7 +243,7 @@ class PermohonanController extends Controller
                     'uid_permohonan' => $permohonan->uid_permohonan,
                 ]
             ]);
-            $response = $client->post('/Service/Pendaftaran/Proses');
+            $response = $client->post('Service/Pendaftaran/Proses');
             
             $permohonan->status = $next_status;
             $permohonan->save();

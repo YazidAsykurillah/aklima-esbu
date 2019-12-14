@@ -122,7 +122,7 @@ class AsesorController extends Controller
             ]
             
         ]);
-        $response = $client->post('/Service/Ref/Asesor');
+        $response = $client->post('Service/Ref/Asesor');
         try{
             
             $code = $response->getStatusCode(); // 200

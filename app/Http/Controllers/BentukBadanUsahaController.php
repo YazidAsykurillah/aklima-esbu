@@ -127,7 +127,7 @@ class BentukBadanUsahaController extends Controller
             
         ]);
 
-        $response = $client->post('/Service/Ref/Bentuk-Badan-Usaha');
+        $response = $client->post('Service/Ref/Bentuk-Badan-Usaha');
 
         try{
             

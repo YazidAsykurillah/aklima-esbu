@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
+use Datatables;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
-use App\JenisUsaha;
+use App\LsbuWilayah;
 
-class JenisUsahaController extends Controller
+class LsbuWilayahController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,25 +19,22 @@ class JenisUsahaController extends Controller
      */
     public function index()
     {
-        //
+        return view('master-data.lsbu-wilayah');
     }
+
     //return datatables object
     public function datatables(Request $request)
     {
         \DB::statement(\DB::raw('set @rownum=0'));
-        $jenis_usaha = JenisUsaha::select([
+        $lsbu_wilayah = LsbuWilayah::select([
             \DB::raw('@rownum  := @rownum  + 1 AS rownum'),
-            'jenis_usaha.*',
-        ])->get();
+            'lsbu_wilayah.*'
+        ]);
 
-        $data_jenis_usaha = Datatables::of($jenis_usaha);
-
-        if ($keyword = $request->get('search')['value']) {
-            $data_jenis_usaha->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
-        }
-
-        return $data_jenis_usaha->make(true);
+        return Datatables::eloquent($lsbu_wilayah)
+            ->make(true);
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -125,24 +122,30 @@ class JenisUsahaController extends Controller
             ]
             
         ]);
-
-        $response = $client->post('Service/Ref/Jenis-Usaha');
-        
+        $response = $client->post('Service/Ref/LSBU-Wilayah');
         try{
             
             $code = $response->getStatusCode(); // 200
             $body = $response->getBody();
             $contents = $body->getContents();
             $decode = json_decode($contents);
-            
-            JenisUsaha::truncate();
+            //Truncate moodel model
+            LsbuWilayah::truncate();
             foreach($decode->result as $res){
-                JenisUsaha::create(
+                LsbuWilayah::create(
                     [
-                        'uid_jenis_usaha'=>$res->uid_jenis_usaha, 
-                        'kode_jenis_usaha'=>$res->kode_jenis_usaha, 
-                        'nama_jenis_usaha'=>$res->nama_jenis_usaha,
+                        'uid_lsbu'=>$res->uid_lsbu,
+                        'kode_lsbu'=>$res->kode_lsbu,
+                        'nama_lsbu'=>$res->nama_lsbu,
+                        'nama_lsbu_short'=>$res->nama_lsbu_short,
+                        'kategori_lsbu'=>$res->kategori_lsbu,
+                        'jenis_lsbu'=>$res->jenis_lsbu,
+                        'alamat'=>$res->alamat,
+                        'provinsi_uid'=>$res->provinsi_uid,
+                        'parent_lsbu_uid'=>$res->parent_lsbu_uid,
+                        'api_keys'=>$res->api_keys,
                         'is_active'=>$res->is_active,
+                        
                     ]
                 );
             }

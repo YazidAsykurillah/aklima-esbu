@@ -6,6 +6,9 @@
                 <div class="toolbar ml-auto">
                     <!--Show document action if only status is Frontdesk (1) -->
                     @if($permohonan->status == '1')
+                    <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#pullPAModal">
+                        <i class="fas fa-sync"></i> Tarik
+                    </a>
                     <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#addPAModal">
                         <i class="fas fa-plus-circle"></i> Tambah
                     </a>
@@ -464,3 +467,28 @@
     </div>
 </div>
 <!--ENDModal Tambah Persyaratan Administratif-->
+
+<!--Modal Tarik Persyaratan Administratif-->
+<div class="modal fade" id="pullPAModal" tabindex="-1" role="dialog" aria-labelledby="pullPAModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form id="form-pull-persyaratan-administratif" method="post" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pullPAModalLabel">Tarik Persyaratan Administratif</h5>
+                    <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    @csrf
+                    <p>Tarik data Persyaratan Administratif dari gatrik</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary btn-xs" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary btn-xs" id="btn-pull-ibu">Tarik</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--ENDModal Tarik Persyaratan Administratif-->

@@ -505,6 +505,56 @@
             });
         });
 
+        //Handler Pull Persyaratan Administratif
+        $('#form-pull-persyaratan-administratif').on('submit', function(event){
+            event.preventDefault();
+            var pullPAData = new FormData($(this)[0]);
+            pullPAData.append('uid_permohonan','{{ $permohonan->uid_permohonan }}');
+            $('#btn-pull-pa').prop('disabled', true).html('<i class="fas fa-hourglass"></i> Processing');
+            $.ajax({
+                method: 'POST',
+                url: '{{ url('persyaratan-administratif/pull-from-gatrik') }}', 
+                data: pullPAData,
+                processData: false,
+                contentType: false,
+                success: function(response){
+                    console.log(response);
+                    if(response.response == 1){
+                        $('#pullPAModal').modal('hide');
+                        alertify.notify(response.message, 'success', 5, function(){  console.log('dismissed'); });
+                        fetchPersyaratanAdministratif();
+                        $('#btn-pull-pa').prop('disabled', false).html('Tarik');
+                        $("#form-pull-persyaratan-administratif")[0].reset();
+                    } else{
+                        $('#pullPAModal').modal('hide');
+                        alertify.notify(response.message, 'error', 5, function(){  console.log('dismissed'); });
+                        fetchPersyaratanAdministratif();
+                        $('#btn-pull-pa').prop('disabled', false).html('Tarik');
+                        $("#form-pull-persyaratan-administratif")[0].reset();
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    let objResponse = jqXHR.responseJSON;
+                    console.log(objResponse);
+                    let message = objResponse.message;
+                    let errors = objResponse.errors;
+                    let error_template = message;
+                    console.log(message);
+                    console.log(errors);
+                        if(errors){
+                            $.each( errors, function( key, value ) {
+                                console.log(value);
+                                error_template += '<li>'+ value[0] + '</li>'; //showing only the first error.
+                            });
+                        }
+                    alertify.notify(error_template, textStatus, 10, function(){});
+                    $('#btn-pull-pa').prop('disabled', false).html('Tarik');
+
+                }
+            });
+        });
+        //ENDHandler Pull Persyaratan Administratif
+
 
         fetchPersyaratanAdministratif();
         //fetch Persyaratan Administratif

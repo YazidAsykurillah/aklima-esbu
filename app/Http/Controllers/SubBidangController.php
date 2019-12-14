@@ -136,7 +136,7 @@ class SubBidangController extends Controller
             
         ]);
 
-        $response = $client->post('/Service/Ref/Sub-Bidang');
+        $response = $client->post('Service/Ref/Sub-Bidang');
         
         try{
             

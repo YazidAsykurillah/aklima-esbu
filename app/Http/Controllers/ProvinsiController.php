@@ -128,7 +128,7 @@ class ProvinsiController extends Controller
             ]
             
         ]);
-        $response = $client->post('/Service/Ref/Provinsi');
+        $response = $client->post('Service/Ref/Provinsi');
         try{
             
             $code = $response->getStatusCode(); // 200

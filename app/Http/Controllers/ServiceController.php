@@ -48,7 +48,7 @@ class ServiceController extends Controller
             ]
             
         ]);
-        $response = $client->post('/Service/Pendaftaran/Tarik');
+        $response = $client->post('Service/Pendaftaran/Tarik');
         try{
             
             $code = $response->getStatusCode(); // 200

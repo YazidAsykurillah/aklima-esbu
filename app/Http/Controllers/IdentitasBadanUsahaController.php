@@ -84,7 +84,7 @@ class IdentitasBadanUsahaController extends Controller
                 'jabatan_penandatangan_surat'=>$request->jabatan_penandatangan_surat,
             ]
         ]);
-        $response = $client->post('/Service/Permohonan/Identitas-Badan-Usaha/Tarik');
+        $response = $client->post('Service/Permohonan/Identitas-Badan-Usaha/Tambah');
         try{
             
             $code = $response->getStatusCode(); // 200
@@ -240,7 +240,7 @@ class IdentitasBadanUsahaController extends Controller
                     'uid_permohonan' => $permohonan->uid_permohonan,
                 ]
             ]);
-            $response = $client->post('/Service/Permohonan/Identitas-Badan-Usaha/Tarik');
+            $response = $client->post('Service/Permohonan/Identitas-Badan-Usaha/Tarik');
             $code = $response->getStatusCode(); // 200
             $body = $response->getBody();
             $contents = $body->getContents();
@@ -351,7 +351,7 @@ class IdentitasBadanUsahaController extends Controller
                     'jabatan_penandatangan_surat'=>$request->jabatan_penandatangan_surat_edit,
                 ]
             ]);
-            $response = $client->post('/Service/Permohonan/Identitas-Badan-Usaha/Ubah');
+            $response = $client->post('Service/Permohonan/Identitas-Badan-Usaha/Ubah');
             $code = $response->getStatusCode(); // 200
             $body = $response->getBody();
             $contents = $body->getContents();

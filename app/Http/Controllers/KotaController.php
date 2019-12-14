@@ -134,7 +134,7 @@ class KotaController extends Controller
             ]
             
         ]);
-        $response = $client->post('/Service/Ref/Kota');
+        $response = $client->post('Service/Ref/Kota');
         try{
             
             $code = $response->getStatusCode(); // 200

@@ -131,7 +131,7 @@ class KecamatanController extends Controller
             ]
             
         ]);
-        $response = $client->post('/Service/Ref/Kecamatan');
+        $response = $client->post('Service/Ref/Kecamatan');
         try{
             
             $code = $response->getStatusCode(); // 200

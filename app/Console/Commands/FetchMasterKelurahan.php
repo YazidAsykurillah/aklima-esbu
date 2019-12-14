@@ -61,7 +61,7 @@ class FetchMasterKelurahan extends Command
             ]
             
         ]);
-        $response = $client->post('/Service/Ref/Kelurahan');
+        $response = $client->post('Service/Ref/Kelurahan');
         try{
             
             $code = $response->getStatusCode(); // 200

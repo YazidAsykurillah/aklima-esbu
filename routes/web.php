@@ -71,6 +71,18 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('kelurahan/datatables', 'KelurahanController@datatables');
 	Route::resource('kelurahan', 'KelurahanController');
 
+	//LSBU Wilayah
+	Route::post('lsbu-wilayah/synchronize', 'LsbuWilayahController@synchronize');
+	Route::get('lsbu-wilayah/datatables', 'LsbuWilayahController@datatables');
+	Route::get('master-data/lsbu-wilayah', 'LsbuWilayahController@index');
+	Route::resource('lsbu-wilayah', 'LsbuWilayahController');
+
+	//LingkupPekerjaanLsbu
+	Route::post('lingkup-pekerjaan-lsbu/synchronize', 'LingkupPekerjaanLsbuController@synchronize');
+	Route::get('lingkup-pekerjaan-lsbu/datatables', 'LingkupPekerjaanLsbuController@datatables');
+	Route::get('master-data/lingkup-pekerjaan-lsbu', 'LingkupPekerjaanLsbuController@index');
+	Route::resource('lingkup-pekerjaan-lsbu', 'LingkupPekerjaanLsbuController');
+
 	//Asesor
 	Route::post('asesor/synchronize', 'AsesorController@synchronize');
 	Route::get('asesor/datatables', 'AsesorController@datatables');
@@ -112,6 +124,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::resource('identitas-badan-usaha', 'IdentitasBadanUsahaController');
 
 	//Persyaratan Administratif
+	Route::post('persyaratan-administratif/pull-from-gatrik', 'PersyaratanAdministratifController@pullFromGatrik');
 	Route::resource('persyaratan-administratif', 'PersyaratanAdministratifController');
 
 
