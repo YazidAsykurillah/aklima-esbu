@@ -12,4 +12,9 @@ class LsbuWilayah extends Model
     	'alamat', 'provinsi_uid', 'parent_lsbu_uid', 'api_keys', 'is_active'
     ];
     protected $primaryKey = 'uid_lsbu';
+
+    public function provinsi()
+    {
+    	return $this->belongsTo('App\Provinsi', 'provinsi_uid', 'uid_provinsi');
+    }
 }

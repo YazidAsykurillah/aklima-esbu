@@ -68,9 +68,11 @@
                             <td style="">{{ $permohonan->badan_usaha->bentuk_badan_usaha->nama_bentuk_badan_usaha }}</td>
                         </tr>
                         <tr>
-                            <td style="width: 30%;">Bentuk Badan Usaha</td>
+                            <td style="width: 30%;">Alamat</td>
                             <td style="width: 5%;">:</td>
-                            <td style="">{{ $permohonan->badan_usaha->alamat_badan_usaha }}</td>
+                            <td style="">
+                                {!! $permohonan->badan_usaha->full_address !!}
+                            </td>
                         </tr>
                         <tr>
                             <td style="width: 30%;">Status</td>

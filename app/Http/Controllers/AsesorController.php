@@ -9,6 +9,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
 use App\Asesor;
+use App\User;
 
 class AsesorController extends Controller
 {
@@ -143,6 +144,30 @@ class AsesorController extends Controller
                         'is_active'=>$res->is_active,
                     ]
                 );
+
+                //Update or create user
+                $user = User::updateOrCreate(
+                    ['email'=>$res->email],
+                    [
+
+                        'name'=>$res->nama_asesor,
+                        'username'=>$res->email,
+                        'email'=>$res->email,
+                        'password'=>bcrypt('12345678'),
+                        'type'=>'internal',
+                        'is_asesor'=>TRUE,
+                        'uid_asesor'=>$res->uid_asesor
+                    ]
+                );
+                \DB::table('role_user')->where('user_id', '=', $user->id)->delete();
+                $role_user = [
+                    ['role_id'=>3, 'user_id'=>$user->id],
+                    ['role_id'=>4, 'user_id'=>$user->id],
+                    ['role_id'=>5, 'user_id'=>$user->id],
+                    ['role_id'=>6, 'user_id'=>$user->id],
+                ];
+                \DB::table('role_user')->insert($role_user);
+                
             }
 
             $ajaxResponse['response'] = $decode->response;

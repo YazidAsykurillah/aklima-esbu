@@ -54,10 +54,10 @@
 					$result = "SBU Sudah diterima pemohon";
 					break;
 				default:
-					$result = $status;
+					$result = ucwords($status);
 					break;
 			}
-			return $result;
+			return ucwords($result);
 		}
 	}
 

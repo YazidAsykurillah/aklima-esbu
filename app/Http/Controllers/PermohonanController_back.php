@@ -10,7 +10,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use App\Permohonan;
 use App\LogPermohonan;
 
-class PermohonanController extends Controller
+class PermohonanController_back extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,8 +22,57 @@ class PermohonanController extends Controller
         
         if($request->has('status')){
             $status = $request->status;
-            return view('permohonan.index')
-                ->with('status', $status);
+            if($status == "all"){
+                return view('permohonan.status_all')
+                    ->with('status', $status);
+            }
+            elseif($status == 0){
+                return view('permohonan.status_0')
+                    ->with('status', $status);
+            }
+            elseif($status == 1){
+                return view('permohonan.status_1')
+                    ->with('status', $status);
+            }
+            elseif($status == 2){
+                return view('permohonan.status_2')
+                    ->with('status', $status);
+            }
+            elseif($status == 4){
+                return view('permohonan.status_4')
+                    ->with('status', $status);
+            }
+            elseif($status == 5){
+                return view('permohonan.status_5')
+                    ->with('status', $status);
+            }
+            elseif($status == 6){
+                return view('permohonan.status_6')
+                    ->with('status', $status);
+            }
+            elseif($status == 7){
+                return view('permohonan.status_7')
+                    ->with('status', $status);
+            }
+            elseif($status == 10){
+                return view('permohonan.status_10')
+                    ->with('status', $status);
+            }
+            elseif($status == 11){
+                return view('permohonan.status_11')
+                    ->with('status', $status);
+            }
+            elseif($status == 12){
+                return view('permohonan.status_12')
+                    ->with('status', $status);
+            }
+            elseif($status == 14){
+                return view('permohonan.status_14')
+                    ->with('status', $status);
+            }
+            else{
+                return $status;
+            }
         }else{
             return 'missing status';
         }
@@ -52,12 +101,10 @@ class PermohonanController extends Controller
                 return $permohonan->jenis_usaha->nama_jenis_usaha;
             })
             ->addColumn('nama_badan_usaha', function($permohonan){
-                $disp = '';
-                $disp.= $permohonan->badan_usaha->nama_badan_usaha.'&nbsp;';
-                $disp.= '('.$permohonan->badan_usaha->bentuk_badan_usaha->nama_singkat.')';
-                $disp.= '<br/>';
-                $disp.= $permohonan->badan_usaha->kota->provinsi->nama_provinsi;
-                return $disp;
+                return $permohonan->badan_usaha->nama_badan_usaha;
+            })
+            ->addColumn('nama_bentuk_badan_usaha', function($permohonan){
+                return $permohonan->badan_usaha->bentuk_badan_usaha->nama_bentuk_badan_usaha;
             })
             ->addColumn('alamat_badan_usaha', function($permohonan){
                 return $permohonan->badan_usaha->alamat_badan_usaha;

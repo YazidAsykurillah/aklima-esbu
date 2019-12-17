@@ -56,6 +56,6 @@ class User extends Authenticatable
 
     public function asesor()
     {
-        return $this->belongsTo('App\Asesor', 'uid_asesor', 'uid_asesor');
+        return $this->hasOne('App\Asesor', 'uid_asesor', 'uid_asesor');
     }
 }

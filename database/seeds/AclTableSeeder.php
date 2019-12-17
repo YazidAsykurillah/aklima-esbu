@@ -83,6 +83,11 @@ class AclTableSeeder extends Seeder
             [ 'id'=>14 ,'slug'=>'view-permohonan-12', 'description'=>'View Permohonan Status SBU sudah dicetak'],
             [ 'id'=>15 ,'slug'=>'view-permohonan-14', 'description'=>'View Permohonan Status SBU Sudah diterima Pemohon'],
 
+            //View User
+            [ 'id'=>16 ,'slug'=>'view-user', 'description'=>'View User'],
+
+
+
         ];
         DB::table('permissions')->insert($permissions);
         //ENDBlock table permissions

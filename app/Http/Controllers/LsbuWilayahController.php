@@ -26,7 +26,7 @@ class LsbuWilayahController extends Controller
     public function datatables(Request $request)
     {
         \DB::statement(\DB::raw('set @rownum=0'));
-        $lsbu_wilayah = LsbuWilayah::select([
+        $lsbu_wilayah = LsbuWilayah::with(['provinsi'])->select([
             \DB::raw('@rownum  := @rownum  + 1 AS rownum'),
             'lsbu_wilayah.*'
         ]);

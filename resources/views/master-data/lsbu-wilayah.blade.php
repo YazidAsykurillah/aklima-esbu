@@ -35,16 +35,16 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">uid_lsbu</th>
-                        <th scope="col">kode_lsbu</th>
-                        <th scope="col">nama_lsbu</th>
-                        <th scope="col">nama_lsbu_short</th>
-                        <th scope="col">kategori_lsbu</th>
-                        <th scope="col">jenis_lsbu</th>
-                        <th scope="col">alamat</th>
-                        <th scope="col">provinsi_uid</th>
-                        <th scope="col">parent_lsbu_uid</th>
-                        <th scope="col">api_keys</th>
+                        <th scope="col">UID LSBU</th>
+                        <th scope="col">Kode SBU</th>
+                        <th scope="col">Nama LSBU</th>
+                        <th scope="col">Nama LSBU Short</th>
+                        <th scope="col">Kategori LSBU</th>
+                        <th scope="col">Jenis Lsbu</th>
+                        <th scope="col">Alamat</th>
+                        <th scope="col">Provinsi</th>
+                        <th scope="col">Parent Lsbu UID</th>
+                        <th scope="col">Api keys</th>
                         <th scope="col">is_active</th>
                     </tr>
                 </thead>
@@ -93,7 +93,9 @@
                 { data: 'kategori_lsbu', name: 'kategori_lsbu'},
                 { data: 'jenis_lsbu', name: 'jenis_lsbu'},
                 { data: 'alamat', name: 'alamat'},
-                { data: 'provinsi_uid', name: 'provinsi_uid'},
+                { data: 'provinsi_uid', name: 'provinsi.nama_provinsi', render:function(data, type, row, meta){
+                    return row.provinsi.nama_provinsi;
+                }},
                 { data: 'parent_lsbu_uid', name: 'parent_lsbu_uid'},
                 { data: 'api_keys', name: 'api_keys'},
                 { data: 'is_active', name: 'is_active'},

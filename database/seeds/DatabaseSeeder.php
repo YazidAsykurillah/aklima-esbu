@@ -13,11 +13,11 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UsersTableSeeder::class);
         $this->call(AclTableSeeder::class);
-        $this->call(BentukBadanUsahasTableSeeder::class);
-        $this->call(JenisUsahaTableSeeder::class);
-        $this->call(BidangTableSeeder::class);
-        $this->call(SubBidangTableSeeder::class);
-        $this->call(MatriksKualifikasiTableSeeder::class);
-        $this->call(ProvinsiTableSeeder::class);
+        //$this->call(BentukBadanUsahasTableSeeder::class);
+        //$this->call(JenisUsahaTableSeeder::class);
+        //$this->call(BidangTableSeeder::class);
+        //$this->call(SubBidangTableSeeder::class);
+        //$this->call(MatriksKualifikasiTableSeeder::class);
+        //$this->call(ProvinsiTableSeeder::class);
     }
 }

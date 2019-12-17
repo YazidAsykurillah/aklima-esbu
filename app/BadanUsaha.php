@@ -15,6 +15,8 @@ class BadanUsaha extends Model
     	'passport', 'no_telepon_penanggung_jawab', 'email_perusahaan'
     ];
 
+    protected $append = ['full_address'];
+
     //Relation with BentukBadanUsaha
     public function bentuk_badan_usaha()
     {
@@ -39,4 +41,14 @@ class BadanUsaha extends Model
     	return $this->belongsTo('App\Kota', 'kota_uid', 'uid_kota')->withDefault();
     }
 
+
+    public function getFullAddressAttribute()
+    {
+        $full_address="";
+        $full_address.=$this->alamat_badan_usaha.'<br/>';
+        $full_address.='Kecamatan '.$this->kecamatan->nama.',&nbsp;';
+        $full_address.=$this->kota->nama_kota.',';
+        $full_address.='Provinsi '.$this->kota->provinsi->nama_provinsi;
+        return $full_address;
+    }
 }
