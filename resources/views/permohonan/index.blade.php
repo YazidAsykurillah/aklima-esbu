@@ -65,9 +65,9 @@
                         <label for="log_description" class="col-form-label">Description</label>
                         <textarea name="log_description" id="log_description" class="form-control"></textarea>
                     </div>
-                    <input type="text" name="permohonan_original_status" id="permohonan_original_status" />
-                    <input type="text" name="permohonan_next_status" id="permohonan_next_status" />
-                    <input type="text" name="permohonan_id_to_change" id="permohonan_id_to_change" />
+                    <input type="hidden" name="permohonan_original_status" id="permohonan_original_status" />
+                    <input type="hidden" name="permohonan_next_status" id="permohonan_next_status" />
+                    <input type="hidden" name="permohonan_id_to_change" id="permohonan_id_to_change" />
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary btn-xs" data-dismiss="modal">Batal</button>
