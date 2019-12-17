@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('page_title')
-    Permohonan :: All
+    Permohonan :: {{ translate_status_permohonan($status) }}
 @endsection
 
 @section('page_header_title')
-<h2 class="pageheader-title">Permohonan : All</h2>
+<h2 class="pageheader-title">Permohonan : {{ translate_status_permohonan($status) }}</h2>
 @endsection
 
 @section('page_breadcrumb')
@@ -13,7 +13,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('home') }}" class="breadcrumb-link">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Permohonan All</li>
+            <li class="breadcrumb-item active" aria-current="page">Permohonan {{ translate_status_permohonan($status) }}</li>
         </ol>
     </nav>
 </div>
@@ -22,7 +22,7 @@
 @section('content')
 <div class="card">
     <div class="card-header d-flex">
-        <h4 class="card-header-title">All</h4>
+        <h4 class="card-header-title">Daftar Semua Permohonan</h4>
         <div class="toolbar ml-auto">
            
         </div>
@@ -33,13 +33,11 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">UID Permohonan</th>
+                        <th scope="col">Detail</th>
+                        <th scope="col">Nama Badan Usaha</th>
                         <th scope="col">Jenis Usaha</th>
                         <th scope="col">Jenis Sertifikasi</th>
                         <th scope="col">Perpanjangan Ke</th>
-                        <th scope="col">Nama Badan Usaha</th>
-                        <th scope="col">Bentuk Badan Usaha</th>
-                        <th scope="col">Alamat Badan Usaha</th>
                         <th scope="col">Status</th>
                     </tr>
                 </thead>
@@ -65,20 +63,18 @@
             },
             columns :[
                 {data: 'rownum', name: 'rownum', searchable:false},
-                { data: 'uid_permohonan', name: 'uid_permohonan', render:function(data, type, row, meta){
+                { data: 'uid_permohonan', name: 'uid_permohonan', orderable:false, searchable:false, render:function(data, type, row, meta){
                     var link = '';
                         link+= '<a href="{{ url('permohonan')}}/'+data+'">';
-                        link+=    data;
+                        link+=      '<i class="fa fa-link"></i>';
                         link+= '</a>';
                     return link;
                 }},
+                { data: 'nama_badan_usaha', name: 'badan_usaha.nama_badan_usaha', orderable:false },
                 { data: 'nama_jenis_usaha', name: 'jenis_usaha.nama_jenis_usaha', orderable:false },
                 { data: 'jenis_sertifikasi', name: 'jenis_sertifikasi', orderable:false },
                 { data: 'perpanjangan_ke', name: 'perpanjangan_ke', orderable:false },
-                { data: 'nama_badan_usaha', name: 'badan_usaha.nama_badan_usaha', orderable:false },
-                { data: 'nama_bentuk_badan_usaha', name: 'badan_usaha.bentuk_badan_usaha.nama_bentuk_badan_usaha', orderable:false },
-                { data: 'alamat_badan_usaha', name: 'badan_usaha.alamat_badan_usaha', orderable:false, searchable:false },
-                {data: 'status', name: 'status', orderable:true, searchable:true},
+                { data: 'status', name: 'status', orderable:true, searchable:true},
                 { data: 'jenis_usaha_uid', name: 'jenis_usaha_uid', visible:false },
                 { data: 'badan_usaha_uid', name: 'badan_usaha_uid', visible:false },
                 

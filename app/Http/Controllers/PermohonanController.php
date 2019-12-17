@@ -22,8 +22,14 @@ class PermohonanController extends Controller
         
         if($request->has('status')){
             $status = $request->status;
-            return view('permohonan.index')
-                ->with('status', $status);
+            if($status == "all"){
+                return view('permohonan.status_all')
+                    ->with('status', $status);
+            }else{
+                return view('permohonan.index')
+                ->with('status', $status);    
+            }
+            
         }else{
             return 'missing status';
         }
@@ -64,6 +70,15 @@ class PermohonanController extends Controller
             })
             ->editColumn('status', function($permohonan){
                 return translate_status_permohonan($permohonan->status);
+            })
+            ->addColumn('actions', function($permohonan){
+                $actions ='';
+                if($permohonan->status == '0'){
+                    $actions.='<button class="btn btn-primary btn-change-status btn-xs" title="Kirim ke Frontdesk" data-original-status="0" data-next-status="1" data-uid-permohonan="'.$permohonan->uid_permohonan.'">';
+                    $actions.=  '<i class="fa fa-share-square"></i>';
+                    $actions.='</button>';
+                }
+                return $actions;
             });
         if ($keyword = $request->get('search')['value']) {
             $data_permohonan->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
