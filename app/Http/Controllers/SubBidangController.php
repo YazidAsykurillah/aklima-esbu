@@ -169,4 +169,18 @@ class SubBidangController extends Controller
         }
     }
 
+    public function select2(Request $request)
+    {
+        $data = [];
+        if($request->has('q')){
+            $search = $request->q;
+            $data = SubBidang::where('nama_sub_bidang', 'LIKE', "%$search%")
+                    ->get();
+        }
+        else{
+            $data = SubBidang::where('uid_jenis_usaha', '=',2)->get();
+        }
+        return response()->json($data);
+    }
+
 }

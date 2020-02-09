@@ -12,7 +12,7 @@ class IdentitasBadanUsaha extends Model
     	'permohonan_uid', 'uid_verifikasi_ibu', 'file_surat_permohonan_sbu',
     	'nomor_surat', 'perihal', 'tanggal_surat', 'nama_penandatangan_surat', 'jabatan_penandatangan_surat'
     ];
-
+        
     public function permohonan()
     {
     	return $this->belongsTo('App\Permohonan', 'permohonan_uid', 'uid_permohonan');

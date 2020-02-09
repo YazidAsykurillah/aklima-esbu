@@ -23,10 +23,10 @@ class PersyaratanAdministratif extends Model
     	'prosentase_saham_pma_ppm_perubahan'
     ];
 
-
     //Relation to Permohonan
     public function permohonan()
     {
     	return $this->belongsTo('App\Permohonan', 'uid_permohonan', 'uid_permohonan')->withDefault();
     }
+    
 }

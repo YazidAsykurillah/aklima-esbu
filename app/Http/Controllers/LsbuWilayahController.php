@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Datatables;
+
+use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
+
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -22,17 +24,21 @@ class LsbuWilayahController extends Controller
         return view('master-data.lsbu-wilayah');
     }
 
-    //return datatables object
     public function datatables(Request $request)
     {
         \DB::statement(\DB::raw('set @rownum=0'));
-        $lsbu_wilayah = LsbuWilayah::with(['provinsi'])->select([
+        $lsbu_wilayah = LsbuWilayah::with('provinsi')->select([
             \DB::raw('@rownum  := @rownum  + 1 AS rownum'),
-            'lsbu_wilayah.*'
+            'lsbu_wilayah.*',
         ]);
 
-        return Datatables::eloquent($lsbu_wilayah)
-            ->make(true);
+        $data = Datatables::of($lsbu_wilayah->get());
+
+        if ($keyword = $request->get('search')['value']) {
+            $data->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        }
+
+        return $data->make(true);
     }
 
     /**

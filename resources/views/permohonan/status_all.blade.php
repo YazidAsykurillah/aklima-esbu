@@ -35,9 +35,11 @@
                         <th scope="col">#</th>
                         <th scope="col">Detail</th>
                         <th scope="col">Nama Badan Usaha</th>
+                        <th scope="col">Provinsi</th>
                         <th scope="col">Jenis Usaha</th>
                         <th scope="col">Jenis Sertifikasi</th>
                         <th scope="col">Perpanjangan Ke</th>
+                        <th scope="col">Status Proses</th>
                         <th scope="col">Status</th>
                     </tr>
                 </thead>
@@ -71,9 +73,11 @@
                     return link;
                 }},
                 { data: 'nama_badan_usaha', name: 'badan_usaha.nama_badan_usaha', orderable:false },
+                { data: 'provinsi_badan_usaha', name: 'badan_usaha.kota.provinsi.nama_provinsi', orderable:true },
                 { data: 'nama_jenis_usaha', name: 'jenis_usaha.nama_jenis_usaha', orderable:false },
                 { data: 'jenis_sertifikasi', name: 'jenis_sertifikasi', orderable:false },
                 { data: 'perpanjangan_ke', name: 'perpanjangan_ke', orderable:false },
+                { data: 'is_processed', name: 'is_processed', orderable:false },
                 { data: 'status', name: 'status', orderable:true, searchable:true},
                 { data: 'jenis_usaha_uid', name: 'jenis_usaha_uid', visible:false },
                 { data: 'badan_usaha_uid', name: 'badan_usaha_uid', visible:false },

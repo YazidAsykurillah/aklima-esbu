@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::resource('bidang', 'BidangController');
 
 	//SubBidangController resource
+	Route::get('sub-bidang/select2', 'SubBidangController@select2');
 	Route::post('sub-bidang/synchronize', 'SubBidangController@synchronize');
 	Route::get('sub-bidang/datatables', 'SubBidangController@datatables');
 	Route::resource('sub-bidang', 'SubBidangController');
@@ -84,6 +85,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::resource('lingkup-pekerjaan-lsbu', 'LingkupPekerjaanLsbuController');
 
 	//Asesor
+	Route::get('asesor/select2', 'AsesorController@select2');
 	Route::post('asesor/synchronize', 'AsesorController@synchronize');
 	Route::get('asesor/datatables', 'AsesorController@datatables');
 	Route::resource('asesor', 'AsesorController');
@@ -94,6 +96,11 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::resource('badan-usaha', 'BadanUsahaController');
 
 	//Permohonan Resource Controller
+	Route::post('permohonan/set-is-processed', 'PermohonanController@setIsProcessed');
+	Route::post('permohonan/delete-asesor-pjt', 'PermohonanController@deleteAsesorPJT');
+	Route::post('permohonan/add-asesor-pjt', 'PermohonanController@saveAsesorPJT');
+	Route::post('permohonan/delete-asesor-tt', 'PermohonanController@deleteAsesorTT');
+	Route::post('permohonan/add-asesor-tt', 'PermohonanController@saveAsesorTT');
 	Route::get('permohonan/{uid_permohonan}/print-certificate', 'PermohonanController@printCertificate');
 	Route::post('permohonan/change-status', 'PermohonanController@changeStatus');
 	Route::get('permohonan/{uid_permohonan}/persyaratan-administratif', 'PermohonanController@fetchPersyaratanAdministratif');
@@ -120,18 +127,66 @@ Route::group(['middleware' => 'auth'], function(){
 
 	//Identitas Badan Usaha
 	Route::post('identitas-badan-usaha/edit', 'IdentitasBadanUsahaController@updateData');
-	Route::post('identitas-badan-usaha/pull-from-gatrik', 'IdentitasBadanUsahaController@pullFromGatrik');
+	Route::post('identitas-badan-usaha/pull-from-gatrik/{uid_permohonan}', 'IdentitasBadanUsahaController@pullFromGatrik');
 	Route::resource('identitas-badan-usaha', 'IdentitasBadanUsahaController');
 
 	//Persyaratan Administratif
+	Route::post('persyaratan-administratif/edit', 'PersyaratanAdministratifController@updateData');
 	Route::post('persyaratan-administratif/pull-from-gatrik', 'PersyaratanAdministratifController@pullFromGatrik');
 	Route::resource('persyaratan-administratif', 'PersyaratanAdministratifController');
 
+	//Persyaratan Teknis
+	Route::get('persyaratan-teknis/selectSubBidang', 'PersyaratanTeknisController@selectSubBidang');
+	Route::post('persyaratan-teknis/delete', 'PersyaratanTeknisController@delete');
+	Route::post('persyaratan-teknis/pull-from-gatrik/{uid_permohonan}', 'PersyaratanTeknisController@pullFromGatrik');
+	Route::resource('persyaratan-teknis', 'PersyaratanTeknisController');
+
+
+	// Persyaratan Teknis Penanggung Jawab Teknik
+	Route::post('persyaratan-teknis-pjt/delete', 'PersyaratanTeknisPenanggungJawabTeknikController@delete');
+	Route::post('persyaratan-teknis-pjt/pull-from-gatrik', 'PersyaratanTeknisPenanggungJawabTeknikController@pullFromGatrik');
+	Route::resource('persyaratan-teknis-pjt', 'PersyaratanTeknisPenanggungJawabTeknikController');
+
+	//Sertifikat Persyaratan Teknis Penanggung Jawab teknis
+	Route::post('sertifikat-pt-pjt/delete', 'SertifikatPtPjtController@delete');
+	Route::post('sertifikat-pt-pjt/pull-from-gatrik', 'SertifikatPtPjtController@pullFromGatrik');
+	Route::resource('sertifikat-pt-pjt', 'SertifikatPtPjtController');
+
+
+	//Persyaratan Teknis Tenaga Teknik
+	Route::post('persyaratan-teknis-tt/delete', 'PersyaratanTeknisTenagaTeknikController@delete');
+	Route::post('persyaratan-teknis-tt/pull-from-gatrik', 'PersyaratanTeknisTenagaTeknikController@pullFromGatrik');
+	Route::resource('persyaratan-teknis-tt', 'PersyaratanTeknisTenagaTeknikController');
+
+	//Sertifikat Persyaratan Teknis Tenaga Teknik
+	Route::post('sertifikat-pt-tt/delete', 'SertifikatPtTtController@delete');
+	Route::post('sertifikat-pt-tt/pull-from-gatrik', 'SertifikatPtTtController@pullFromGatrik');
+	Route::resource('sertifikat-pt-tt', 'SertifikatPtTtController');
+
+
+	//Data Pengurus Dewan Komisaris
+	Route::post('data-pengurus-dewan-komisaris/delete', 'DataPengurusDewanKomisarisController@delete');
+	Route::post('data-pengurus-dewan-komisaris/pull-from-gatrik', 'DataPengurusDewanKomisarisController@pullFromGatrik');
+	Route::resource('data-pengurus-dewan-komisaris', 'DataPengurusDewanKomisarisController');
+
+	//Data Pengurus Dewan Direksi
+	Route::post('data-pengurus-dewan-direksi/delete', 'DataPengurusDewanDireksiController@delete');
+	Route::post('data-pengurus-dewan-direksi/pull-from-gatrik', 'DataPengurusDewanDireksiController@pullFromGatrik');
+	Route::resource('data-pengurus-dewan-direksi', 'DataPengurusDewanDireksiController');
+
+	//Data Pengurus Pemegang Saham
+	Route::post('data-pengurus-pemegang-saham/delete', 'DataPengurusPemegangSahamController@delete');
+	Route::post('data-pengurus-pemegang-saham/pull-from-gatrik', 'DataPengurusPemegangSahamController@pullFromGatrik');
+	Route::resource('data-pengurus-pemegang-saham', 'DataPengurusPemegangSahamController');
 
 	//Configuration
 		Route::post('configuration/service-integrator/generate-token', 'ConfigurationController@generateToken');
 		Route::post('configuration/service-integrator/test-connection', 'ConfigurationController@testConnection');
 		Route::get('configuration/service-integrator', 'ConfigurationController@renderServiceIntegratorView');
 
+	//Role
+	Route::post('role/update-permission', 'RoleController@updatePermission');
+	Route::get('role/datatables', 'RoleController@datatables');
+	Route::resource('role', 'RoleController');
 });
 

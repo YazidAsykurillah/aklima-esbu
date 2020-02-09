@@ -24,7 +24,9 @@
     <div class="card-header d-flex">
         <h4 class="card-header-title">Daftar User</h4>
         <div class="toolbar ml-auto">
-            
+            <a href="{{ url('user/create') }}" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus-circle"></i> Tambah User Baru
+            </a>
         </div>
     </div>
     <div class="card-body">
@@ -55,8 +57,14 @@
             serverSide : true,
             ajax : '{!! url('user/datatables') !!}',
             columns :[
-                {data: 'rownum', name: 'rownum', searchable:false},
-                { data: 'name', name: 'name' },
+                { data: 'rownum', name: 'rownum', searchable:false },
+                { data: 'name', name: 'name', render:function(data, type, row, meta){
+                    var link ='';
+                        link+='<a href="{{ url('user') }}/'+row.id+'">';
+                        link+=  data;
+                        link+='</a>';
+                    return link;
+                }},
                 { data: 'username', name: 'username' },
                 { data: 'email', name: 'email' },
                 { data: 'roles', name: 'roles.name' },

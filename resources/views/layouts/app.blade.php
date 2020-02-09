@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="{{ url('assets/vendor/alertify/css/themes/default.css') }}">
     <!--Datepicker-->
     <link rel="stylesheet" href="{{ url('assets/vendor/datepicker/tempusdominus-bootstrap-4.css') }}">
+    <!--Select2-->
+    <link rel="stylesheet" href="{{ url('assets/vendor/select2/css/select2.css') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ url('css/my-style.css') }}">
     @yield('additional_styles')
@@ -72,9 +74,15 @@
                       </div>
                     @endif
                     @if(Session::has('errorMessage'))
-                      <div class="alert alert-error alert-dismissible" role="alert" id="alert-error">
+                      <div class="alert alert-danger alert-dismissible" role="alert" id="alert-danger">
                           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <strong>Error...!</strong> <span id="error-info"> {{ Session::get('errorMessage') }}</span>
+                          <strong>Error...!</strong> <span id="danger-info"> {{ Session::get('errorMessage') }}</span>
+                      </div>
+                    @endif
+                    @if(Session::has('warningMessage'))
+                      <div class="alert alert-warning alert-dismissible" role="alert" id="alert-warning">
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <strong>Warning...!</strong> <span id="warning-info"> {{ Session::get('warningMessage') }}</span>
                       </div>
                     @endif
                   </div>
@@ -123,6 +131,8 @@
 
     <!--Alertify-->
     <script src="{{ url('assets/vendor/alertify/alertify.js') }}"></script>
+    <!--Select2-->
+    <script src="{{ url('assets/vendor/select2/js/select2.min.js') }}"></script>
     <!--Datepicker-->
     <script src="{{ url('assets/vendor/datepicker/moment.js') }}"></script>
     <script src="{{ url('assets/vendor/datepicker/tempusdominus-bootstrap-4.js') }}"></script>

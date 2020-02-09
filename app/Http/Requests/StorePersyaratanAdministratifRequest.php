@@ -23,7 +23,7 @@ class StorePersyaratanAdministratifRequest extends FormRequest
      */
     public function rules()
     {
-        return[];
+        
         return [
             'uid_permohonan'=>'required',
             'file_akta_pendirian_bu'=>'required',

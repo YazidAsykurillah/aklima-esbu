@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
 
+use App\Http\Requests\StoreUserRequest;
+
 use App\User;
+use App\Role;
+use App\Provinsi;
 
 class UserController extends Controller
 {
@@ -51,7 +55,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $role_options = Role::all();
+        $provinsi_options = Provinsi::all();
+        return view('user.create')
+            ->with('provinsi_options', $provinsi_options)
+            ->with('role_options', $role_options);
     }
 
     /**
@@ -60,9 +68,22 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->username = $request->email;
+        $user->type = 'internal';
+        $user->password = bcrypt('12345');
+        $user->provinsi_id = $request->provinsi_id;
+        $user->save();
+
+        $role_user = [
+            ['role_id'=>$request->role_id, 'user_id'=>$user->id],
+        ];
+        \DB::table('role_user')->insert($role_user);
+        return redirect('user/'.$user->id);
     }
 
     /**
@@ -73,7 +94,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $roles = Role::all();
+        return view('user.show')
+            ->with('user', $user)
+            ->with('roles', $roles);
     }
 
     /**

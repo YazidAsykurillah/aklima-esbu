@@ -25,7 +25,7 @@ class StoreIdentitasBadanUsahaRequest extends FormRequest
     {
         return [
             'uid_permohonan'=>'required',
-            'file_surat_permohonan_sbu'=>'required|image|mimes:jpg,jpeg,png,JPG,JPEG,PNG|max:2048',
+            'file_surat_permohonan_sbu'=>'required|file|mimes:pdf|max:2048',
             'nomor_surat'=>'required',
             'perihal'=>'required',
             'tanggal_surat'=>'required',

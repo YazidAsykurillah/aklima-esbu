@@ -57,7 +57,7 @@ class ServiceController extends Controller
             $decode = json_decode($contents);
             //Truncate moodel model
             //Permohonan::truncate();
-            \DB::table('permohonan')->where('status', '=', '0')->orWhere('status','=', NULL)->delete();
+            \DB::table('permohonan')->where('is_processed', '=', FALSE)->orWhere('status','=', NULL)->delete();
             foreach($decode->result as $res){
                 Permohonan::create(
                     [

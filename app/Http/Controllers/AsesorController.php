@@ -9,6 +9,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
 use App\Asesor;
+use App\Provinsi;
 use App\User;
 
 class AsesorController extends Controller
@@ -163,8 +164,6 @@ class AsesorController extends Controller
                 $role_user = [
                     ['role_id'=>3, 'user_id'=>$user->id],
                     ['role_id'=>4, 'user_id'=>$user->id],
-                    ['role_id'=>5, 'user_id'=>$user->id],
-                    ['role_id'=>6, 'user_id'=>$user->id],
                 ];
                 \DB::table('role_user')->insert($role_user);
                 
@@ -178,5 +177,23 @@ class AsesorController extends Controller
         catch(GuzzleException $e){
             return $e;
         }
+    }
+
+    public function select2(Request $request)
+    {
+        $provinsi = Provinsi::findOrFail($request->provinsi_id);
+        $nama_provinsi = $provinsi ? $provinsi->nama_provinsi : NULL;
+
+        $data = [];
+        if($request->has('q')){
+            $search = $request->q;
+            $data = Asesor::where('nama_asesor', 'LIKE', "%$search%")
+                    ->where('alamat', 'LIKE', "%$nama_provinsi%")
+                    ->get();
+        }
+        else{
+            $data = Asesor::where('alamat', 'LIKE', "%$nama_provinsi%")->get();
+        }
+        return response()->json($data);
     }
 }

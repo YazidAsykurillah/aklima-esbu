@@ -16,6 +16,12 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Event' => [
             'App\Listeners\EventListener',
         ],
+        'App\Events\IdentitasBadanUsahaIsUploaded' => [
+            'App\Listeners\PullIdentitasBadanUsahaFromGatrik',
+        ],
+        'App\Events\PersyaratanTeknisIsDeleted' => [
+            'App\Listeners\PullPersyaratanTeknisFromGatrik',
+        ],
     ];
 
     /**

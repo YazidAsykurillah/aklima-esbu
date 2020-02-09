@@ -35,11 +35,11 @@
                 <thead>
                     <tr>
                         <th scope="col" style="width:5%;">#</th>
-                        <th scope="col" style="width:5%;">Detail</th>
                         <th scope="col">Nama Badan Usaha</th>
                         <th scope="col" style="width:15%;">Jenis Usaha</th>
                         <th scope="col" style="width:10%;">Jenis Sertifikasi</th>
                         <th scope="col" style="width:10%;">Perpanjangan Ke</th>
+                        <th scope="col">Status Proses</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -68,44 +68,72 @@
         </div>
     </div>
 </div>
+<!-- ENDModal Synchronize-->
+
+<!--Modal Process Permohonan-->
+<div class="modal fade" id="setIsProcessedModal" tabindex="-1" role="dialog" aria-labelledby="setIsProcessedModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form id="form-set-is-processed" method="post" action="{{ url('permohonan/set-is-processed') }}" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="setIsProcessedModalLabel">Proses Permohonan</h5>
+                    <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="uid_permohonan" name="uid_permohonan" />
+                    <button class="btn btn-secondary btn-xs" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary btn-xs" id="btn-set-is-processed">OK</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--ENDModal Process Permohonan-->
 @endsection
 
 @section('additional_scripts')
 <script type="text/javascript">
-   //Synchronize handler
-    $('#btn-synchronize').on('click', function(event){
-        event.preventDefault();
-        $('#btn-synchronize').prop('disabled', true).html('<i class="fas fa-hourglass"></i> Processing');
-        var _token = "{{ csrf_token() }}";
-        $.ajax({
-            method: 'POST', // Type of response and matches what we said in the route
-            url: '{{ url('service/tarik-pendaftaran') }}', // This is the url we gave in the route
-            data: {'_token' : _token}, // a JSON object to send back
-            success: function(response){ // What to do if we succeed
-                console.log(response);
-                if(response.response == 1){
-                    $('#synchModal').modal('hide');
-                    alertify.notify(response.message, 'success', 5, function(){  console.log('dismissed'); });
-                    table.ajax.reload();
-                    resetSynchronizeButton();
-                } else{
+    $(document).ready(function(){
+        //Synchronize handler
+        $('#btn-synchronize').on('click', function(event){
+            event.preventDefault();
+            $('#btn-synchronize').prop('disabled', true).html('<i class="fas fa-hourglass"></i> Processing');
+            var _token = "{{ csrf_token() }}";
+            $.ajax({
+                method: 'POST', // Type of response and matches what we said in the route
+                url: '{{ url('service/tarik-pendaftaran') }}', // This is the url we gave in the route
+                data: {'_token' : _token}, // a JSON object to send back
+                success: function(response){ // What to do if we succeed
                     console.log(response);
+                    if(response.response == 1){
+                        $('#synchModal').modal('hide');
+                        alertify.notify(response.message, 'success', 5, function(){  console.log('dismissed'); });
+                        table.ajax.reload();
+                        resetSynchronizeButton();
+                    } else{
+                        console.log(response);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                    console.log(JSON.stringify(jqXHR));
+                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                    alertify.notify(jqXHR.responseJSON.message, textStatus, 5, function(){  console.log('dismissed'); });
+                    resetSynchronizeButton();
                 }
-            },
-            error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
-                console.log(JSON.stringify(jqXHR));
-                console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-                alertify.notify(jqXHR.responseJSON.message, textStatus, 5, function(){  console.log('dismissed'); });
-                resetSynchronizeButton();
-            }
+            });
         });
-    });
 
-    function resetSynchronizeButton(){
-        $('#btn-synchronize').prop('disabled', false).html('Tarik Pendaftaran');
-    }
+        function resetSynchronizeButton(){
+            $('#btn-synchronize').prop('disabled', false).html('Tarik Pendaftaran');
+        }
 
-   var table =  $('#table').DataTable({
+        var table =  $('#table').DataTable({
             processing :true,
             serverSide : true,
             //ajax : '{!! url('permohonan/datatables') !!}',
@@ -113,22 +141,28 @@
                 url: '{!! url('permohonan/datatables') !!}',
                 "data": function ( d ) {
                     d.status = '0';
+                    d.is_processed = 0;
                 }
             },
             columns :[
                 {data: 'rownum', name: 'rownum', searchable:false},
-                { data: 'uid_permohonan', name: 'uid_permohonan', orderable:false, searchable:false, render:function(data, type, row, meta){
-                    var link = '';
-                        link+= '<a href="{{ url('permohonan')}}/'+data+'">';
-                        link+=      '<i class="fa fa-link"></i>';
-                        link+= '</a>';
-                    return link;
-                }},
                 { data: 'nama_badan_usaha', name: 'badan_usaha.nama_badan_usaha', orderable:false },
                 { data: 'nama_jenis_usaha', name: 'jenis_usaha.nama_jenis_usaha', orderable:false },
                 { data: 'jenis_sertifikasi', name: 'jenis_sertifikasi', orderable:false },
                 { data: 'perpanjangan_ke', name: 'perpanjangan_ke', orderable:false },
+                { data: 'is_processed', name: 'is_processed', orderable:false },
             ]
         });
+
+        table.on('click', '.btn-set-is-processed', function(event){
+            event.preventDefault();
+            var uid_permohonan = $(this).attr('data-uid-permohonan');
+            $('#form-set-is-processed #uid_permohonan').val();
+            $('#form-set-is-processed #uid_permohonan').val(uid_permohonan);
+            $('#setIsProcessedModal').modal('show');
+        });
+
+    });
+    
 </script>
 @endsection

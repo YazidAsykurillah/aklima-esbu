@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password', 'type', 'is_asesor', 'uid_asesor'
+        'name', 'username', 'email', 'password', 'type', 'is_asesor', 'uid_asesor', 'provinsi_id'
     ];
 
     /**
@@ -46,7 +46,7 @@ class User extends Authenticatable
 
     public function isSuperAdmin()
     {
-       if ($this->roles->contains('name', 'Super Admin')) {
+        if ($this->roles->contains('name', 'Super Admin')) {
             return true;
         }
         return false;

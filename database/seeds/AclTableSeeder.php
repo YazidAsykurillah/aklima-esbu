@@ -86,6 +86,9 @@ class AclTableSeeder extends Seeder
             //View User
             [ 'id'=>16 ,'slug'=>'view-user', 'description'=>'View User'],
 
+            //Role
+            [ 'id'=>17 ,'slug'=>'access-role', 'description'=>'Access Role'],            
+
 
 
         ];

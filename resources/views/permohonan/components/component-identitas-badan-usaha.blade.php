@@ -2,73 +2,122 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header d-flex">
-                <h4 class="card-header-title">Identitas Badan Usaha</h4>
+                <h4 class="card-header-title">
+                    <i class="fas fa-briefcase"></i> Identitas Badan Usaha
+                </h4>
                 <div class="toolbar ml-auto">
-                    <!--Show document action if only status is Frontdesk (1) -->
-                    @if($permohonan->status == '1')
-                    <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#pullIBUModal">
-                        <i class="fas fa-sync"></i> Tarik
-                    </a>
-                    <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#addIBUModal">
-                        <i class="fas fa-plus-circle"></i> Tambah
-                    </a>
-                    <!-- <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#editIBUModal">
-                        <i class="fas fa-edit"></i> Edit
-                    </a>
-                     -->
+                    <!--Show document action if only status is Menunggu Dokumen (0) -->
+                    @if($permohonan->status == '0')
+                        <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#pullIBUModal">
+                            <i class="fas fa-sync"></i> Tarik
+                        </a>
+                        @if(is_null($permohonan->identitas_badan_usaha))
+                            
+                            <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#addIBUModal">
+                                <i class="fas fa-plus-circle"></i> Tambah
+                            </a>
+                        @else
+                            <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#editIBUModal">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            
+                        @endif
                     @endif
                 </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
+                    @if(!is_null($identitas_badan_usaha))
                     <table class="table">
                         <tr>
-                            <td style="width: 30%;">UID Verifikasi</td>
+                            <td style="width: 30%;">UID Verifikasi IBU</td>
                             <td style="width: 5%;">:</td>
-                            <td style="" id="ibu_holder_uid_verifikasi_ibu"></td>
+                            <td style="" id="ibu_holder_uid_verifikasi_ibu">
+                                {{ $identitas_badan_usaha->uid_verifikasi_ibu }}
+                            </td>
                         </tr>
                         <tr>
                             <td style="width: 30%;">File Surat Permohoan SBU</td>
                             <td style="width: 5%;">:</td>
-                            <td style="" id="ibu_holder_file_surat_permohonan_sbu"></td>
+                            <td style="" id="ibu_holder_file_surat_permohonan_sbu">
+                                <a href="{{ $identitas_badan_usaha->file_surat_permohonan_sbu }}">
+                                    {{ $identitas_badan_usaha->file_surat_permohonan_sbu }}
+                                </a>
+                            </td>
                         </tr>
                         <tr>
                             <td style="width: 30%;">Nomor Surat</td>
                             <td style="width: 5%;">:</td>
-                            <td style="" id="ibu_holder_nomor_surat"></td>
+                            <td style="" id="ibu_holder_nomor_surat">
+                                {{ $identitas_badan_usaha->nomor_surat }}
+                            </td>
                         </tr>
                         <tr>
                             <td style="width: 30%;">Perihal</td>
                             <td style="width: 5%;">:</td>
-                            <td style="" id="ibu_holder_perihal"></td>
+                            <td style="" id="ibu_holder_perihal">
+                                {{ $identitas_badan_usaha->perihal }}
+                            </td>
                         </tr>
                         <tr>
                             <td style="width: 30%;">Tanggal Surat</td>
                             <td style="width: 5%;">:</td>
-                            <td style="" id="ibu_holder_tanggal_surat"></td>
+                            <td style="" id="ibu_holder_tanggal_surat">
+                                {{ $identitas_badan_usaha->tanggal_surat }}
+                            </td>
                         </tr>
                         <tr>
                             <td style="width: 30%;">Nama Penandatanganan Surat</td>
                             <td style="width: 5%;">:</td>
-                            <td style="" id="ibu_holder_nama_penandatangan_surat"></td>
+                            <td style="" id="ibu_holder_nama_penandatangan_surat">
+                                {{ $identitas_badan_usaha->nama_penandatangan_surat }}
+                            </td>
                         </tr>
                         <tr>
                             <td style="width: 30%;">Jabatan Penandatanganan Surat</td>
                             <td style="width: 5%;">:</td>
-                            <td style="" id="ibu_holder_jabatan_penandatangan_surat"></td>
+                            <td style="" id="ibu_holder_jabatan_penandatangan_surat">
+                                {{ $identitas_badan_usaha->jabatan_penandatangan_surat }}
+                            </td>
                         </tr>
                     </table>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<!--Modal Tarik Identitas Badan Usaha-->
+<div class="modal fade" id="pullIBUModal" tabindex="-1" role="dialog" aria-labelledby="pullIBUModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form id="form-pull-identitas-badan-usaha" method="post" enctype="multipart/form-data" action="{{ url('identitas-badan-usaha/pull-from-gatrik/'.$permohonan->uid_permohonan.'') }}">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pullIBUModalLabel">Tarik Identitas Badan Usaha</h5>
+                    <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    @csrf
+                    <p>Tarik data Identitas Badan Usaha dari gatrik</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary btn-xs" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary btn-xs" id="btn-pull-ibu">Tarik</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--ENDModal Tarik Identitas Badan Usaha-->
+
 <!--Modal Tambah Identitas Badan Usaha-->
 <div class="modal fade" id="addIBUModal" tabindex="-1" role="dialog" aria-labelledby="addIBUModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form id="form-tambah-identitas-badan-usaha" method="post" enctype="multipart/form-data">
+            <form id="form-tambah-identitas-badan-usaha" method="post" enctype="multipart/form-data" action="{{ url('identitas-badan-usaha') }}">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addIBUModalLabel">Tambah Identitas Badan Usaha</h5>
                     <a href="#" class="close" data-dismiss="modal" aria-label="Close">
@@ -77,9 +126,9 @@
                 </div>
                 <div class="modal-body">
                     @csrf
-                    <div class="custom-file mb-3">
-                        <label class="custom-file-label" for="file_surat_permohonan_sbu">File Surat Permohonan SBU</label>
-                        <input type="file" class="custom-file-input" id="file_surat_permohonan_sbu" name="file_surat_permohonan_sbu">
+                    <div class="form-group">
+                        <label for="file_surat_permohonan_sbu" class="col-form-label">File Surat Permohonan SBU</label>
+                        <input type="file" class="form-control" id="file_surat_permohonan_sbu" name="file_surat_permohonan_sbu">
                     </div>
                     <div class="form-group">
                         <label for="nomor_surat" class="col-form-label">Nomor Surat</label>
@@ -130,11 +179,9 @@
                 </div>
                 <div class="modal-body">
                     @csrf
-                    <div class="custom-file mb-3">
-                        <label class="custom-file-label" for="file_surat_permohonan_sbu_edit">
-                            File Surat Permohonan SBU
-                        </label>
-                        <input type="file" class="custom-file-input" id="file_surat_permohonan_sbu_edit" name="file_surat_permohonan_sbu_edit">
+                    <div class="form-group">
+                        <label for="file_surat_permohonan_sbu_edit" class="col-form-label">File Surat Permohonan SBU</label>
+                        <input type="file" class="form-control" id="file_surat_permohonan_sbu_edit" name="file_surat_permohonan_sbu_edit">
                     </div>
                     <div class="form-group">
                         <label for="nomor_surat_edit" class="col-form-label">Nomor Surat</label>
@@ -163,6 +210,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    @if($permohonan->identitas_badan_usaha)
+                        <input type="hidden" id="uid_verifikasi_ibu" name="uid_verifikasi_ibu" value="{{ $permohonan->identitas_badan_usaha->uid_verifikasi_ibu }}">
+                    @endif
                     <button class="btn btn-secondary btn-xs" data-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary btn-xs" id="btn-edit-ibu">Edit</button>
                 </div>
@@ -172,27 +222,3 @@
 </div>
 <!--ENDModal Edit Identitas Badan Usaha-->
 
-<!--Modal Tarik Identitas Badan Usaha-->
-<div class="modal fade" id="pullIBUModal" tabindex="-1" role="dialog" aria-labelledby="pullIBUModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <form id="form-pull-identitas-badan-usaha" method="post" enctype="multipart/form-data">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="pullIBUModalLabel">Tarik Identitas Badan Usaha</h5>
-                    <a href="#" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </a>
-                </div>
-                <div class="modal-body">
-                    @csrf
-                    <p>Tarik data Identitas Badan Usaha dari gatrik</p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary btn-xs" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary btn-xs" id="btn-pull-ibu">Tarik</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!--ENDModal Tarik Identitas Badan Usaha-->

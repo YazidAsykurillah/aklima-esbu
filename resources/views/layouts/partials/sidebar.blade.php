@@ -12,7 +12,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{{ (Request::is('home') ? 'active' : '') }}}" href="{{ url('home')}}">
-                            <i class="fa fa-fw fa-home"></i> Dashboard
+                            <i class="fa fa-fw fa-home"></i>Dashboard
                         </a>
                     </li>
                     @if(\Auth::user()->can('view-permohonan'))
@@ -218,7 +218,14 @@
                         </a>
                     </li>
                     @endif
-                    
+
+                    @if(\Auth::user()->can('access-role'))
+                    <li class="nav-item">
+                        <a class="nav-link {{{ (Request::is('role') ? 'active' : '') }}}" href="{{ url('role')}}">
+                            <i class="fa fa-fw fa-list"></i> Role
+                        </a>
+                    </li>
+                    @endif
                 </ul>
             </div>
         </nav>
