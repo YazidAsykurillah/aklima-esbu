@@ -85,34 +85,6 @@
                                 {{ translate_status_permohonan($permohonan->status) }}
                             </td>
                         </tr>
-                        @if($permohonan->status =='11')
-                        <tr>
-                            <td style="width: 30%;"></td>
-                            <td style="width: 5%;"></td>
-                            <td style="">
-                                <a href="{{ url('permohonan/'.$permohonan->uid_permohonan.'/print-certificate') }}" class="btn btn-primary btn-xs" id="btn-print-certificate">
-                                    <i class="fa fa-print"></i> Cetak Sertifikat
-                                </a>
-                                <a href="#" class="btn btn-info btn-change-status btn-xs" data-next-status="12">
-                                    Sudah Dicetak
-                                </a>
-                            </td>
-                        </tr>
-                        @endif
-                        @if($permohonan->status =='12')
-                        <tr>
-                            <td style="width: 30%;"></td>
-                            <td style="width: 5%;"></td>
-                            <td style="">
-                                <a href="{{ url('permohonan/'.$permohonan->uid_permohonan.'/print-certificate') }}" class="btn btn-primary btn-xs" id="btn-print-certificate">
-                                    <i class="fa fa-print"></i> Cetak Sertifikat
-                                </a>
-                                <a href="#" class="btn btn-info btn-change-status btn-xs" data-next-status="14">
-                                    Sudah diterima Pemohon
-                                </a>
-                            </td>
-                        </tr>
-                        @endif
                     </table>
                 </div>
             </div>
@@ -262,7 +234,29 @@
 </div>
 <!--ENDRow Change Next Status-->
 
-<!--Log status permohonan-->
+<!--Row Fasilitas Generate Nomor Agenda dan Tarik Nomor Sertifikat-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-header-title">
+                    <i class="fa fa-th-list"></i> Generate Nomor Agenda dan Tarik Nomor Sertifikat
+                </h5>
+            </div>
+            <div class="card-body">
+                <button id="btn-generate-nomor-agenda" class="btn btn-info" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
+                    <i class="fa fa-barcode"></i> Generate Nomor Agenda
+                </button>
+                <button id="btn-tarik-nomor-sertifikat" class="btn btn-primary" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
+                    <i class="fa fa-barcode"></i> Tarik Nomor Sertifikat
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--ENDRow Fasilitas Generate Nomor Agenda dan Tarik Nomor Sertifikat-->
+
+<!--Row Log status permohonan-->
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -300,6 +294,45 @@
         </div>
     </div>
 </div>
+<!--ENDRow Log status permohonan-->
+
+<!--Row Status DJK-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-header-title">
+                    <i class="fa fa-clock"></i> Status DJK
+                </h5>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Tahap</th>
+                            <th>Keterangan Tahap</th>
+                            <th>Status</th>
+                            <th>Keterangan Status</th>
+                            <th>Waktu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if($status_djk)
+                        <tr>
+                            <td>{{ $status_djk->tahap }}</td>
+                            <td>{{ $status_djk->keterangan_tahap }}</td>
+                            <td>{{ $status_djk->status }}</td>
+                            <td>{{ $status_djk->keterangan_status }}</td>
+                            <td>{{ $status_djk->updated_at }}</td>
+                        </tr>
+                        @endif
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!--ENDRow Status DJK-->
 
 <!--Modal Change Status-->
 <div class="modal fade" id="changeStatusModal" tabindex="-1" role="dialog" aria-labelledby="changeStatusModalLabel" aria-hidden="true">
@@ -2070,6 +2103,107 @@
         });
 
     });
+
+    //Block Generate Nomor Agenda
+    $('#btn-generate-nomor-agenda').on('click', function(event){
+        event.preventDefault();
+        let uid_permohonan = $(this).attr('data-uid_permohonan');
+        $.ajax({
+            method: 'POST',
+            url: "{{ url('permohonan/generate-nomor-agenda') }}",
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data: 'uid_permohonan='+uid_permohonan,
+            beforeSend:function(){
+                $('#btn-generate-nomor-agenda').prop('disabled', true).html('<i class="fa fa-barcode"></i> Processing..');        
+            },
+            success: function(response){
+                console.log(response);
+                if(response.response == 1){
+                    alertify.notify(response.message, 'success', 2, function(){
+                        //console.log(response);
+                        location.reload();
+                    });
+                    
+                } else{
+                    alertify.notify(response.message, 'error', 5, function(){
+                        $('#btn-generate-nomor-agenda').prop('disabled', false).html('<i class="fa fa-barcode"></i> Generate Nomor Agenda');
+                    });
+                    
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                let objResponse = jqXHR.responseJSON;
+                let message = objResponse.message;
+                let errors = objResponse.errors;
+                let error_template = message;
+                
+                if(errors){
+                    $.each( errors, function( key, value ) {
+                        console.log(value);
+                        error_template += '<li>'+ value[0] + '</li>'; //showing only the first error.
+                    });
+                }
+                alertify.notify(error_template, textStatus, 5, function(){
+                    console.log(errors);
+                    $('#btn-generate-nomor-agenda').prop('disabled', false).html('<i class="fa fa-barcode"></i> Generate Nomor Agenda');
+                });
+                
+            }
+        });
+
+    });
+    //ENDBlock Generate Nomor Agenda
+
+    //Block Tarik Nomor Sertifikat
+    $('#btn-tarik-nomor-sertifikat').on('click', function(event){
+        event.preventDefault();
+        let uid_permohonan = $(this).attr('data-uid_permohonan');
+        $.ajax({
+            method: 'POST',
+            url: "{{ url('permohonan/tarik-nomor-sertifikat') }}",
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data: 'uid_permohonan='+uid_permohonan,
+            beforeSend:function(){
+                $('#btn-tarik-nomor-sertifikat').prop('disabled', true).html('<i class="fa fa-barcode"></i> Processing..');        
+            },
+            success: function(response){
+                console.log(response);
+                if(response.response == 1){
+                    alertify.notify(response.message, 'success', 2, function(){
+                        //console.log(response);
+                        location.reload();
+                    });
+                    
+                } else{
+                    alertify.notify(response.message, 'error', 5, function(){
+                        $('#btn-tarik-nomor-sertifikat').prop('disabled', false).html('<i class="fa fa-barcode"></i> Tarik Nomor Sertifikat');
+                    });
+                    
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                let objResponse = jqXHR.responseJSON;
+                let message = objResponse.message;
+                let errors = objResponse.errors;
+                let error_template = message;
+                
+                if(errors){
+                    $.each( errors, function( key, value ) {
+                        console.log(value);
+                        error_template += '<li>'+ value[0] + '</li>'; //showing only the first error.
+                    });
+                }
+                alertify.notify(error_template, textStatus, 5, function(){
+                    console.log(errors);
+                    $('#btn-tarik-nomor-sertifikat').prop('disabled', false).html('<i class="fa fa-barcode"></i> Tarik Nomor Sertifikat');
+                });
+                
+            }
+        });
+
+    });
+    //ENDBlock Tarik Nomor Sertifikat
+
 </script>
 @endsection
 

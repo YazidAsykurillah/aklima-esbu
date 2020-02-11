@@ -14,6 +14,9 @@ use App\AsesorPermohonan;
 use App\LsbuWilayah;
 use App\LogPermohonan;
 
+use Event;
+use App\Events\PermohonanIsDisplayed;
+
 class PermohonanController extends Controller
 {
     /**
@@ -216,6 +219,13 @@ class PermohonanController extends Controller
         $data_pengurus_dewan_direksi = $permohonan->data_pengurus_dewan_direksi;
         $data_pengurus_pemegang_saham = $permohonan->data_pengurus_pemegang_saham;
         $log_permohonan = $permohonan->log_permohonan;
+        
+        //Fire event PermohonanIsDisplayed
+        Event::fire(new PermohonanIsDisplayed($permohonan));
+
+        $status_djk = $permohonan->status_djk;
+        //return $status_djk;
+
         return view('permohonan.show')
             ->with('permohonan', $permohonan)
             ->with('identitas_badan_usaha', $identitas_badan_usaha)
@@ -224,7 +234,8 @@ class PermohonanController extends Controller
             ->with('data_pengurus_dewan_komisaris', $data_pengurus_dewan_komisaris)
             ->with('data_pengurus_dewan_direksi', $data_pengurus_dewan_direksi)
             ->with('data_pengurus_pemegang_saham', $data_pengurus_pemegang_saham)
-            ->with('log_permohonan', $log_permohonan);
+            ->with('log_permohonan', $log_permohonan)
+            ->with('status_djk', $status_djk);
     }
 
     /**
@@ -277,24 +288,6 @@ class PermohonanController extends Controller
         );
     }
 
-    /*public function changeStatus_back20200103(Request $request)
-    {
-
-        $original_status = $request->permohonan_original_status;
-        $next_status = $request->permohonan_next_status;
-        if($original_status == '0' && $next_status == '1'){
-            return $this->call_api_proses_pendaftaran($request);
-        }else{
-            $permohonan = Permohonan::findOrFail($request->permohonan_id_to_change);
-            $permohonan->status = $next_status;
-            $permohonan->save();
-
-            $this->insertLogPermohonan($request->permohonan_id_to_change, $original_status, $request->permohonan_next_status, $request->log_description);
-            return redirect()->back()
-                ->with('successMessage', "Status permohonan berhasil diubah");    
-        }
-        
-    }*/
 
     public function changeStatus(Request $request)
     {
@@ -305,10 +298,6 @@ class PermohonanController extends Controller
         //Menunggu Dokumen ke Frontdesk (Asesor TT)
         if($original_status == '0' && $next_status == '1'){
             return $this->call_api_kirim_ke_asesor_tt($request);
-        }
-        //Frontdesk ke Verfikator (Asesor PJT)
-        else if($original_status == '1' && $next_status == '4'){
-            return $this->call_api_kirim_ke_asesor_pjt($request);
         }
         else{
             $permohonan = Permohonan::findOrFail($request->permohonan_id_to_change);
@@ -322,47 +311,7 @@ class PermohonanController extends Controller
         
     }
 
-    protected function call_api_kirim_ke_asesor_pjt($request){
-        
-        try{
-            $token = getCurrentActiveToken()['token'];
-            $original_status = $request->permohonan_original_status;
-            $next_status = $request->permohonan_next_status;
-
-            $permohonan = Permohonan::findOrFail($request->permohonan_id_to_change);
-
-            $client = new Client([
-                // Base URI is used with relative requests
-                'base_uri' => config('app.gatrik_base_uri'),
-                'verify'=>false,
-                'headers'=>[
-                    'Content-Type'=>'multipart/form-data',
-                    'Enctype'=>'multipart/form-data',
-                    'X-Lsbu-Key'=>config('app.x_lsbu_key'),
-                    'Token'=> $token
-                ],
-                'form_params' => [
-                    'uid_permohonan' => $permohonan->uid_permohonan,
-                ]
-            ]);
-            $response = $client->post('/Service/Kirim-Data-Pemohon-Ke-Asesor-PJT');
-            $code = $response->getStatusCode(); // 200
-            $body = $response->getBody();
-            $contents = $body->getContents();
-            $decode = json_decode($contents);
-            
-            $permohonan->status = $next_status;
-            $permohonan->save();
-
-            $this->insertLogPermohonan($request->permohonan_id_to_change, $original_status, $request->permohonan_next_status, $request->log_description);
-            
-            return redirect()->back()
-                ->with('successMessage', $decode->message);            
-        }
-        catch(Exception $e){
-            return $e;
-        }
-    }
+    
 
     protected function call_api_kirim_ke_asesor_tt($request){
         
@@ -736,5 +685,97 @@ class PermohonanController extends Controller
         }
     }
 
+
+    public function generateNomorAgenda(Request $request)
+    {
+        $permohonan = Permohonan::findOrFail($request->uid_permohonan);
+        $ajaxResponse['response']= NULL;
+        $ajaxResponse['message']= NULL;
+        $ajaxResponse['result']= NULL;
+        
+        try{
+            $client = new Client([
+                // Base URI is used with relative requests
+                'base_uri' => config('app.gatrik_base_uri'),
+                'verify'=>false,
+                'headers'=>[
+                    'Content-Type'=>'multipart/form-data',
+                    'Enctype'=>'multipart/form-data',
+                    'X-Lsbu-Key'=>config('app.x_lsbu_key'),
+                    'Token'=> getCurrentActiveToken()['token']
+                ],
+                'form_params' => [
+                    'uid_permohonan' => $permohonan->uid_permohonan,
+                ]
+            ]);
+            $response = $client->post('Service/Generate-Nomor-Agenda');
+            $code = $response->getStatusCode(); // 200
+            $body = $response->getBody();
+            $contents = $body->getContents();
+            $decode = json_decode($contents);
+
+            
+            if($decode->response == '1'){
+                
+            }
+            $ajaxResponse['response'] = $decode->response;
+            $ajaxResponse['message'] = $decode->message;
+            $ajaxResponse['result'] = $decode->result;
+            
+        }
+        catch(GuzzleException $e){
+            $contents = $e->getResponse()->getBody()->getContents();
+            $decode = json_decode($contents);
+            $ajaxResponse['response'] = $decode->response;
+            $ajaxResponse['message'] = $decode->message;
+        }
+        return $ajaxResponse;
+    }
+
+
+    public function tarikNomorSertifikat(Request $request)
+    {
+        $permohonan = Permohonan::findOrFail($request->uid_permohonan);
+        $ajaxResponse['response']= NULL;
+        $ajaxResponse['message']= NULL;
+        $ajaxResponse['result']= NULL;
+        
+        try{
+            $client = new Client([
+                // Base URI is used with relative requests
+                'base_uri' => config('app.gatrik_base_uri'),
+                'verify'=>false,
+                'headers'=>[
+                    'Content-Type'=>'multipart/form-data',
+                    'Enctype'=>'multipart/form-data',
+                    'X-Lsbu-Key'=>config('app.x_lsbu_key'),
+                    'Token'=> getCurrentActiveToken()['token']
+                ],
+                'form_params' => [
+                    'uid_permohonan' => $permohonan->uid_permohonan,
+                ]
+            ]);
+            $response = $client->post('Service/Tarik-Status-Permohonan');
+            $code = $response->getStatusCode(); // 200
+            $body = $response->getBody();
+            $contents = $body->getContents();
+            $decode = json_decode($contents);
+
+            
+            if($decode->response == '1'){
+                
+            }
+            $ajaxResponse['response'] = $decode->response;
+            $ajaxResponse['message'] = $decode->message;
+            
+        }
+        catch(GuzzleException $e){
+            $contents = $e->getResponse()->getBody()->getContents();
+            $decode = json_decode($contents);
+            $ajaxResponse['response'] = $decode->response;
+            $ajaxResponse['message'] = $decode->message;
+        }
+        return $ajaxResponse;
+    }
 
 }

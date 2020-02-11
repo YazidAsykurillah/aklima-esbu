@@ -113,4 +113,9 @@ class Permohonan extends Model
     {
         return $this->hasMany('App\Sertifikat', 'uid_permohonan');
     }
+
+    public function status_djk()
+    {
+        return $this->hasOne('App\StatusDjk', 'uid_permohonan');
+    }
 }

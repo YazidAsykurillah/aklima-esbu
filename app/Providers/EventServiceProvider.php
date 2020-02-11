@@ -22,6 +22,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\PersyaratanTeknisIsDeleted' => [
             'App\Listeners\PullPersyaratanTeknisFromGatrik',
         ],
+        'App\Events\PermohonanIsDisplayed' => [
+            'App\Listeners\CallApiTarikStatusPermohonan',
+        ],
     ];
 
     /**

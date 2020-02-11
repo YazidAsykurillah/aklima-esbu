@@ -96,6 +96,8 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::resource('badan-usaha', 'BadanUsahaController');
 
 	//Permohonan Resource Controller
+	Route::post('permohonan/tarik-nomor-sertifikat', 'PermohonanController@tarikNomorSertifikat');
+	Route::post('permohonan/generate-nomor-agenda', 'PermohonanController@generateNomorAgenda');
 	Route::post('permohonan/set-is-processed', 'PermohonanController@setIsProcessed');
 	Route::post('permohonan/delete-asesor-pjt', 'PermohonanController@deleteAsesorPJT');
 	Route::post('permohonan/add-asesor-pjt', 'PermohonanController@saveAsesorPJT');
