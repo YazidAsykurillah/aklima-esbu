@@ -172,7 +172,7 @@
 
                                         </td>
                                         <td>{{ $dp_ps->prosentase_kepemilikan_saham }}</td>
-                                        <td>{{ number_format($dp_ps->nominal_kepemilikan_saham) }}</td>
+                                        <td>{{ rupiah($dp_ps->nominal_kepemilikan_saham) }}</td>
                                         <td>
                                             <button type="button" class="btn btn-danger btn-xs btn-delete-dp-ps-trigger"  title="Hapus Data Pengurus Pemegang Saham" data-id="{{ $dp_ps->id }}">
                                                 <i class="fa fa-trash"></i>

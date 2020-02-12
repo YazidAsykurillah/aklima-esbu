@@ -10,7 +10,7 @@ class Permohonan extends Model
     protected $primaryKey = 'uid_permohonan';
     protected $fillable = [
     	'uid_permohonan', 'jenis_usaha_uid', 'jenis_sertifikasi', 'perpanjangan_ke', 'badan_usaha_uid', 'is_processed',
-    	'asesor_tt_id', 'asesor_pjt_id', 'status', 'nomor_sertifikat', 'nomor_registrasi'
+    	'asesor_tt_id', 'asesor_pjt_id', 'status', 'nomor_sertifikat', 'nomor_registrasi', 'nomor_agenda'
     ];
 
     //Relation with JenisUsaha
@@ -117,5 +117,15 @@ class Permohonan extends Model
     public function status_djk()
     {
         return $this->hasOne('App\StatusDjk', 'uid_permohonan');
+    }
+
+    public function akta_perubahan_bu_pa()
+    {
+        return $this->hasOne('App\AktaPerubahanBuPa', 'uid_permohonan');
+    }
+
+    public function pengesahan_akta_perubahan()
+    {
+        return $this->hasOne('App\PengesahanAktaPerubahan', 'uid_permohonan');
     }
 }

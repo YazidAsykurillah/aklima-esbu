@@ -62,7 +62,7 @@
                             <td style="width: 30%;">Tanggal Akta</td>
                             <td style="width: 5%;">:</td>
                             <td style="" id="pa_holder_tanggal_akta">
-                                {{ $persyaratan_administratif->tanggal_akta }}
+                                {{ indonesian_date($persyaratan_administratif->tanggal_akta) }}
                             </td>
                         </tr>
                         <tr>
@@ -106,7 +106,7 @@
                             <td style="width: 30%;">Tanggal Badan Hukum</td>
                             <td style="width: 5%;">:</td>
                             <td style="" id="pa_holder_tanggal_badan_hukum">
-                                {{ $persyaratan_administratif->tanggal_badan_hukum }}
+                                {{ indonesian_date($persyaratan_administratif->tanggal_badan_hukum) }}
                             </td>
                         </tr>
                         <tr>
@@ -152,14 +152,14 @@
                             <td style="width: 30%;">Tanggal SKDU</td>
                             <td style="width: 5%;">:</td>
                             <td style="" id="pa_holder_tanggal_skdu">
-                                {{ $persyaratan_administratif->tanggal_skdu }}
+                                {{ indonesian_date($persyaratan_administratif->tanggal_skdu) }}
                             </td>
                         </tr>
                         <tr>
                             <td style="width: 30%;">Masa Berlaku SKDU</td>
                             <td style="width: 5%;">:</td>
                             <td style="" id="pa_holder_masa_berlaku_skdu">
-                                {{ $persyaratan_administratif->masa_berlaku_skdu }}
+                                {{ indonesian_date($persyaratan_administratif->masa_berlaku_skdu) }}
                             </td>
                         </tr>
                         <tr>
@@ -212,14 +212,14 @@
                             <td style="width: 30%;">Kekayaan Bersih</td>
                             <td style="width: 5%;">:</td>
                             <td style="" id="pa_holder_kekayaan_bersih">
-                                {{ $persyaratan_administratif->kekayaan_bersih }}
+                                {{ rupiah($persyaratan_administratif->kekayaan_bersih) }}
                             </td>
                         </tr>
                         <tr>
                             <td style="width: 30%;">Modal Disetor</td>
                             <td style="width: 5%;">:</td>
                             <td style="" id="pa_holder_modal_disetor">
-                                {{ $persyaratan_administratif->modal_disetor }}
+                                {{ rupiah($persyaratan_administratif->modal_disetor) }}
                             </td>
                         </tr>
                         <tr>
@@ -261,7 +261,7 @@
                             <td style="width: 30%;">Tanggal Laporan Keuangan</td>
                             <td style="width: 5%;">:</td>
                             <td style="" id="pa_holder_tanggal_laporan_keuangan">
-                                {{ $persyaratan_administratif->tanggal_laporan_keuangan }}
+                                {{ indonesian_date($persyaratan_administratif->tanggal_laporan_keuangan) }}
                             </td>
                         </tr>
                         <tr>
@@ -309,7 +309,7 @@
                             <td style="width: 30%;">Tanggal PPM</td>
                             <td style="width: 5%;">:</td>
                             <td style="" id="pa_holder_tanggal_ppm">
-                                {{ $persyaratan_administratif->tanggal_ppm }}
+                                {{ indonesian_date($persyaratan_administratif->tanggal_ppm) }}
                             </td>
                         </tr>
                         <tr>
@@ -339,7 +339,7 @@
                             <td style="width: 30%;">Tanggal PPM Perubahan</td>
                             <td style="width: 5%;">:</td>
                             <td style="" id="pa_holder_tanggal_ppm_perubahan">
-                                {{ $persyaratan_administratif->tanggal_ppm_perubahan }}
+                                {{ indonesian_date($persyaratan_administratif->tanggal_ppm_perubahan) }}
                             </td>
                         </tr>
                         <tr>
@@ -352,6 +352,89 @@
                     </table>
                     @endif
                 </div>
+
+                <!--Block Akta Perubahan BU Persyaratan Administratif-->
+                <div class="card">
+                    <div class="card-header d-flex">
+                        <h4 class="card-header-title">
+                            <i class="fas fa-globe"></i> Akta Perubahan Badan Usaha
+                        </h4>
+                        <div class="toolbar ml-auto">
+                            <button class="btn btn-light btn-xs" id="btn-pull-akta-perubahan-bu-pa" title="Tarik Akta Perubahan BU" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
+                                <i class="fas fa-sync"></i> Tarik
+                            </button>
+                            <button class="btn btn-light btn-xs" id="btn-add-akta-perubahan-bu-pa-trigger" title="Tambah Akta Perubahan BU" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
+                                <i class="fas fa-plus-circle"></i> Tambah
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        @if($akta_perubahan_bu_pa)
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 30%;">Nama Notaris</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="">
+                                            {{ $akta_perubahan_bu_pa->nama_notaris }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Judul Akta</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="">
+                                            {{ $akta_perubahan_bu_pa->judul_akta }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Tanggal Akta</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="">
+                                            {{ $akta_perubahan_bu_pa->tanggal_akta }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor Akta</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="">
+                                            {{ $akta_perubahan_bu_pa->nomor_akta }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Hal Yang Diubah</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="">
+                                            {{ $akta_perubahan_bu_pa->hal_yang_diubah }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        @else
+                            <p class="info">Tidak ada data</p>
+                        @endif
+                    </div>
+                </div>
+                <!--ENDBlock Akta Perubahan BU Persyaratan Administratif-->
+
+                <!--Block Pengesahan Akta Perubahan-->
+                <div class="card">
+                    <div class="card-header d-flex">
+                        <h4 class="card-header-title">
+                            <i class="fas fa-globe"></i> Pengesahan Akta Perubahan
+                        </h4>
+                        <div class="toolbar ml-auto">
+                            <button class="btn btn-light btn-xs" id="btn-pull-pengesahan-akta-perubahan" title="Tarik Pengesahan Akta Perubahan" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
+                                <i class="fas fa-sync"></i> Tarik
+                            </button>
+                            <button class="btn btn-light btn-xs" id="btn-add-pengesahan-akta-perubahan-trigger" title="Tambah Pengesahan Akta Perubahan" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
+                                <i class="fas fa-plus-circle"></i> Tambah
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                    </div>
+                </div>
+                <!--ENDBlock Pengesahan Akta Perubahan-->
             </div>
         </div>
     </div>
@@ -843,3 +926,106 @@
 </div>
 <!--ENDModal Edit Persyaratan Administratif-->
 
+
+<!--Modal Tambah Akta Perubahan Badan Usaha Persyaratan Administratif-->
+<div class="modal fade" id="addAktaPerubahanBuPaModal" tabindex="-1" role="dialog" aria-labelledby="addAktaPerubahanBuPaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form id="form-add-akta-perubahan-bu-pa" method="post" enctype="multipart/form-data" action="{{ url('akta-perubahan-bu-pa') }}">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAktaPerubahanBuPaModalLabel">Tambah Akta Perubahan Badan Usaha</h5>
+                    <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-form-label" for="file_akta_pendirian_bu">File Akta Pendirian BU</label>
+                        <input type="file" class="form-control" name="file_akta_pendirian_bu" >
+                    </div>
+                    <div class="form-group">
+                        <label for="nama_notaris" class="col-form-label">Nama Notaris</label>
+                        <input type="text" name="nama_notaris" class="form-control"  />
+                    </div>
+                    <div class="form-group">
+                        <label for="judul_akta" class="col-form-label">Judul Akta</label>
+                        <input type="text" name="judul_akta" class="form-control"  />
+                    </div>
+                    <div class="form-group">
+                        <label for="tanggal_akta" class="col-form-label">Tanggal Akta</label>
+                        <input type="text" name="tanggal_akta" class="form-control"  />
+                    </div>
+                    <div class="form-group">
+                        <label for="nomor_akta" class="col-form-label">Nomor Akta</label>
+                        <input type="text" name="nomor_akta" class="form-control"  />
+                    </div>
+                    <div class="form-group">
+                        <label for="hal_yang_diubah" class="col-form-label">Hal Yang Dirubah</label>
+                        <textarea name="hal_yang_diubah" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="file_akta_perubahan_bu" class="col-form-label">File Akta Perubahan BU</label>
+                        <input type="file" class="form-control" name="file_akta_perubahan_bu" >
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    @csrf
+                    <input type="hidden" name="uid_verifikasi_pa" value="">
+                    <button class="btn btn-secondary btn-xs" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary btn-xs" id="btn-add-akta-perubahan-bu-pa">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--ENDModal Tambah Akta Perubahan Badan Usaha Persyaratan Administratif-->
+
+<!--Modal Tambah Pengesahan Akta Perubahan-->
+<div class="modal fade" id="addPengesahanAktaPerubahanModal" tabindex="-1" role="dialog" aria-labelledby="addPengesahanAktaPerubahanModallLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form id="form-add-pengesahan-akta-perubahan" method="post" enctype="multipart/form-data" action="{{ url('pengesahan-akta-perubahan') }}">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addPengesahanAktaPerubahanModallLabel">Tambah Pengesahan Akta Perubahan Badan Usaha</h5>
+                    <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-form-label" for="file_pengesahan_akta_perubahan">File Pengesahan Akta Perubahan</label>
+                        <input type="file" class="form-control" name="file_pengesahan_akta_perubahan" >
+                    </div>
+                    <div class="form-group">
+                        <label for="nomor" class="col-form-label">Nomor</label>
+                        <input type="text" name="nomor" class="form-control"  />
+                    </div>
+                    <div class="form-group">
+                        <label for="tentang" class="col-form-label">Tentang</label>
+                        <input type="text" name="tentang" class="form-control"  />
+                    </div>
+                    <div class="form-group">
+                        <label for="tanggal" class="col-form-label">Tanggal</label>
+                        <div class="input-group date" id="tanggal-pengesahan-akta-perubahan" data-target-input="nearest">
+                            <input type="text" id="tanggal-pengesahan-akta-perubahan" name="tanggal" class="form-control datetimepicker-input" data-target="#tanggal-pengesahan-akta-perubahan" />
+                            <div class="input-group-append" data-target="#tanggal-pengesahan-akta-perubahan" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    @csrf
+                    <input type="hidden" name="uid_verifikasi_pa" value="">
+                    <button class="btn btn-secondary btn-xs" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary btn-xs" id="btn-add-pengesahan-akta-perubahan">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--ENDModal Tambah Pengesahan Akta Perubahan-->

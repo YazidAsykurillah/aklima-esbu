@@ -9,11 +9,16 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
 use App\Permohonan;
-use App\LogPermohonan;
 use App\Asesor;
 use App\AsesorPermohonan;
+use App\LsbuWilayah;
+use App\LogPermohonan;
+use App\Sertifikat;
 
-class PermohonanController_back20200103 extends Controller
+use Event;
+use App\Events\PermohonanIsDisplayed;
+
+class PermohonanController_back20200211 extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,6 +46,17 @@ class PermohonanController_back20200103 extends Controller
     public function datatables(Request $request)
     {
         //return $request->all();
+        $user = \Auth::user();
+        //get asesor id if the user is asesor;
+        $asesor_id = NULL;
+        if($user->is_asesor == TRUE){
+            $asesor_id = $user->asesor->uid_asesor;
+        }
+
+        //get dpd id = 
+        $provinsi_id = $user->provinsi_id;
+        //return $provinsi_id;
+
 
         \DB::statement(\DB::raw('set @rownum=0'));
         if($request->has('status') && $request->status !="all"){
@@ -50,14 +66,35 @@ class PermohonanController_back20200103 extends Controller
                 'permohonan.*'
             ])
             ->where('status', '=', $request->status)
+            ->where('is_processed', '=', $request->is_processed)
             ->where('badan_usaha_uid','!=', NULL);
+
+            if($request->status == '1' && \Auth::user()->is_asesor == TRUE){
+                $permohonan->where('asesor_tt_id', '=', $asesor_id);
+            }
+            if($request->status == '4' && \Auth::user()->is_asesor == TRUE){
+                $permohonan->where('asesor_pjt_id', '=', $asesor_id);
+            }
+
+            if($provinsi_id!=NULL){
+                $permohonan->whereHas('badan_usaha.kota.provinsi', function($query) use($provinsi_id){
+                    return $query->where('uid_provinsi','=', $provinsi_id);
+                });
+            }
+
         }else{
             $permohonan = Permohonan::with(['jenis_usaha', 'badan_usaha', 'badan_usaha.bentuk_badan_usaha', 'badan_usaha.kota.provinsi', 'asesor_tenaga_teknik', 'asesor_penanggung_jawab_teknik'])
             ->select([
                 \DB::raw('@rownum  := @rownum  + 1 AS rownum'),
                 'permohonan.*'
             ])
+            ->where('status', '!=', '14')
             ->where('badan_usaha_uid','!=', NULL);
+            if($provinsi_id!=NULL){
+                $permohonan->whereHas('badan_usaha.kota.provinsi', function($query) use($provinsi_id){
+                    return $query->where('uid_provinsi','=', $provinsi_id);
+                });
+            }
         }
         
 
@@ -71,7 +108,7 @@ class PermohonanController_back20200103 extends Controller
                 $disp.= '('.$permohonan->badan_usaha->bentuk_badan_usaha->nama_singkat.')';
                 return $disp;
             })
-            ->addColumn('provinsi_badan_usaha', function($permohonan){
+            ->addColumn('provinsi_badan_usaha', function($permohonan) use($provinsi_id){
                 return $permohonan->badan_usaha->kota->provinsi->nama_provinsi;
             })
             ->addColumn('alamat_badan_usaha', function($permohonan){
@@ -80,9 +117,12 @@ class PermohonanController_back20200103 extends Controller
             ->editColumn('is_processed', function($permohonan){
                 $is_processed = '';
                 if($permohonan->is_processed == FALSE){
-                    $is_processed.='<i class="fa fa-hourglass"></i> Belum diproses';
+                    $is_processed.='<p>Belum diproses</p>';
+                    $is_processed.='<button class="btn btn-primary btn-xs btn-set-is-processed" data-uid-permohonan="'.$permohonan->uid_permohonan.'">';
+                    $is_processed.= '<i class="fa fa-check-circle"></i>';
+                    $is_processed.='</button>';
                 }else{
-                    $is_processed.='<i class="fa fa-check-circle"></i> Sudah diproses';
+                    $is_processed.='<p>Sudah diproses</p>';
                 }
                 return $is_processed;
             })
@@ -93,13 +133,18 @@ class PermohonanController_back20200103 extends Controller
                 $disp_asesor_tt = '';
                 if($permohonan->asesor_tenaga_teknik){
                     $disp_asesor_tt.= $permohonan->asesor_tenaga_teknik->nama_asesor.'<br/>';
-                    $disp_asesor_tt.= '<button class="btn btn-danger btn-xs btn-delete-asesor-tt" data-uid-permohonan-asesor="'.$permohonan->uid_permohonan_tt.'">';
-                    $disp_asesor_tt.=   '<i class="fa fa-trash"></i>';
-                    $disp_asesor_tt.= '</button>';
+                    /*if($permohonan->status == '0'){
+                        $disp_asesor_tt.= '<button class="btn btn-danger btn-xs btn-delete-asesor-tt" data-uid-permohonan-asesor="'.$permohonan->uid_permohonan_tt.'">';
+                        $disp_asesor_tt.=   '<i class="fa fa-trash"></i>';
+                        $disp_asesor_tt.= '</button>';
+                    }*/
                 }else{
-                    $disp_asesor_tt.='<button class="btn btn-info btn-xs btn-add-asesor-tt" data-uid-permohonan="'.$permohonan->uid_permohonan.'" data-provinsi-id="'.$permohonan->badan_usaha->kota->provinsi_uid.'">';
-                    $disp_asesor_tt.=   '<i class="fa fa-plus-circle"></i>';
-                    $disp_asesor_tt.='</button>';
+                    /*if($permohonan->status == '0'){
+                        $disp_asesor_tt.='<button class="btn btn-info btn-xs btn-add-asesor-tt" data-uid-permohonan="'.$permohonan->uid_permohonan.'" data-provinsi-id="'.$permohonan->badan_usaha->kota->provinsi_uid.'">';
+                        $disp_asesor_tt.=   '<i class="fa fa-plus-circle"></i>';
+                        $disp_asesor_tt.='</button>';
+                    }*/
+                    
                 }
                 return $disp_asesor_tt;
 
@@ -108,20 +153,24 @@ class PermohonanController_back20200103 extends Controller
                 $disp_asesor_pjt = '';
                 if($permohonan->asesor_penanggung_jawab_teknik){
                     $disp_asesor_pjt.= $permohonan->asesor_penanggung_jawab_teknik->nama_asesor.'<br/>';
-                    $disp_asesor_pjt.= '<button class="btn btn-danger btn-xs btn-delete-asesor-pjt" data-uid-permohonan-asesor="'.$permohonan->uid_permohonan_pjt.'">';
-                    $disp_asesor_pjt.=   '<i class="fa fa-trash"></i>';
-                    $disp_asesor_pjt.= '</button>';
+                    /*if($permohonan->status == '0'){
+                        $disp_asesor_pjt.= '<button class="btn btn-danger btn-xs btn-delete-asesor-pjt" data-uid-permohonan-asesor="'.$permohonan->uid_permohonan_pjt.'">';
+                        $disp_asesor_pjt.=   '<i class="fa fa-trash"></i>';
+                        $disp_asesor_pjt.= '</button>';
+                    }*/
                 }else{
-                    $disp_asesor_pjt.='<button class="btn btn-info btn-xs btn-add-asesor-pjt" data-uid-permohonan="'.$permohonan->uid_permohonan.'" data-provinsi-id="'.$permohonan->badan_usaha->kota->provinsi_uid.'">';
-                    $disp_asesor_pjt.=   '<i class="fa fa-plus-circle"></i>';
-                    $disp_asesor_pjt.='</button>';
+                    /*if($permohonan->status == '0'){
+                        $disp_asesor_pjt.='<button class="btn btn-info btn-xs btn-add-asesor-pjt" data-uid-permohonan="'.$permohonan->uid_permohonan.'" data-provinsi-id="'.$permohonan->badan_usaha->kota->provinsi_uid.'">';
+                        $disp_asesor_pjt.=   '<i class="fa fa-plus-circle"></i>';
+                        $disp_asesor_pjt.='</button>';
+                    }*/
                 }
                 return $disp_asesor_pjt;
 
             })
             ->addColumn('actions', function($permohonan){
                 $actions ='';
-                if($permohonan->status == '0'){
+                if($permohonan->status == '0' && $permohonan->asesor_tt_id != NULL && $permohonan->asesor_pjt_id != NULL){
                     $actions.='<button class="btn btn-primary btn-change-status btn-xs" title="Kirim ke Frontdesk" data-original-status="0" data-next-status="1" data-uid-permohonan="'.$permohonan->uid_permohonan.'">';
                     $actions.=  '<i class="fa fa-share-square"></i>';
                     $actions.='</button>';
@@ -164,10 +213,36 @@ class PermohonanController_back20200103 extends Controller
     public function show($uid_permohonan)
     {
         $permohonan = Permohonan::findOrFail($uid_permohonan);
+        $identitas_badan_usaha = $permohonan->identitas_badan_usaha;
+        $persyaratan_administratif = $permohonan->persyaratan_administratif;
+        $persyaratan_teknis = $permohonan->persyaratan_teknis;
+        $data_pengurus_dewan_komisaris = $permohonan->data_pengurus_dewan_komisaris;
+        $data_pengurus_dewan_direksi = $permohonan->data_pengurus_dewan_direksi;
+        $data_pengurus_pemegang_saham = $permohonan->data_pengurus_pemegang_saham;
+        $sertifikat = $permohonan->sertifikat;
         $log_permohonan = $permohonan->log_permohonan;
+        $akta_perubahan_bu_pa = $permohonan->akta_perubahan_bu_pa;
+        $pengesahan_akta_perubahan = $permohonan->pengesahan_akta_perubahan;
+        
+        //Fire event PermohonanIsDisplayed
+        Event::fire(new PermohonanIsDisplayed($permohonan));
+
+        $status_djk = $permohonan->status_djk;
+        //return $status_djk;
+
         return view('permohonan.show')
             ->with('permohonan', $permohonan)
-            ->with('log_permohonan', $log_permohonan);
+            ->with('identitas_badan_usaha', $identitas_badan_usaha)
+            ->with('persyaratan_administratif', $persyaratan_administratif)
+            ->with('persyaratan_teknis', $persyaratan_teknis)
+            ->with('data_pengurus_dewan_komisaris', $data_pengurus_dewan_komisaris)
+            ->with('data_pengurus_dewan_direksi', $data_pengurus_dewan_direksi)
+            ->with('data_pengurus_pemegang_saham', $data_pengurus_pemegang_saham)
+            ->with('log_permohonan', $log_permohonan)
+            ->with('akta_perubahan_bu_pa', $akta_perubahan_bu_pa)
+            ->with('pengesahan_akta_perubahan', $pengesahan_akta_perubahan)
+            ->with('sertifikat', $sertifikat)
+            ->with('status_djk', $status_djk);
     }
 
     /**
@@ -207,23 +282,31 @@ class PermohonanController_back20200103 extends Controller
     public function getIdentitasBadanUsaha($uid_permohonan)
     {
         $permohonan = Permohonan::findOrFail($uid_permohonan);
-        return response()->json($permohonan->identitas_badan_usaha);
+        return response()->json(
+            ['data'=>$permohonan->identitas_badan_usaha]
+        );
     }
 
     public function fetchPersyaratanAdministratif($uid_permohonan)
     {
         $permohonan = Permohonan::findOrFail($uid_permohonan);
-        return response()->json($permohonan->persyaratan_administratif);
+        return response()->json(
+            ['data'=>$permohonan->persyaratan_administratif]
+        );
     }
+
 
     public function changeStatus(Request $request)
     {
 
         $original_status = $request->permohonan_original_status;
         $next_status = $request->permohonan_next_status;
+        //return $request->all();
+        //Menunggu Dokumen ke Frontdesk (Asesor TT)
         if($original_status == '0' && $next_status == '1'){
-            return $this->call_api_proses_pendaftaran($request);
-        }else{
+            return $this->call_api_kirim_ke_asesor_tt($request);
+        }
+        else{
             $permohonan = Permohonan::findOrFail($request->permohonan_id_to_change);
             $permohonan->status = $next_status;
             $permohonan->save();
@@ -233,6 +316,50 @@ class PermohonanController_back20200103 extends Controller
                 ->with('successMessage', "Status permohonan berhasil diubah");    
         }
         
+    }
+
+    
+
+    protected function call_api_kirim_ke_asesor_tt($request){
+        
+        try{
+            $token = getCurrentActiveToken()['token'];
+            $original_status = $request->permohonan_original_status;
+            $next_status = $request->permohonan_next_status;
+
+            $permohonan = Permohonan::findOrFail($request->permohonan_id_to_change);
+
+            $client = new Client([
+                // Base URI is used with relative requests
+                'base_uri' => config('app.gatrik_base_uri'),
+                'verify'=>false,
+                'headers'=>[
+                    'Content-Type'=>'multipart/form-data',
+                    'Enctype'=>'multipart/form-data',
+                    'X-Lsbu-Key'=>config('app.x_lsbu_key'),
+                    'Token'=> $token
+                ],
+                'form_params' => [
+                    'uid_permohonan' => $permohonan->uid_permohonan,
+                ]
+            ]);
+            $response = $client->post('Service/Kirim-Data-Pemohon-Ke-Asesor');
+            $code = $response->getStatusCode(); // 200
+            $body = $response->getBody();
+            $contents = $body->getContents();
+            $decode = json_decode($contents);
+            
+            $permohonan->status = $next_status;
+            $permohonan->save();
+
+            $this->insertLogPermohonan($request->permohonan_id_to_change, $original_status, $request->permohonan_next_status, $request->log_description);
+            
+            return redirect()->back()
+                ->with('successMessage', $decode->message);            
+        }
+        catch(Exception $e){
+            return $e;
+        }
     }
 
     protected function call_api_proses_pendaftaran($request)
@@ -395,13 +522,16 @@ class PermohonanController_back20200103 extends Controller
     public function printCertificate(Request $request, $uid_permohonan)
     {
         $permohonan = Permohonan::findOrFail($uid_permohonan);
+        $sertifikat = $permohonan->sertifikat;
         $badan_usaha = $permohonan->badan_usaha;
         $jenis_usaha = $permohonan->jenis_usaha;
         $identitas_badan_usaha = $permohonan->identitas_badan_usaha;
         $persyaratan_administratif = $permohonan->persyaratan_administratif;
+        $persyaratan_teknis = $permohonan->persyaratan_teknis;
 
         $export_name = 'Permohonan-'.$permohonan->uid_permohonan.'.pdf';
 
+        $tanggal_cetak = Carbon::now()->format('d-M-Y');
         
 
         $data = [
@@ -410,6 +540,8 @@ class PermohonanController_back20200103 extends Controller
             'jenis_usaha'=>$jenis_usaha,
             'identitas_badan_usaha'=>$identitas_badan_usaha,
             'persyaratan_administratif'=>$persyaratan_administratif,
+            'persyaratan_teknis'=>$persyaratan_teknis,
+            'tanggal_cetak'=>$tanggal_cetak
         ];
 
         $pdf = \PDF::loadView('permohonan.print_certificate', $data);
@@ -421,7 +553,6 @@ class PermohonanController_back20200103 extends Controller
 
     public function saveAsesorPJT(Request $request)
     {
-         //return $request->all();
         try{
             $token = getCurrentActiveToken()['token'];
             //Check Permohonan
@@ -523,6 +654,135 @@ class PermohonanController_back20200103 extends Controller
         catch(Exception $e){
             return $e;
         }
-
     }
+
+
+    public function setIsProcessed(Request $request)
+    {
+        
+        try{
+            $token = getCurrentActiveToken()['token'];
+
+            $permohonan = Permohonan::findOrFail($request->uid_permohonan);
+
+            $client = new Client([
+                // Base URI is used with relative requests
+                'base_uri' => config('app.gatrik_base_uri'),
+                'verify'=>false,
+                'headers'=>[
+                    'Content-Type'=>'multipart/form-data',
+                    'Enctype'=>'multipart/form-data',
+                    'X-Lsbu-Key'=>config('app.x_lsbu_key'),
+                    'Token'=> $token
+                ],
+                'form_params' => [
+                    'uid_permohonan' => $permohonan->uid_permohonan,
+                ]
+            ]);
+            $response = $client->post('Service/Pendaftaran/Proses');
+            
+            $permohonan->is_processed = TRUE;
+            $permohonan->save();
+            
+            return redirect()->back()
+            ->with('successMessage', "Permohonan berhasil diproses");         
+        }
+        catch(Exception $e){
+            return $e;
+        }
+    }
+
+
+    public function generateNomorAgenda(Request $request)
+    {
+        $permohonan = Permohonan::findOrFail($request->uid_permohonan);
+        $ajaxResponse['response']= NULL;
+        $ajaxResponse['message']= NULL;
+        $ajaxResponse['result']= NULL;
+        
+        try{
+            $client = new Client([
+                // Base URI is used with relative requests
+                'base_uri' => config('app.gatrik_base_uri'),
+                'verify'=>false,
+                'headers'=>[
+                    'Content-Type'=>'multipart/form-data',
+                    'Enctype'=>'multipart/form-data',
+                    'X-Lsbu-Key'=>config('app.x_lsbu_key'),
+                    'Token'=> getCurrentActiveToken()['token']
+                ],
+                'form_params' => [
+                    'uid_permohonan' => $permohonan->uid_permohonan,
+                ]
+            ]);
+            $response = $client->post('Service/Generate-Nomor-Agenda');
+            $code = $response->getStatusCode(); // 200
+            $body = $response->getBody();
+            $contents = $body->getContents();
+            $decode = json_decode($contents);
+
+            
+            if($decode->response == '1'){
+                
+            }
+            $ajaxResponse['response'] = $decode->response;
+            $ajaxResponse['message'] = $decode->message;
+            $ajaxResponse['result'] = $decode->result;
+            
+        }
+        catch(GuzzleException $e){
+            $contents = $e->getResponse()->getBody()->getContents();
+            $decode = json_decode($contents);
+            $ajaxResponse['response'] = $decode->response;
+            $ajaxResponse['message'] = $decode->message;
+        }
+        return $ajaxResponse;
+    }
+
+
+    public function tarikNomorSertifikat(Request $request)
+    {
+        $permohonan = Permohonan::findOrFail($request->uid_permohonan);
+        $ajaxResponse['response']= NULL;
+        $ajaxResponse['message']= NULL;
+        $ajaxResponse['result']= NULL;
+        
+        try{
+            $client = new Client([
+                // Base URI is used with relative requests
+                'base_uri' => config('app.gatrik_base_uri'),
+                'verify'=>false,
+                'headers'=>[
+                    'Content-Type'=>'multipart/form-data',
+                    'Enctype'=>'multipart/form-data',
+                    'X-Lsbu-Key'=>config('app.x_lsbu_key'),
+                    'Token'=> getCurrentActiveToken()['token']
+                ],
+                'form_params' => [
+                    'uid_permohonan' => $permohonan->uid_permohonan,
+                ]
+            ]);
+            $response = $client->post('Service/Tarik-Status-Permohonan');
+            $code = $response->getStatusCode(); // 200
+            $body = $response->getBody();
+            $contents = $body->getContents();
+            $decode = json_decode($contents);
+
+            
+            if($decode->response == '1'){
+                
+            }
+            $ajaxResponse['response'] = $decode->response;
+            $ajaxResponse['message'] = $decode->message;
+            
+        }
+        catch(GuzzleException $e){
+            $contents = $e->getResponse()->getBody()->getContents();
+            $decode = json_decode($contents);
+            $ajaxResponse['response'] = $decode->response;
+            $ajaxResponse['message'] = $decode->message;
+        }
+        return $ajaxResponse;
+    }
+
 }

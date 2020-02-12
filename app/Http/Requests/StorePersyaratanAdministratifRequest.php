@@ -26,7 +26,7 @@ class StorePersyaratanAdministratifRequest extends FormRequest
         
         return [
             'uid_permohonan'=>'required',
-            'file_akta_pendirian_bu'=>'required',
+            'file_akta_pendirian_bu'=>'required|file|mimes:pdf|max:1000',
             'nama_notaris'=>'required',
             'judul_akta'=>'required',
             'tanggal_akta'=>'required',

@@ -148,7 +148,7 @@
                             </td>
                             <td>
                                 @if($permohonan->asesor_penanggung_jawab_teknik && $permohonan->status=='0')
-                                    <button id="btn-delete-asesor-pjt" class="btn btn-danger btn-xs" data-uid-permohonan-asesor="{{ $permohonan->uid_permohonan_pjt }}">
+                                    <button id="btn-delete-asesor-pjt" class="btn btn-danger btn-xs" data-uid-permohonan-asesor="{{ $permohonan->uid_permohonan_tt }}">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 @else
@@ -427,9 +427,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary btn-xs" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary btn-xs" id="btn-submit-asesor-tt">
-                        <i class="fa fa-save"></i> Submit
-                    </button>
+                    <button type="submit" class="btn btn-primary btn-xs" id="btn-update-status">OK</button>
                 </div>
             </form>
         </div>
@@ -439,27 +437,23 @@
 
 <!--Modal Delete Asesor TT-->
 <div class="modal fade" id="deleteAsesorTTModal" tabindex="-1" role="dialog" aria-labelledby="deleteAsesorTTModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xs" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <form id="form-delete-asesor-tt" method="post" action="{{ url('permohonan/delete-asesor-tt') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteAsesorTTModalLabel">Konfirmasi</h5>
+                    <h5 class="modal-title" id="deleteAsesorTTModalLabel">Hapus Asesor TT</h5>
                     <a href="#" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </a>
                 </div>
                 <div class="modal-body">
-                    <p class="alert alert-warning">
-                        Klik Hapus untuk menghapus asesor TT
-                    </p>
+                    
                     <input type="hidden" name="uid_permohonan_asesor_tt" id="uid_permohonan_asesor_tt" />
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-light btn-xs" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-danger btn-xs" id="btn-submit-delete-asesor-tt">
-                        <i class="fa fa-trash"></i> Hapus
-                    </button>
+                    <button class="btn btn-secondary btn-xs" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary btn-xs" id="btn-update-status">OK</button>
                 </div>
             </form>
         </div>
@@ -496,9 +490,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary btn-xs" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary btn-xs" id="btn-submit-asesor-pjt">
-                        <i class="fa fa-save"></i> Submit
-                    </button>
+                    <button type="submit" class="btn btn-primary btn-xs" id="btn-update-status">OK</button>
                 </div>
             </form>
         </div>
@@ -508,27 +500,23 @@
 
 <!--Modal Delete Asesor PJT-->
 <div class="modal fade" id="deleteAsesorPJTModal" tabindex="-1" role="dialog" aria-labelledby="deleteAsesorPJTModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xs" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <form id="form-delete-asesor-pjt" method="post" action="{{ url('permohonan/delete-asesor-pjt') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteAsesorPJTModalLabel">Konfirmasi</h5>
+                    <h5 class="modal-title" id="deleteAsesorPJTModalLabel">Hapus Asesor PJT</h5>
                     <a href="#" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </a>
                 </div>
                 <div class="modal-body">
-                    <p class="alert alert-warning">
-                        Klik Hapus untuk menghapus asesor PJT
-                    </p>
+                    
                     <input type="hidden" name="uid_permohonan_asesor_pjt" id="uid_permohonan_asesor_pjt" />
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-light btn-xs" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-danger btn-xs" id="btn-submit-delete-asesor-pjt">
-                        <i class="fa fa-trash"></i> Hapus
-                    </button>
+                    <button class="btn btn-secondary btn-xs" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary btn-xs" id="btn-update-status">OK</button>
                 </div>
             </form>
         </div>
@@ -2287,9 +2275,9 @@
         });
         //ENDHandler Change status
 
-    //Block Asesor
+
         var selected_provinsi_id = null;
-        //Block Select Asesor TT
+        //Handler Select Asesor TT
         $('#asesor_tt_id').select2({
             placeholder : 'Pilih Asesor TT',
             ajax: {
@@ -2317,115 +2305,23 @@
             },
             allowClear : true,
         });
-        //ENDBlock Select Asesor TT
-
-        //Block Add Asesor TT
+        //ENDHandler Select Asesor TT
         $('#btn-add-asesor-tt').on('click', function(){
             event.preventDefault();
             selected_provinsi_id = $(this).attr('data-provinsi-id');
             $('#uid_permohonan_to_add_asesor_tt').val($(this).attr('data-uid-permohonan'));
             $('#addAsesorTTModal').modal('show');
         });
-        $('#form-add-asesor-tt').on('submit', function(event){
-            event.preventDefault();
-            $.ajax({
-                method: 'POST',
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
-                beforeSend:function(){
-                    $('#btn-submit-asesor-tt').prop('disabled', true).html('Processing...');
-                },
-                success: function(response){
-                    console.log(response);
-                    if(response.response == 1){
-                        alertify.notify(response.message, 'success', 2, function(){
-                            $('#form-add-asesor-tt')[0].reset();
-                            location.reload();
-                        });
-                        
-                    } else{
-                        alertify.notify(response.message, 'error', 5, function(){
-                            $('#btn-submit-asesor-tt').prop('disabled', false);
-                        });
-                        
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown){
-                    let objResponse = jqXHR.responseJSON;
-                    let message = objResponse.message;
-                    let errors = objResponse.errors;
-                    let error_template = message;
-                    
-                    if(errors){
-                        $.each( errors, function( key, value ) {
-                            console.log(value);
-                            error_template += '<li>'+ value[0] + '</li>'; //showing only the first error.
-                        });
-                    }
-                    alertify.notify(error_template, textStatus, 10, function(){
-                        console.log(errors);
-                        $('#btn-submit-asesor-tt').prop('disabled', false);
-                    });
-                    
-                }
-            });
-        });
-        //ENDBlock Add Asesor TT
-
-        //Block Delete Asessor TT
+        //Handler Delete Asessor TT
         $('#btn-delete-asesor-tt').on('click', function(event){
             event.preventDefault();
             var uid_permohonan_asesor_tt = $(this).attr('data-uid-permohonan-asesor');
             $('#uid_permohonan_asesor_tt').val(uid_permohonan_asesor_tt);
             $('#deleteAsesorTTModal').modal('show');
         });
-        $('#form-delete-asesor-tt').on('submit', function(event){
-            event.preventDefault();
-            $.ajax({
-                method: 'POST',
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
-                beforeSend:function(){
-                    $('#btn-submit-delete-asesor-tt').prop('disabled', true).html('Processing...');
-                },
-                success: function(response){
-                    console.log(response);
-                    if(response.response == 1){
-                        alertify.notify(response.message, 'success', 2, function(){
-                            $('#form-delete-asesor-tt')[0].reset();
-                            location.reload();
-                        });
-                        
-                    } else{
-                        alertify.notify(response.message, 'error', 5, function(){
-                            $('#btn-submit-delete-asesor-tt').prop('disabled', false);
-                        });
-                        
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown){
-                    let objResponse = jqXHR.responseJSON;
-                    let message = objResponse.message;
-                    let errors = objResponse.errors;
-                    let error_template = message;
-                    
-                    if(errors){
-                        $.each( errors, function( key, value ) {
-                            console.log(value);
-                            error_template += '<li>'+ value[0] + '</li>'; //showing only the first error.
-                        });
-                    }
-                    alertify.notify(error_template, textStatus, 10, function(){
-                        console.log(errors);
-                        $('#btn-submit-delete-asesor-tt').prop('disabled', false);
-                    });
-                    
-                }
-            });
-        });
-        //ENDBlock Delete Asessor TT
+        //ENDHandler Delete Asessor TT
         
-        //Block Select Asesor PJT
+        //Handler Select Asesor PJT
         $('#asesor_pjt_id').select2({
             placeholder : 'Pilih Asesor PJT',
             ajax: {
@@ -2453,219 +2349,115 @@
             },
             allowClear : true,
         });
-        //ENDBlock Select Asesor PJT
-
-        //Block Add Asesor PJT
+        //ENDHandler Select Asesor PJT
         $('#btn-add-asesor-pjt').on('click', function(){
             event.preventDefault();
             selected_provinsi_id = $(this).attr('data-provinsi-id');
             $('#uid_permohonan_to_add_asesor_pjt').val($(this).attr('data-uid-permohonan'));
             $('#addAsesorPJTModal').modal('show');
         });
-        $('#form-add-asesor-pjt').on('submit', function(event){
-            event.preventDefault();
-            $.ajax({
-                method: 'POST',
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
-                beforeSend:function(){
-                    $('#btn-submit-asesor-pjt').prop('disabled', true).html('Processing...');
-                },
-                success: function(response){
-                    console.log(response);
-                    if(response.response == 1){
-                        alertify.notify(response.message, 'success', 2, function(){
-                            $('#form-add-asesor-pjt')[0].reset();
-                            location.reload();
-                        });
-                        
-                    } else{
-                        alertify.notify(response.message, 'error', 5, function(){
-                            $('#btn-submit-asesor-pjt').prop('disabled', false).html('<i class="fa fa-save"></i> Submit');
-                        });
-                        
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown){
-                    let objResponse = jqXHR.responseJSON;
-                    let message = objResponse.message;
-                    let errors = objResponse.errors;
-                    let error_template = message;
-                    
-                    if(errors){
-                        $.each( errors, function( key, value ) {
-                            console.log(value);
-                            error_template += '<li>'+ value[0] + '</li>'; //showing only the first error.
-                        });
-                    }
-                    alertify.notify(error_template, textStatus, 10, function(){
-                        console.log(errors);
-                        $('#btn-submit-asesor-pjt').prop('disabled', false).html('<i class="fa fa-save"></i> Submit');
+
+    });
+
+    //Block Generate Nomor Agenda
+    $('#btn-generate-nomor-agenda').on('click', function(event){
+        event.preventDefault();
+        let uid_permohonan = $(this).attr('data-uid_permohonan');
+        $.ajax({
+            method: 'POST',
+            url: "{{ url('permohonan/generate-nomor-agenda') }}",
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data: 'uid_permohonan='+uid_permohonan,
+            beforeSend:function(){
+                $('#btn-generate-nomor-agenda').prop('disabled', true).html('<i class="fa fa-barcode"></i> Processing..');        
+            },
+            success: function(response){
+                console.log(response);
+                if(response.response == 1){
+                    alertify.notify(response.message, 'success', 2, function(){
+                        //console.log(response);
+                        location.reload();
                     });
                     
-                }
-            });
-        });
-        //ENDBlock Add Asesor PJT
-
-        //Block Delete Asesor PJT
-        $('#btn-delete-asesor-pjt').on('click', function(event){
-            event.preventDefault();
-            var uid_permohonan_asesor_pjt = $(this).attr('data-uid-permohonan-asesor');
-            $('#uid_permohonan_asesor_pjt').val(uid_permohonan_asesor_pjt);
-            $('#deleteAsesorPJTModal').modal('show');
-        });
-
-        $('#form-delete-asesor-pjt').on('submit', function(event){
-            event.preventDefault();
-            $.ajax({
-                method: 'POST',
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
-                beforeSend:function(){
-                    $('#btn-submit-delete-asesor-pjt').prop('disabled', true).html('Processing...');
-                },
-                success: function(response){
-                    console.log(response);
-                    if(response.response == 1){
-                        alertify.notify(response.message, 'success', 2, function(){
-                            $('#form-delete-asesor-pjt')[0].reset();
-                            location.reload();
-                        });
-                        
-                    } else{
-                        alertify.notify(response.message, 'error', 5, function(){
-                            $('#btn-submit-delete-asesor-pjt').prop('disabled', false);
-                        });
-                        
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown){
-                    let objResponse = jqXHR.responseJSON;
-                    let message = objResponse.message;
-                    let errors = objResponse.errors;
-                    let error_template = message;
-                    
-                    if(errors){
-                        $.each( errors, function( key, value ) {
-                            console.log(value);
-                            error_template += '<li>'+ value[0] + '</li>'; //showing only the first error.
-                        });
-                    }
-                    alertify.notify(error_template, textStatus, 10, function(){
-                        console.log(errors);
-                        $('#btn-submit-delete-asesor-pjt').prop('disabled', false);
-                    });
-                    
-                }
-            });
-        });
-        //ENDBlock Delete Asesor PJT
-    //ENDBlock Asesor
-
-        //Block Generate Nomor Agenda
-        $('#btn-generate-nomor-agenda').on('click', function(event){
-            event.preventDefault();
-            let uid_permohonan = $(this).attr('data-uid_permohonan');
-            $.ajax({
-                method: 'POST',
-                url: "{{ url('permohonan/generate-nomor-agenda') }}",
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data: 'uid_permohonan='+uid_permohonan,
-                beforeSend:function(){
-                    $('#btn-generate-nomor-agenda').prop('disabled', true).html('<i class="fa fa-barcode"></i> Processing..');        
-                },
-                success: function(response){
-                    console.log(response);
-                    if(response.response == 1){
-                        alertify.notify(response.message, 'success', 2, function(){
-                            //console.log(response);
-                            location.reload();
-                        });
-                        
-                    } else{
-                        alertify.notify(response.message, 'error', 5, function(){
-                            $('#btn-generate-nomor-agenda').prop('disabled', false).html('<i class="fa fa-barcode"></i> Generate Nomor Agenda');
-                        });
-                        
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown){
-                    let objResponse = jqXHR.responseJSON;
-                    let message = objResponse.message;
-                    let errors = objResponse.errors;
-                    let error_template = message;
-                    
-                    if(errors){
-                        $.each( errors, function( key, value ) {
-                            console.log(value);
-                            error_template += '<li>'+ value[0] + '</li>'; //showing only the first error.
-                        });
-                    }
-                    alertify.notify(error_template, textStatus, 5, function(){
-                        console.log(errors);
+                } else{
+                    alertify.notify(response.message, 'error', 5, function(){
                         $('#btn-generate-nomor-agenda').prop('disabled', false).html('<i class="fa fa-barcode"></i> Generate Nomor Agenda');
                     });
                     
                 }
-            });
-
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                let objResponse = jqXHR.responseJSON;
+                let message = objResponse.message;
+                let errors = objResponse.errors;
+                let error_template = message;
+                
+                if(errors){
+                    $.each( errors, function( key, value ) {
+                        console.log(value);
+                        error_template += '<li>'+ value[0] + '</li>'; //showing only the first error.
+                    });
+                }
+                alertify.notify(error_template, textStatus, 5, function(){
+                    console.log(errors);
+                    $('#btn-generate-nomor-agenda').prop('disabled', false).html('<i class="fa fa-barcode"></i> Generate Nomor Agenda');
+                });
+                
+            }
         });
-        //ENDBlock Generate Nomor Agenda
 
-        //Block Tarik Nomor Sertifikat
-        $('#btn-tarik-nomor-sertifikat').on('click', function(event){
-            event.preventDefault();
-            let uid_permohonan = $(this).attr('data-uid_permohonan');
-            $.ajax({
-                method: 'POST',
-                url: "{{ url('permohonan/tarik-nomor-sertifikat') }}",
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data: 'uid_permohonan='+uid_permohonan,
-                beforeSend:function(){
-                    $('#btn-tarik-nomor-sertifikat').prop('disabled', true).html('<i class="fa fa-barcode"></i> Processing..');        
-                },
-                success: function(response){
-                    console.log(response);
-                    if(response.response == 1){
-                        alertify.notify(response.message, 'success', 2, function(){
-                            //console.log(response);
-                            location.reload();
-                        });
-                        
-                    } else{
-                        alertify.notify(response.message, 'error', 5, function(){
-                            $('#btn-tarik-nomor-sertifikat').prop('disabled', false).html('<i class="fa fa-barcode"></i> Tarik Nomor Sertifikat');
-                        });
-                        
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown){
-                    let objResponse = jqXHR.responseJSON;
-                    let message = objResponse.message;
-                    let errors = objResponse.errors;
-                    let error_template = message;
+    });
+    //ENDBlock Generate Nomor Agenda
+
+    //Block Tarik Nomor Sertifikat
+    $('#btn-tarik-nomor-sertifikat').on('click', function(event){
+        event.preventDefault();
+        let uid_permohonan = $(this).attr('data-uid_permohonan');
+        $.ajax({
+            method: 'POST',
+            url: "{{ url('permohonan/tarik-nomor-sertifikat') }}",
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            data: 'uid_permohonan='+uid_permohonan,
+            beforeSend:function(){
+                $('#btn-tarik-nomor-sertifikat').prop('disabled', true).html('<i class="fa fa-barcode"></i> Processing..');        
+            },
+            success: function(response){
+                console.log(response);
+                if(response.response == 1){
+                    alertify.notify(response.message, 'success', 2, function(){
+                        //console.log(response);
+                        location.reload();
+                    });
                     
-                    if(errors){
-                        $.each( errors, function( key, value ) {
-                            console.log(value);
-                            error_template += '<li>'+ value[0] + '</li>'; //showing only the first error.
-                        });
-                    }
-                    alertify.notify(error_template, textStatus, 5, function(){
-                        console.log(errors);
+                } else{
+                    alertify.notify(response.message, 'error', 5, function(){
                         $('#btn-tarik-nomor-sertifikat').prop('disabled', false).html('<i class="fa fa-barcode"></i> Tarik Nomor Sertifikat');
                     });
                     
                 }
-            });
-
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                let objResponse = jqXHR.responseJSON;
+                let message = objResponse.message;
+                let errors = objResponse.errors;
+                let error_template = message;
+                
+                if(errors){
+                    $.each( errors, function( key, value ) {
+                        console.log(value);
+                        error_template += '<li>'+ value[0] + '</li>'; //showing only the first error.
+                    });
+                }
+                alertify.notify(error_template, textStatus, 5, function(){
+                    console.log(errors);
+                    $('#btn-tarik-nomor-sertifikat').prop('disabled', false).html('<i class="fa fa-barcode"></i> Tarik Nomor Sertifikat');
+                });
+                
+            }
         });
-        //ENDBlock Tarik Nomor Sertifikat
 
     });
-
-    
+    //ENDBlock Tarik Nomor Sertifikat
 
 </script>
 @endsection

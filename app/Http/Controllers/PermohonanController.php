@@ -13,6 +13,7 @@ use App\Asesor;
 use App\AsesorPermohonan;
 use App\LsbuWilayah;
 use App\LogPermohonan;
+use App\Sertifikat;
 
 use Event;
 use App\Events\PermohonanIsDisplayed;
@@ -132,17 +133,17 @@ class PermohonanController extends Controller
                 $disp_asesor_tt = '';
                 if($permohonan->asesor_tenaga_teknik){
                     $disp_asesor_tt.= $permohonan->asesor_tenaga_teknik->nama_asesor.'<br/>';
-                    if($permohonan->status == '0'){
+                    /*if($permohonan->status == '0'){
                         $disp_asesor_tt.= '<button class="btn btn-danger btn-xs btn-delete-asesor-tt" data-uid-permohonan-asesor="'.$permohonan->uid_permohonan_tt.'">';
                         $disp_asesor_tt.=   '<i class="fa fa-trash"></i>';
                         $disp_asesor_tt.= '</button>';
-                    }
+                    }*/
                 }else{
-                    if($permohonan->status == '0'){
+                    /*if($permohonan->status == '0'){
                         $disp_asesor_tt.='<button class="btn btn-info btn-xs btn-add-asesor-tt" data-uid-permohonan="'.$permohonan->uid_permohonan.'" data-provinsi-id="'.$permohonan->badan_usaha->kota->provinsi_uid.'">';
                         $disp_asesor_tt.=   '<i class="fa fa-plus-circle"></i>';
                         $disp_asesor_tt.='</button>';
-                    }
+                    }*/
                     
                 }
                 return $disp_asesor_tt;
@@ -152,17 +153,17 @@ class PermohonanController extends Controller
                 $disp_asesor_pjt = '';
                 if($permohonan->asesor_penanggung_jawab_teknik){
                     $disp_asesor_pjt.= $permohonan->asesor_penanggung_jawab_teknik->nama_asesor.'<br/>';
-                    if($permohonan->status == '0'){
+                    /*if($permohonan->status == '0'){
                         $disp_asesor_pjt.= '<button class="btn btn-danger btn-xs btn-delete-asesor-pjt" data-uid-permohonan-asesor="'.$permohonan->uid_permohonan_pjt.'">';
                         $disp_asesor_pjt.=   '<i class="fa fa-trash"></i>';
                         $disp_asesor_pjt.= '</button>';
-                    }
+                    }*/
                 }else{
-                    if($permohonan->status == '0'){
+                    /*if($permohonan->status == '0'){
                         $disp_asesor_pjt.='<button class="btn btn-info btn-xs btn-add-asesor-pjt" data-uid-permohonan="'.$permohonan->uid_permohonan.'" data-provinsi-id="'.$permohonan->badan_usaha->kota->provinsi_uid.'">';
                         $disp_asesor_pjt.=   '<i class="fa fa-plus-circle"></i>';
                         $disp_asesor_pjt.='</button>';
-                    }
+                    }*/
                 }
                 return $disp_asesor_pjt;
 
@@ -218,7 +219,10 @@ class PermohonanController extends Controller
         $data_pengurus_dewan_komisaris = $permohonan->data_pengurus_dewan_komisaris;
         $data_pengurus_dewan_direksi = $permohonan->data_pengurus_dewan_direksi;
         $data_pengurus_pemegang_saham = $permohonan->data_pengurus_pemegang_saham;
+        $sertifikat = $permohonan->sertifikat;
         $log_permohonan = $permohonan->log_permohonan;
+        $akta_perubahan_bu_pa = $permohonan->akta_perubahan_bu_pa;
+        $pengesahan_akta_perubahan = $permohonan->pengesahan_akta_perubahan;
         
         //Fire event PermohonanIsDisplayed
         Event::fire(new PermohonanIsDisplayed($permohonan));
@@ -235,6 +239,9 @@ class PermohonanController extends Controller
             ->with('data_pengurus_dewan_direksi', $data_pengurus_dewan_direksi)
             ->with('data_pengurus_pemegang_saham', $data_pengurus_pemegang_saham)
             ->with('log_permohonan', $log_permohonan)
+            ->with('akta_perubahan_bu_pa', $akta_perubahan_bu_pa)
+            ->with('pengesahan_akta_perubahan', $pengesahan_akta_perubahan)
+            ->with('sertifikat', $sertifikat)
             ->with('status_djk', $status_djk);
     }
 
@@ -397,7 +404,9 @@ class PermohonanController extends Controller
 
     public function saveAsesorTT(Request $request)
     {
-        // return $request->all();
+        $ajaxResponse['response']= NULL;
+        $ajaxResponse['message']= NULL;
+        $ajaxResponse['result']= NULL;
         try{
             $token = getCurrentActiveToken()['token'];
             //Check Permohonan
@@ -427,44 +436,50 @@ class PermohonanController extends Controller
             $contents = $body->getContents();
             $decode = json_decode($contents);
 
-            //get uid_permohonan_asesor from response;
-            $uid_permohonan_asesor = $decode->uid_permohonan_asesor;
-            
-            //update asseor_tt_id property of Permohonan;
-            $permohonan->asesor_tt_id = $asesor->uid_asesor;
-            $permohonan->save();
+            if($decode->response == '1'){
+                //get uid_permohonan_asesor from response;
+                $uid_permohonan_asesor = $decode->uid_permohonan_asesor;
+                
+                //update asseor_tt_id property of Permohonan;
+                $permohonan->asesor_tt_id = $asesor->uid_asesor;
+                $permohonan->save();
 
 
-            //insert data to asesor_permohonan table
-            $data_asesor_permohonan = [
-                'type'=>'tt',
-                'uid_permohonan'=>$permohonan->uid_permohonan,
-                'uid_asesor'=>$asesor->uid_asesor,
-                'uid_permohonan_asesor'=>$uid_permohonan_asesor
-            ];
-            \DB::table('asesor_permohonan')->insert($data_asesor_permohonan);
-            
-
-            return redirect()->back()
-                ->with('successMessage', "Data Asesor TT berhasil ditambahkan");            
+                //insert data to asesor_permohonan table
+                $data_asesor_permohonan = [
+                    'type'=>'tt',
+                    'uid_permohonan'=>$permohonan->uid_permohonan,
+                    'uid_asesor'=>$asesor->uid_asesor,
+                    'uid_permohonan_asesor'=>$uid_permohonan_asesor
+                ];
+                \DB::table('asesor_permohonan')->insert($data_asesor_permohonan);
+                
+            }
+            $ajaxResponse['response'] = $decode->response;
+            $ajaxResponse['message'] = $decode->message;
+            $ajaxResponse['result'] = $decode->result;            
         }
-        catch(Exception $e){
-            return $e;
+        catch(GuzzleException $e){
+            $contents = $e->getResponse()->getBody()->getContents();
+            $decode = json_decode($contents);
+            $ajaxResponse['response'] = $decode->response;
+            $ajaxResponse['message'] = $decode->message;
         }
+        return $ajaxResponse;
     }
 
     //Delete Asesor TT
     public function deleteAsesorTT(Request $request)
     {
-        
-
+        $ajaxResponse['response']= NULL;
+        $ajaxResponse['message']= NULL;
+        $ajaxResponse['result']= NULL;
         try{
             $token = getCurrentActiveToken()['token'];
             $asesor_permohonan = AsesorPermohonan::findOrFail($request->uid_permohonan_asesor_tt);
 
             //Check Permohonan
             $permohonan = Permohonan::findOrFail($asesor_permohonan->uid_permohonan);
-
 
             $client = new Client([
                 // Base URI is used with relative requests
@@ -486,20 +501,25 @@ class PermohonanController extends Controller
             $body = $response->getBody();
             $contents = $body->getContents();
             $decode = json_decode($contents);
+            if($decode->response == '1'){
+                //Delete Asesor Permohonan
+                $asesor_permohonan->delete();
 
-            //Delete Asesor Permohonan
-            $asesor_permohonan->delete();
-
-            //RESET asesor_tt_id of permohonan to NULL;
-            $permohonan->asesor_tt_id = NULL;
-            $permohonan->save();
-
-            return redirect()->back()
-                ->with('successMessage', "Data Asesor TT berhasil dihapus");            
+                //RESET asesor_tt_id of permohonan to NULL;
+                $permohonan->asesor_tt_id = NULL;
+                $permohonan->save();
+            }
+            
+            $ajaxResponse['response'] = $decode->response;
+            $ajaxResponse['message'] = $decode->message;     
         }
-        catch(Exception $e){
-            return $e;
+        catch(GuzzleException $e){
+            $contents = $e->getResponse()->getBody()->getContents();
+            $decode = json_decode($contents);
+            $ajaxResponse['response'] = $decode->response;
+            $ajaxResponse['message'] = $decode->message;
         }
+        return $ajaxResponse;
 
     }
 
@@ -512,40 +532,12 @@ class PermohonanController extends Controller
         $logPermohonan->save();
     }
 
-    public function printCertificate(Request $request, $uid_permohonan)
-    {
-        $permohonan = Permohonan::findOrFail($uid_permohonan);
-        $sertifikat = $permohonan->sertifikat;
-        $badan_usaha = $permohonan->badan_usaha;
-        $jenis_usaha = $permohonan->jenis_usaha;
-        $identitas_badan_usaha = $permohonan->identitas_badan_usaha;
-        $persyaratan_administratif = $permohonan->persyaratan_administratif;
-        $persyaratan_teknis = $permohonan->persyaratan_teknis;
-
-        $export_name = 'Permohonan-'.$permohonan->uid_permohonan.'.pdf';
-
-        $tanggal_cetak = Carbon::now()->format('d-M-Y');
-        
-
-        $data = [
-            'permohonan' => $permohonan,
-            'badan_usaha'=>$badan_usaha,
-            'jenis_usaha'=>$jenis_usaha,
-            'identitas_badan_usaha'=>$identitas_badan_usaha,
-            'persyaratan_administratif'=>$persyaratan_administratif,
-            'persyaratan_teknis'=>$persyaratan_teknis,
-            'tanggal_cetak'=>$tanggal_cetak
-        ];
-
-        $pdf = \PDF::loadView('permohonan.print_certificate', $data);
-
-
-        return $pdf->stream($export_name);
-    }
-
 
     public function saveAsesorPJT(Request $request)
     {
+        $ajaxResponse['response']= NULL;
+        $ajaxResponse['message']= NULL;
+        $ajaxResponse['result']= NULL;
         try{
             $token = getCurrentActiveToken()['token'];
             //Check Permohonan
@@ -575,36 +567,45 @@ class PermohonanController extends Controller
             $contents = $body->getContents();
             $decode = json_decode($contents);
 
-            //get uid_permohonan_asesor from response;
-            $uid_permohonan_asesor = $decode->uid_permohonan_asesor;
+            if($decode->response =='1'){
+                //get uid_permohonan_asesor from response;
+                $uid_permohonan_asesor = $decode->uid_permohonan_asesor;
+                
+                //update asesor_pjt_id property of Permohonan;
+                $permohonan->asesor_pjt_id = $asesor->uid_asesor;
+                $permohonan->save();
+
+
+                //insert data to asesor_permohonan table
+                $data_asesor_permohonan = [
+                    'type'=>'pjt',
+                    'uid_permohonan'=>$permohonan->uid_permohonan,
+                    'uid_asesor'=>$asesor->uid_asesor,
+                    'uid_permohonan_asesor'=>$uid_permohonan_asesor
+                ];
+            }
             
-            //update asesor_pjt_id property of Permohonan;
-            $permohonan->asesor_pjt_id = $asesor->uid_asesor;
-            $permohonan->save();
-
-
-            //insert data to asesor_permohonan table
-            $data_asesor_permohonan = [
-                'type'=>'pjt',
-                'uid_permohonan'=>$permohonan->uid_permohonan,
-                'uid_asesor'=>$asesor->uid_asesor,
-                'uid_permohonan_asesor'=>$uid_permohonan_asesor
-            ];
             \DB::table('asesor_permohonan')->insert($data_asesor_permohonan);
             
-
-            return redirect()->back()
-                ->with('successMessage', "Data Asesor PJT berhasil ditambahkan");            
+            $ajaxResponse['response'] = $decode->response;
+            $ajaxResponse['message'] = $decode->message;
+            $ajaxResponse['result'] = $decode->result;          
         }
-        catch(Exception $e){
-            return $e;
+        catch(GuzzleException $e){
+            $contents = $e->getResponse()->getBody()->getContents();
+            $decode = json_decode($contents);
+            $ajaxResponse['response'] = $decode->response;
+            $ajaxResponse['message'] = $decode->message;
         }
+        return $ajaxResponse;
     }
 
     //Delete Asesor PJT
     public function deleteAsesorPJT(Request $request)
     {
-        //return $request->all();
+        $ajaxResponse['response']= NULL;
+        $ajaxResponse['message']= NULL;
+        $ajaxResponse['result']= NULL;
         try{
             $token = getCurrentActiveToken()['token'];
             $asesor_permohonan = AsesorPermohonan::findOrFail($request->uid_permohonan_asesor_pjt);
@@ -633,20 +634,24 @@ class PermohonanController extends Controller
             $body = $response->getBody();
             $contents = $body->getContents();
             $decode = json_decode($contents);
+            if($decode->response == '1'){
+                //Delete Asesor Permohonan
+                $asesor_permohonan->delete();
 
-            //Delete Asesor Permohonan
-            $asesor_permohonan->delete();
-
-            //RESET asesor_pjt_id of permohonan to NULL;
-            $permohonan->asesor_pjt_id = NULL;
-            $permohonan->save();
-
-            return redirect()->back()
-                ->with('successMessage', "Data Asesor PJT berhasil dihapus");            
+                //RESET asesor_pjt_id of permohonan to NULL;
+                $permohonan->asesor_pjt_id = NULL;
+                $permohonan->save();    
+            }
+            $ajaxResponse['response'] = $decode->response;
+            $ajaxResponse['message'] = $decode->message;     
         }
-        catch(Exception $e){
-            return $e;
+        catch(GuzzleException $e){
+            $contents = $e->getResponse()->getBody()->getContents();
+            $decode = json_decode($contents);
+            $ajaxResponse['response'] = $decode->response;
+            $ajaxResponse['message'] = $decode->message;
         }
+        return $ajaxResponse;
     }
 
 

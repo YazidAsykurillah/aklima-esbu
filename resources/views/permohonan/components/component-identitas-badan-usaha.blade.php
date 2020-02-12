@@ -63,7 +63,7 @@
                             <td style="width: 30%;">Tanggal Surat</td>
                             <td style="width: 5%;">:</td>
                             <td style="" id="ibu_holder_tanggal_surat">
-                                {{ $identitas_badan_usaha->tanggal_surat }}
+                                {{ indonesian_date($identitas_badan_usaha->tanggal_surat) }}
                             </td>
                         </tr>
                         <tr>

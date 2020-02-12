@@ -26,7 +26,7 @@ class UpdateIdentitasBadanUsahaRequest extends FormRequest
         return [
             'uid_verifikasi_ibu'=>'required',
             'uid_permohonan'=>'required',
-            'file_surat_permohonan_sbu_edit'=>'required|file|mimes:pdf|max:2048',
+            'file_surat_permohonan_sbu_edit'=>'required|file|mimes:pdf|max:1000',
             'nomor_surat_edit'=>'required',
             'perihal_edit'=>'required',
             'tanggal_surat_edit'=>'required',

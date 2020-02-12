@@ -188,6 +188,7 @@ class PersyaratanTeknisPenanggungJawabTeknikController extends Controller
 
             
             if($decode->response == '1'){
+                PersyaratanTeknisPenanggungJawabTeknis::where('uid_verifikasi_pt','=', $persyaratan_teknis->uid_verifikasi_pt)->where('uid_permohonan', '=', $permohonan->uid_permohonan)->delete();
                 foreach($decode->result as $res){
                     PersyaratanTeknisPenanggungJawabTeknis::updateOrCreate(
                         [

@@ -18,4 +18,14 @@ class Sertifikat extends Model
     {
     	return $this->belongsTo('App\Permohonan', 'uid_permohonan', 'uid_permohonan');
     }
+
+    public function sub_bidang()
+    {
+        return $this->belongsTo('App\SubBidang', 'uid_sub_bidang');
+    }
+
+    public function jenis_usaha()
+    {
+        return $this->belongsTo('App\JenisUsaha', 'uid_jenis_usaha');
+    }
 }

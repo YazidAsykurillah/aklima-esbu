@@ -181,6 +181,19 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::post('data-pengurus-pemegang-saham/pull-from-gatrik', 'DataPengurusPemegangSahamController@pullFromGatrik');
 	Route::resource('data-pengurus-pemegang-saham', 'DataPengurusPemegangSahamController');
 
+
+	//Akta Perubahan BU Persyaratan Administratif
+	Route::post('akta-perubahan-bu-pa/pull-from-gatrik', 'AktaPerubahanBuPaController@pullFromGatrik');
+	Route::resource('akta-perubahan-bu-pa', 'AktaPerubahanBuPaController');
+
+	//Pengesahan Akta Perubahan
+	Route::post('pengesahan-akta-perubahan/pull-from-gatrik', 'PengesahanAktaPerubahanController@pullFromGatrik');
+	Route::resource('pengesahan-akta-perubahan', 'PengesahanAktaPerubahanController');
+
+
+	//Sertifikat
+	Route::get('sertifikat/{id}/print-pdf', 'SertifikatController@printPdf');
+	Route::resource('sertifikat', 'SertifikatController');
 	//Configuration
 		Route::post('configuration/service-integrator/generate-token', 'ConfigurationController@generateToken');
 		Route::post('configuration/service-integrator/test-connection', 'ConfigurationController@testConnection');
