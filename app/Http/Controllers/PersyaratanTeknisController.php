@@ -13,6 +13,7 @@ use App\Permohonan;
 use App\SubBidang;
 use App\LsbuWilayah;
 use App\PersyaratanTeknis;
+use App\LingkupPekerjaanLSBU;
 
 use Event;
 use App\Events\PersyaratanTeknisIsDeleted;
@@ -238,15 +239,25 @@ class PersyaratanTeknisController extends Controller
 
     public function selectSubBidang(Request $request)
     {
+        $filter_sub_bidang_id = [];
+        $lingkup_pekerjaan_lsbu = LingkupPekerjaanLSBU::where('uid_jenis_usaha', '=', $request->jenis_usaha_uid)->get();
+        if(count($lingkup_pekerjaan_lsbu)){
+            foreach($lingkup_pekerjaan_lsbu as $lpl){
+                $filter_sub_bidang_id[] = $lpl->uid_sub_bidang;
+            }
+        }
+
         $data = [];
         if($request->has('q')){
             $search = $request->q;
             $data = SubBidang::where('nama_sub_bidang', 'LIKE', "%$search%")
                     ->where('uid_jenis_usaha', '=', $request->jenis_usaha_uid)
+                    ->whereIn('uid_sub_bidang',$filter_sub_bidang_id)
                     ->get();
         }
         else{
             $data = SubBidang::where('uid_jenis_usaha', '=', $request->jenis_usaha_uid)
+                    ->whereIn('uid_sub_bidang',$filter_sub_bidang_id)
                     ->get();
         }
         return response()->json($data);

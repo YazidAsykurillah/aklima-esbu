@@ -8,9 +8,9 @@
                 <div class="toolbar ml-auto">
                     <!--Show document action if only status is Menunggu Dokumen (0) -->
                     @if($permohonan->status == '0')
-                        <button type="button" id="btn-pull-ibu-trigger" class="btn btn-light btn-xs" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
+                        <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#pullIBUModal">
                             <i class="fas fa-sync"></i> Tarik
-                        </button>
+                        </a>
                         @if(is_null($permohonan->identitas_badan_usaha))
                             
                             <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#addIBUModal">
@@ -92,7 +92,7 @@
 <div class="modal fade" id="pullIBUModal" tabindex="-1" role="dialog" aria-labelledby="pullIBUModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form id="form-pull-identitas-badan-usaha" method="post" enctype="multipart/form-data" action="{{ url('identitas-badan-usaha/pull-from-gatrik') }}">
+            <form id="form-pull-identitas-badan-usaha" method="post" enctype="multipart/form-data" action="{{ url('identitas-badan-usaha/pull-from-gatrik/'.$permohonan->uid_permohonan.'') }}">
                 <div class="modal-header">
                     <h5 class="modal-title" id="pullIBUModalLabel">Tarik Identitas Badan Usaha</h5>
                     <a href="#" class="close" data-dismiss="modal" aria-label="Close">
@@ -104,7 +104,6 @@
                     <p>Tarik data Identitas Badan Usaha dari gatrik</p>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="uid_permohonan">
                     <button class="btn btn-secondary btn-xs" data-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary btn-xs" id="btn-pull-ibu">Tarik</button>
                 </div>

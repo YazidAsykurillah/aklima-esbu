@@ -572,7 +572,7 @@
                         });
                     } else{
                         alertify.notify(response.message, 'error', 5, function(){  console.log('dismissed'); });
-                        $('#btn-add-ibu').prop('disabled', false).html('Edit');
+                        $('#btn-add-ibu').prop('disabled', false).html('Tambah');
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown){
@@ -665,6 +665,63 @@
             });
         });
         //ENDHandler Show Edit IBU Modal
+
+
+        //Handler Pull IBU Trigger
+            $('#btn-pull-ibu-trigger').on('click', function(event){
+                event.preventDefault();
+                $('#form-pull-identitas-badan-usaha').find("input[name=uid_permohonan]").val($(this).attr('data-uid_permohonan'));
+                $('#pullIBUModal').modal('show');
+            });
+        //ENDHandler Pull IBU Trigger
+
+        //Hanlder pull IBU submission
+        $('#form-pull-identitas-badan-usaha').on('submit', function(event){
+            event.preventDefault();
+            $.ajax({
+                method: 'POST',
+                url: $(this).attr('action'), 
+                data: $(this).serialize(),
+                beforeSend:function(){
+                    $('#btn-pull-ibu').prop('disabled', true);
+                },
+                success: function(response){
+                    console.log(response);
+                    if(response.response == 1){
+                        $('#pullIBUModal').modal('hide');
+                        alertify.notify(response.message, 'success', 2, function(){
+                            location.reload();
+                        });
+                       
+                    } else{
+                        
+                        alertify.notify(response.message, 'error', 5, function(){  console.log('dismissed'); });
+                        $('#btn-pull-ibu').prop('disabled', false).html('Tarik');
+                        $("#form-pull-persyaratan-administratif")[0].reset();
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    let objResponse = jqXHR.responseJSON;
+                    console.log(objResponse);
+                    let message = objResponse.message;
+                    let errors = objResponse.errors;
+                    let error_template = message;
+                    console.log(message);
+                    console.log(errors);
+                        if(errors){
+                            $.each( errors, function( key, value ) {
+                                console.log(value);
+                                error_template += '<li>'+ value[0] + '</li>'; //showing only the first error.
+                            });
+                        }
+                    alertify.notify(error_template, textStatus, 10, function(){});
+                    $('#btn-pull-ibu').prop('disabled', false).html('Tarik');
+
+                }
+            });
+
+        });
+        //ENDHanlder pull IBU submission
 
     //ENDBlock Identitas Badan Usaha
 

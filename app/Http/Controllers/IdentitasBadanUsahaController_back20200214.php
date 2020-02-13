@@ -18,7 +18,7 @@ use App\IdentitasBadanUsaha;
 use Event;
 use App\Events\IdentitasBadanUsahaIsUploaded;
 
-class IdentitasBadanUsahaController extends Controller
+class IdentitasBadanUsahaController_back20200214 extends Controller
 {
     protected $link_file_surat_permohonan_sbu = "";
 
@@ -82,7 +82,7 @@ class IdentitasBadanUsahaController extends Controller
             ],
             'form_params' => [
                 'uid_permohonan' => $permohonan->uid_permohonan,
-                'file_surat_permohonan_sbu'=>$request->has('file_surat_permohonan_sbu') ? base64_encode(file_get_contents($request->file_surat_permohonan_sbu)) : NULL,
+                'file_surat_permohonan_sbu'=>base64_encode(file_get_contents($request->file_surat_permohonan_sbu)),
                 'nomor_surat'=>$request->nomor_surat,
                 'perihal'=>$request->perihal,
                 'tanggal_surat'=>Carbon::parse($request->tanggal_surat)->format('d-m-Y'),
@@ -98,21 +98,18 @@ class IdentitasBadanUsahaController extends Controller
             $contents = $body->getContents();
             $decode = json_decode($contents);
 
-            //Fire event IdentitasBadanUsahaIsUploaded
-            Event::fire(new IdentitasBadanUsahaIsUploaded($permohonan));
-
             $ajaxResponse['response'] = $decode->response;
             $ajaxResponse['message'] = $decode->message;
             $ajaxResponse['result'] = $decode->result;
             
+            //Fire event IdentitasBadanUsahaIsUploaded
+            Event::fire(new IdentitasBadanUsahaIsUploaded($permohonan));
+
+            return $ajaxResponse;
         }
         catch(GuzzleException $e){
-            $contents = $e->getResponse()->getBody()->getContents();
-            $decode = json_decode($contents);
-            $ajaxResponse['response'] = $decode->response;
-            $ajaxResponse['message'] = $decode->message;
+            return $e;
         }
-        return $ajaxResponse;
     }
 
     
@@ -172,13 +169,12 @@ class IdentitasBadanUsahaController extends Controller
 
     
 
-    public function pullFromGatrik(Request $request)
+    public function pullFromGatrik($uid_permohonan = NULL)
     {
 
-        $permohonan = Permohonan::findOrFail($request->uid_permohonan);
-        $ajaxResponse['response']= NULL;
-        $ajaxResponse['message']= NULL;
-        $ajaxResponse['result']= NULL;
+        $permohonan = Permohonan::findOrFail($uid_permohonan);
+        $token = getCurrentActiveToken()['token'];
+        
         try{
             $client = new Client([
                 // Base URI is used with relative requests
@@ -188,7 +184,7 @@ class IdentitasBadanUsahaController extends Controller
                     'Content-Type'=>'multipart/form-data',
                     'Enctype'=>'multipart/form-data',
                     'X-Lsbu-Key'=>config('app.x_lsbu_key'),
-                    'Token'=> getCurrentActiveToken()['token']
+                    'Token'=> $token
                 ],
                 'form_params' => [
                     'uid_permohonan' => $permohonan->uid_permohonan,
@@ -216,20 +212,18 @@ class IdentitasBadanUsahaController extends Controller
                         ]
                     );
                 }
+                return redirect()->back()
+                    ->with('successMessage', $decode->message);
             }
-            $ajaxResponse['response'] = $decode->response;
-            $ajaxResponse['message'] = $decode->message;
-            $ajaxResponse['result'] = $decode->result;
             
         }
         catch(GuzzleException $e){
             $contents = $e->getResponse()->getBody()->getContents();
             $decode = json_decode($contents);
-            $ajaxResponse['response'] = $decode->response;
-            $ajaxResponse['message'] = $decode->message;
+            return redirect()->back()
+                ->with('warningMessage', $decode->message);
             
         }
-        return $ajaxResponse;
     }
 
 
