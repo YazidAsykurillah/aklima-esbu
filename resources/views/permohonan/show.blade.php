@@ -782,6 +782,7 @@
                         fetchPersyaratanAdministratif();
                         $('#btn-add-pa').prop('disabled', false).html('Tambah');
                         $("#form-tambah-persyaratan-administratif")[0].reset();
+                        location.reload();
                     } else{
                         console.log(response);
                     }

@@ -214,6 +214,10 @@ class PermohonanController extends Controller
     public function show($uid_permohonan)
     {
         $permohonan = Permohonan::findOrFail($uid_permohonan);
+        
+        //Fire event PermohonanIsDisplayed
+        Event::fire(new PermohonanIsDisplayed($permohonan));
+
         $identitas_badan_usaha = $permohonan->identitas_badan_usaha;
         $persyaratan_administratif = $permohonan->persyaratan_administratif;
         $persyaratan_teknis = $permohonan->persyaratan_teknis;
@@ -225,8 +229,7 @@ class PermohonanController extends Controller
         $akta_perubahan_bu_pa = $permohonan->akta_perubahan_bu_pa;
         $pengesahan_akta_perubahan = $permohonan->pengesahan_akta_perubahan;
         
-        //Fire event PermohonanIsDisplayed
-        Event::fire(new PermohonanIsDisplayed($permohonan));
+        
 
         $status_djk = $permohonan->status_djk;
         //return $status_djk;

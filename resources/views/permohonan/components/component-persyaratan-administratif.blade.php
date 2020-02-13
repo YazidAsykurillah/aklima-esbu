@@ -3,22 +3,22 @@
         <div class="card">
             <div class="card-header d-flex">
                 <h4 class="card-header-title">
-                   <i class="fas fa-file-alt"></i> Persyaratan Administratif
+                   <i class="fa fa-file-alt"></i> Persyaratan Administratif
                 </h4>
                 <div class="toolbar ml-auto">
                     <!--Show document action if only status is Menunggu Dokumen (0) -->
                     @if($permohonan->status == '0')
                         <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#pullPAModal">
-                            <i class="fas fa-sync"></i> Tarik
+                            <i class="fa fa-sync"></i> Tarik
                         </a>
                         @if(is_null($permohonan->persyaratan_administratif))
                             
                             <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#addPAModal">
-                                <i class="fas fa-plus-circle"></i> Tambah
+                                <i class="fa fa-plus-circle"></i> Tambah
                             </a>
                         @else
                             <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#editPAModal">
-                                <i class="fas fa-edit"></i> Edit
+                                <i class="fa fa-edit"></i> Edit
                             </a>
                         @endif
                     @endif
@@ -350,6 +350,10 @@
                             </td>
                         </tr>
                     </table>
+                    @else
+                    <p class="alert alert-warning">
+                        Data Persyaratan Administratif tidak ditemukan, silahkan tarik data atau tambahkan
+                    </p>
                     @endif
                 </div>
 
@@ -357,15 +361,17 @@
                 <div class="card">
                     <div class="card-header d-flex">
                         <h4 class="card-header-title">
-                            <i class="fas fa-globe"></i> Akta Perubahan Badan Usaha
+                            <i class="fa fa-file-alt"></i> Akta Perubahan Badan Usaha
                         </h4>
                         <div class="toolbar ml-auto">
+                            @if(!is_null($persyaratan_administratif))
                             <button class="btn btn-light btn-xs" id="btn-pull-akta-perubahan-bu-pa" title="Tarik Akta Perubahan BU" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
-                                <i class="fas fa-sync"></i> Tarik
+                                <i class="fa fa-sync"></i> Tarik
                             </button>
                             <button class="btn btn-light btn-xs" id="btn-add-akta-perubahan-bu-pa-trigger" title="Tambah Akta Perubahan BU" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
-                                <i class="fas fa-plus-circle"></i> Tambah
+                                <i class="fa fa-plus-circle"></i> Tambah
                             </button>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body">
@@ -410,7 +416,9 @@
                                 </tbody>
                             </table>
                         @else
-                            <p class="info">Tidak ada data</p>
+                            <p class="alert alert-warning">
+                                Data Akta Perubahan Badan Usaha tidak ditemukan, silahkan tarik data atau tambahkan
+                            </p>
                         @endif
                     </div>
                 </div>
@@ -420,15 +428,17 @@
                 <div class="card">
                     <div class="card-header d-flex">
                         <h4 class="card-header-title">
-                            <i class="fas fa-globe"></i> Pengesahan Akta Perubahan
+                            <i class="fa fa-file-alt"></i> Pengesahan Akta Perubahan
                         </h4>
                         <div class="toolbar ml-auto">
+                            
                             <button class="btn btn-light btn-xs" id="btn-pull-pengesahan-akta-perubahan" title="Tarik Pengesahan Akta Perubahan" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
-                                <i class="fas fa-sync"></i> Tarik
+                                <i class="fa fa-sync"></i> Tarik
                             </button>
                             <button class="btn btn-light btn-xs" id="btn-add-pengesahan-akta-perubahan-trigger" title="Tambah Pengesahan Akta Perubahan" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
-                                <i class="fas fa-plus-circle"></i> Tambah
+                                <i class="fa fa-plus-circle"></i> Tambah
                             </button>
+                            
                         </div>
                     </div>
                     <div class="card-body">

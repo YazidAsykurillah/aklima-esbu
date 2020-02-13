@@ -24,6 +24,8 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\PermohonanIsDisplayed' => [
             'App\Listeners\CallApiTarikStatusPermohonan',
+            'App\Listeners\CallApiTarikPersyaratanAdministratif',
+            'App\Listeners\CallApiTarikIdentitasBadanUsaha',
         ],
     ];
 
