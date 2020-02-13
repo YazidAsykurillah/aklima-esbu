@@ -203,5 +203,9 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::post('role/update-permission', 'RoleController@updatePermission');
 	Route::get('role/datatables', 'RoleController@datatables');
 	Route::resource('role', 'RoleController');
+
+	//Permission
+	Route::get('permission/datatables', 'PermissionController@datatables');
+	Route::resource('permission', 'PermissionController');
 });
 

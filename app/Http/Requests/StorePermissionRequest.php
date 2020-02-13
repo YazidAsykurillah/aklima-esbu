@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreIdentitasBadanUsahaRequest extends FormRequest
+class StorePermissionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,8 @@ class StoreIdentitasBadanUsahaRequest extends FormRequest
     public function rules()
     {
         return [
-            'uid_permohonan'=>'required',
-            //'file_surat_permohonan_sbu'=>'required|file|mimes:pdf|max:1000',
-            'nomor_surat'=>'required',
-            'perihal'=>'required',
-            //'tanggal_surat'=>'required',
-            'nama_penandatangan_surat'=>'required',
-            'jabatan_penandatangan_surat'=>'required',
+            'slug'=>'required|unique:permissions,slug',
+            'description'=>'required'
         ];
     }
 }

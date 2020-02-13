@@ -187,11 +187,13 @@
                         <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#service" aria-controls="service"><i class="fa fa-fw fa-cogs"></i>Services</a>
                         <div id="service" class="submenu {{{ (Request::is('service/*') ? 'show' : 'collapse') }}}" style="">
                             <ul class="nav flex-column">
+                                @if(\Auth::user()->can('access-tarik-pendaftaran'))
                                 <li class="nav-item">
                                      <a class="nav-link {{{ (Request::is('service/tarik-pendaftaran') ? 'active' : '') }}}" href="{{ url('service/tarik-pendaftaran') }}">
                                         <span class=""></span>Tarik Pendaftaran
                                     </a>
-                                </li>                
+                                </li>
+                                @endif
                             </ul>
                         </div>
                     </li>
@@ -226,6 +228,15 @@
                         </a>
                     </li>
                     @endif
+
+                    @if(\Auth::user()->can('access-permission'))
+                    <li class="nav-item">
+                        <a class="nav-link {{{ (Request::is('permission') ? 'active' : '') }}}" href="{{ url('permission')}}">
+                            <i class="fa fa-fw fa-lock"></i> Permission
+                        </a>
+                    </li>
+                    @endif
+                    
                 </ul>
             </div>
         </nav>

@@ -89,6 +89,7 @@ class PermohonanController extends Controller
                 'permohonan.*'
             ])
             ->where('status', '!=', '14')
+            ->where('is_processed', '=', TRUE)
             ->where('badan_usaha_uid','!=', NULL);
             if($provinsi_id!=NULL){
                 $permohonan->whereHas('badan_usaha.kota.provinsi', function($query) use($provinsi_id){
@@ -114,7 +115,7 @@ class PermohonanController extends Controller
             ->addColumn('alamat_badan_usaha', function($permohonan){
                 return $permohonan->badan_usaha->alamat_badan_usaha;
             })
-            ->editColumn('is_processed', function($permohonan){
+            /*->editColumn('is_processed', function($permohonan){
                 $is_processed = '';
                 if($permohonan->is_processed == FALSE){
                     $is_processed.='<p>Belum diproses</p>';
@@ -125,7 +126,7 @@ class PermohonanController extends Controller
                     $is_processed.='<p>Sudah diproses</p>';
                 }
                 return $is_processed;
-            })
+            })*/
             ->editColumn('status', function($permohonan){
                 return translate_status_permohonan($permohonan->status);
             })

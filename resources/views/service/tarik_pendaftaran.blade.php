@@ -24,9 +24,11 @@
     <div class="card-header d-flex">
         <h4 class="card-header-title">Pendaftaran Belum Di Proses</h4>
         <div class="toolbar ml-auto">
+            @if(\Auth::user()->can('access-tarik-pendaftaran'))
             <a href="#" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#synchModal">
                 <i class="fas fa-sync"></i> Tarik Pendaftaran
             </a>
+            @endif
         </div>
     </div>
     <div class="card-body">
@@ -77,18 +79,20 @@
             <form id="form-set-is-processed" method="post" action="{{ url('permohonan/set-is-processed') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title" id="setIsProcessedModalLabel">Proses Permohonan</h5>
+                    <h5 class="modal-title" id="setIsProcessedModalLabel">Konfirmasi</h5>
                     <a href="#" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </a>
                 </div>
                 <div class="modal-body">
-                    
+                    <p class="alert alert-info">Klik tombol Proses untuk memproses permohonan </p>
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" id="uid_permohonan" name="uid_permohonan" />
                     <button class="btn btn-secondary btn-xs" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary btn-xs" id="btn-set-is-processed">OK</button>
+                    <button type="submit" class="btn btn-primary btn-xs" id="btn-set-is-processed">
+                        <i class="fa fa-check-circle"></i> Proses
+                    </button>
                 </div>
             </form>
         </div>
@@ -150,7 +154,19 @@
                 { data: 'nama_jenis_usaha', name: 'jenis_usaha.nama_jenis_usaha', orderable:false },
                 { data: 'jenis_sertifikasi', name: 'jenis_sertifikasi', orderable:false },
                 { data: 'perpanjangan_ke', name: 'perpanjangan_ke', orderable:false },
-                { data: 'is_processed', name: 'is_processed', orderable:false },
+                { data: 'is_processed', name: 'is_processed', orderable:false, render:function(data, type, row, meta){
+                    let action_btn = '';
+                    if(data == false){
+                        action_btn = '<p>Belum diproses</p>';
+                        action_btn+= '<button class="btn btn-info btn-xs btn-set-is-processed" data-uid-permohonan="'+row.uid_permohonan+'" title="Proses Permohonan">';
+                        action_btn+=    '<i class="fa fa-check"></i>';
+                        action_btn+= '</button>';
+                    }else{
+                        action_btn = '<p>Sudah diproses</p>';
+                    }
+                    return action_btn;
+                    
+                }},
             ]
         });
 

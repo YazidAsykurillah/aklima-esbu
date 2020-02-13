@@ -13,7 +13,9 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('home') }}" class="breadcrumb-link">Dashboard</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Permohonan {{ translate_status_permohonan($status) }}</li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Permohonan {{ translate_status_permohonan($status) }}
+            </li>
         </ol>
     </nav>
 </div>

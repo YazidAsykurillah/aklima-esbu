@@ -254,7 +254,7 @@ class IdentitasBadanUsahaController extends Controller
                 'form_params' => [
                     'uid_verifikasi_ibu'=>$request->uid_verifikasi_ibu,
                     'uid_permohonan' => $permohonan->uid_permohonan,
-                    'file_surat_permohonan_sbu'=>base64_encode(file_get_contents($request->file_surat_permohonan_sbu_edit)),
+                    'file_surat_permohonan_sbu'=>$request->has('file_surat_permohonan_sbu_edit') ? base64_encode(file_get_contents($request->file_surat_permohonan_sbu_edit)) : NULL,
                     'nomor_surat'=>$request->nomor_surat_edit,
                     'perihal'=>$request->perihal_edit,
                     'tanggal_surat'=>Carbon::parse($request->tanggal_surat_edit)->format('d-m-Y'),
@@ -267,7 +267,6 @@ class IdentitasBadanUsahaController extends Controller
             $body = $response->getBody();
             $contents = $body->getContents();
             $decode = json_decode($contents);
-            
             if($decode->response == '1'){
                 //Fire event IdentitasBadanUsahaIsUploaded
                 Event::fire(new IdentitasBadanUsahaIsUploaded($permohonan));
