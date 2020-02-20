@@ -64,13 +64,13 @@ class AktaPerubahanBuPaController extends Controller
                 'form_params' => [
                     'uid_verifikasi_pa' => $persyaratan_administratif->uid_verifikasi_pa,
                     'uid_permohonan' => $persyaratan_administratif->permohonan->uid_permohonan,
-                    'file_akta_pendirian_bu' => base64_encode(file_get_contents($request->file_akta_pendirian_bu)),
+                    'file_akta_pendirian_bu' => $request->has('file_akta_pendirian_bu') ? base64_encode(file_get_contents($request->file_akta_pendirian_bu)) : NULL,
                     'nama_notaris' => $request->nama_notaris,
                     'judul_akta' => $request->judul_akta,
                     'tanggal_akta' => $request->tanggal_akta,
                     'nomor_akta' => $request->nomor_akta,
                     'hal_yang_diubah' => $request->hal_yang_diubah,
-                    'file_akta_perubahan_bu' => base64_encode(file_get_contents($request->file_akta_perubahan_bu))
+                    'file_akta_perubahan_bu' => $request->has('file_akta_perubahan_bu') ? base64_encode(file_get_contents($request->file_akta_perubahan_bu)) : NULL
                 ]
             ]);
             $response = $client->post('Service/Permohonan/Persyaratan-Administratif/Akta-Perubahan-Badan-Usaja/Tambah');
@@ -81,7 +81,25 @@ class AktaPerubahanBuPaController extends Controller
 
             
             if($decode->response == '1'){
-                
+                AktaPerubahanBuPa::where('uid_verifikasi_pa', '=', $persyaratan_administratif->uid_verifikasi_pa)
+                    ->where('uid_permohonan', '=', $persyaratan_administratif->uid_permohonan)
+                    ->delete();
+                foreach($decode->result as $res){
+                    AktaPerubahanBuPa::create(
+                        [
+                            'uid_verifikasi_pa'=>$res->uid_verifikasi_pa,
+                            'uid_permohonan'=>$res->uid_permohonan,
+                            'file_akta_pendirian_bu'=>$res->file_akta_pendirian_bu,
+                            'nama_notaris'=>$res->nama_notaris,
+                            'judul_akta'=>$res->judul_akta,
+                            'tanggal_akta'=>$res->tanggal_akta,
+                            'nomor_akta'=>$res->nomor_akta,
+                            'hal_yang_diubah'=>$res->hal_yang_diubah,
+                            'file_akta_perubahan_bu'=>$res->file_akta_perubahan_bu,
+                            'uid_akta_perubahan_bu'=>$res->uid_akta_perubahan_bu,
+                        ]
+                    );
+                }
             }
             $ajaxResponse['response'] = $decode->response;
             $ajaxResponse['message'] = $decode->message;
@@ -89,11 +107,13 @@ class AktaPerubahanBuPaController extends Controller
             
         }
         catch(GuzzleException $e){
+            return $e;
             $contents = $e->getResponse()->getBody()->getContents();
             $decode = json_decode($contents);
             $ajaxResponse['response'] = $decode->response;
             $ajaxResponse['message'] = $decode->message;
         }
+
         return $ajaxResponse;
     }
 
@@ -175,7 +195,25 @@ class AktaPerubahanBuPaController extends Controller
 
             
             if($decode->response == '1'){
-                
+                AktaPerubahanBuPa::where('uid_verifikasi_pa', '=', $persyaratan_administratif->uid_verifikasi_pa)
+                    ->where('uid_permohonan', '=', $persyaratan_administratif->uid_permohonan)
+                    ->delete();
+                foreach($decode->result as $res){
+                    AktaPerubahanBuPa::create(
+                        [
+                            'uid_verifikasi_pa'=>$res->uid_verifikasi_pa,
+                            'uid_permohonan'=>$res->uid_permohonan,
+                            'file_akta_pendirian_bu'=>$res->file_akta_pendirian_bu,
+                            'nama_notaris'=>$res->nama_notaris,
+                            'judul_akta'=>$res->judul_akta,
+                            'tanggal_akta'=>$res->tanggal_akta,
+                            'nomor_akta'=>$res->nomor_akta,
+                            'hal_yang_diubah'=>$res->hal_yang_diubah,
+                            'file_akta_perubahan_bu'=>$res->file_akta_perubahan_bu,
+                            'uid_akta_perubahan_bu'=>$res->uid_akta_perubahan_bu,
+                        ]
+                    );
+                }
             }
             $ajaxResponse['response'] = $decode->response;
             $ajaxResponse['message'] = $decode->message;

@@ -217,10 +217,10 @@
                 @elseif($permohonan->status == '5')
                     @if(\Auth::user()->can('view-permohonan-5'))
                         <a href="#" class="btn btn-primary btn-sm btn-change-status" data-next-status="6">
-                            Approve by Auditor
+                            <i class="fas fa-check-circle"></i>&nbsp; Approve by Auditor
                         </a>
                         <a href="#" class="btn btn-danger btn-sm btn-change-status" data-next-status="1">
-                            Reject By Auditor
+                             <i class="far fa-window-close"></i> Kembalikan
                         </a>
                     @endif
                 @elseif($permohonan->status == '6')

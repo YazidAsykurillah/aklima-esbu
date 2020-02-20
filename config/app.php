@@ -173,6 +173,8 @@ return [
 
         Barryvdh\DomPDF\ServiceProvider::class,
 
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class
+
     ],
 
     /*
@@ -228,6 +230,8 @@ return [
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
 
         'PDF' => Barryvdh\DomPDF\Facade::class,
+
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
 
     ],
 

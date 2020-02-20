@@ -17,12 +17,15 @@
                             A. Dewan Komisaris
                         </h4>
                         <div class="toolbar ml-auto">
+                            <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                            @if($permohonan->status == '0' || $permohonan->status == '1')
                             <button class="btn btn-light btn-xs" id="btn-pull-dp-dk-trigger" title="Tarik Data Pengurus Dewan Komisaris" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
                                 <i class="fas fa-sync"></i> Tarik
                             </button>
                             <a href="#" class="btn btn-light btn-xs" title="Tambah Data Pengurus Dewan Komisaris"  data-toggle="modal" data-target="#addDpDkModal">
                                 <i class="fas fa-plus-circle"></i> Tambah 
                             </a>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body">
@@ -78,12 +81,15 @@
                             B. Dewan Direksi
                         </h4>
                         <div class="toolbar ml-auto">
+                            <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                            @if($permohonan->status == '0' || $permohonan->status == '1')
                             <button class="btn btn-light btn-xs" id="btn-pull-dp-dd-trigger" title="Tarik Data Pengurus Dewan Direksi" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
                                 <i class="fas fa-sync"></i> Tarik
                             </button>
                             <a href="#" class="btn btn-light btn-xs" title="Tambah Data Pengurus Dewan Direksi"  data-toggle="modal" data-target="#addDpDdModal">
                                 <i class="fas fa-plus-circle"></i> Tambah 
                             </a>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body">
@@ -136,12 +142,15 @@
                             C. Pemegang Saham
                         </h4>
                         <div class="toolbar ml-auto">
+                            <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                            @if($permohonan->status == '0' || $permohonan->status == '1')
                             <button class="btn btn-light btn-xs" id="btn-pull-dp-ps-trigger" title="Tarik Data Pengurus Pemegang Saham" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
                                 <i class="fas fa-sync"></i> Tarik
                             </button>
                             <a href="#" class="btn btn-light btn-xs" title="Tambah Data Pengurus Pemegang Saham"  data-toggle="modal" data-target="#addDpPsModal">
                                 <i class="fas fa-plus-circle"></i> Tambah 
                             </a>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body">

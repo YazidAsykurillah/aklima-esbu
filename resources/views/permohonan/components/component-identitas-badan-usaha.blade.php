@@ -6,8 +6,8 @@
                     <i class="fas fa-briefcase"></i> Identitas Badan Usaha
                 </h4>
                 <div class="toolbar ml-auto">
-                    <!--Show document action if only status is Menunggu Dokumen (0) -->
-                    @if($permohonan->status == '0')
+                    <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                    @if($permohonan->status == '0' || $permohonan->status == '1')
                         <button type="button" id="btn-pull-ibu-trigger" class="btn btn-light btn-xs" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
                             <i class="fas fa-sync"></i> Tarik
                         </button>

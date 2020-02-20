@@ -6,8 +6,8 @@
                    <i class="fa fa-file-alt"></i> Persyaratan Administratif
                 </h4>
                 <div class="toolbar ml-auto">
-                    <!--Show document action if only status is Menunggu Dokumen (0) -->
-                    @if($permohonan->status == '0')
+                    <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                    @if($permohonan->status == '0' || $permohonan->status == '1')
                         <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#pullPAModal">
                             <i class="fa fa-sync"></i> Tarik
                         </a>
@@ -364,13 +364,16 @@
                             <i class="fa fa-file-alt"></i> Akta Perubahan Badan Usaha
                         </h4>
                         <div class="toolbar ml-auto">
-                            @if(!is_null($persyaratan_administratif))
-                            <button class="btn btn-light btn-xs" id="btn-pull-akta-perubahan-bu-pa" title="Tarik Akta Perubahan BU" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
-                                <i class="fa fa-sync"></i> Tarik
-                            </button>
-                            <button class="btn btn-light btn-xs" id="btn-add-akta-perubahan-bu-pa-trigger" title="Tambah Akta Perubahan BU" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
-                                <i class="fa fa-plus-circle"></i> Tambah
-                            </button>
+                            <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                            @if($permohonan->status == '0' || $permohonan->status == '1')
+                                @if(!is_null($persyaratan_administratif))
+                                <button class="btn btn-light btn-xs" id="btn-pull-akta-perubahan-bu-pa" title="Tarik Akta Perubahan BU" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
+                                    <i class="fa fa-sync"></i> Tarik
+                                </button>
+                                <button class="btn btn-light btn-xs" id="btn-add-akta-perubahan-bu-pa-trigger" title="Tambah Akta Perubahan BU" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
+                                    <i class="fa fa-plus-circle"></i> Tambah
+                                </button>
+                                @endif
                             @endif
                         </div>
                     </div>
@@ -417,7 +420,7 @@
                             </table>
                         @else
                             <p class="alert alert-warning">
-                                Data Akta Perubahan Badan Usaha tidak ditemukan, silahkan tarik data atau tambahkan
+                                Tidak ada data
                             </p>
                         @endif
                     </div>
@@ -431,17 +434,58 @@
                             <i class="fa fa-file-alt"></i> Pengesahan Akta Perubahan
                         </h4>
                         <div class="toolbar ml-auto">
-                            
-                            <button class="btn btn-light btn-xs" id="btn-pull-pengesahan-akta-perubahan" title="Tarik Pengesahan Akta Perubahan" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
-                                <i class="fa fa-sync"></i> Tarik
-                            </button>
-                            <button class="btn btn-light btn-xs" id="btn-add-pengesahan-akta-perubahan-trigger" title="Tambah Pengesahan Akta Perubahan" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
-                                <i class="fa fa-plus-circle"></i> Tambah
-                            </button>
-                            
+                            <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                            @if($permohonan->status == '0' || $permohonan->status == '1')
+                                @if(!is_null($persyaratan_administratif))
+                                <button class="btn btn-light btn-xs" id="btn-pull-pengesahan-akta-perubahan" title="Tarik Pengesahan Akta Perubahan" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
+                                    <i class="fa fa-sync"></i> Tarik
+                                </button>
+                                <button class="btn btn-light btn-xs" id="btn-add-pengesahan-akta-perubahan-trigger" title="Tambah Pengesahan Akta Perubahan" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
+                                    <i class="fa fa-plus-circle"></i> Tambah
+                                </button>
+                                @endif
+                            @endif
                         </div>
                     </div>
                     <div class="card-body">
+                        @if($pengesahan_akta_perubahan)
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 30%;">File Pengesahan Akta Perubahan</td>
+                                    <td style="width: 5%;">:</td>
+                                    <td style="">
+                                        {{ $pengesahan_akta_perubahan->file_pengesahan_akta_perubahan }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 30%;">Nomor</td>
+                                    <td style="width: 5%;">:</td>
+                                    <td style="">
+                                        {{ $pengesahan_akta_perubahan->nomor }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 30%;">Tentang</td>
+                                    <td style="width: 5%;">:</td>
+                                    <td style="">
+                                        {{ $pengesahan_akta_perubahan->tentang }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 30%;">Tanggal</td>
+                                    <td style="width: 5%;">:</td>
+                                    <td style="">
+                                        {{ $pengesahan_akta_perubahan->tanggal }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        @else
+                            <p class="alert alert-warning">
+                                Tidak ada data
+                            </p>
+                        @endif
                     </div>
                 </div>
                 <!--ENDBlock Pengesahan Akta Perubahan-->

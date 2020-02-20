@@ -81,11 +81,10 @@
 			<td style="width: 15%;"></td>
 		</tr>
 	</table>
-
+	<div style="font-size: 13px; margin-bottom: 12px;">
+		Dengan ini menerangkan bahwa,
+	</div>
 	<table style="width: 100%; font-size: 13px;">
-		<tr>
-			<td style="width: 25%;">Dengan ini menerangkan bahwa,</td>
-		</tr>
 		<tr>
 			<td style="width: 25%;">Nama Badan Usaha</td>
 			<td style="width: 5%; text-align:right;">:</td>
@@ -163,8 +162,8 @@
 	<p></p>
 	<table style="width: 100%;">
 		<tr>
-			<td style="width: 15%;">
-				<img src="https://via.placeholder.com/75">
+			<td style="width: 15%; text-align: left;">
+				<img src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(150)->generate('https://sbudjk.esdm.go.id')) }} ">
 			</td>
 			<td style="text-align: center; vertical-align: top;">
 				
@@ -173,6 +172,7 @@
 				<p>Ditetapkan di Jakarta</p>
 				<p>Pada tanggal {{ indonesian_date($sertifikat->tanggal_terbit) }}</p>
 				<p>Direktur Utama,</p>
+				<p>&nbsp;</p>
 				<p>&nbsp;</p>
 				<p>&nbsp;</p>
 				<p>SOEWARTO, BE</p>
@@ -282,9 +282,13 @@
 			<td colspan="6">A. PENANGGUNG JAWAB TEKNIK</td>
 		</tr>
 		@if(!is_null($penanggung_jawab_teknis))
+			<?php $pjt_no = 0; ?>
 			@foreach($penanggung_jawab_teknis as $pjt)
+			<?php $pjt_no++;?>
 			<tr>
-				<td style="text-align: center;"></td>
+				<td style="text-align: center;">
+					{{ $pjt_no }}
+				</td>
 				<td style="text-align: left;">
 					{{ $pjt->nama }} <br/>
 					@if($pjt->jenis_identitas == 'KTP')
@@ -313,9 +317,13 @@
 			<td colspan="6">B. TENAGA TEKNIK</td>
 		</tr>
 		@if(!is_null($tenaga_teknik))
+			<?php $tt_no = 0; ?>
 			@foreach($tenaga_teknik as $tt)
+			<?php $tt_no++;?>
 			<tr>
-				<td style="text-align: center;"></td>
+				<td style="text-align: center;">
+					{{ $tt_no }}
+				</td>
 				<td style="text-align: left;">
 					{{ $tt->nama }} <br/>
 					@if($tt->jenis_identitas == 'KTP')

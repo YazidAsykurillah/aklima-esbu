@@ -6,8 +6,8 @@
                     <i class="fas fa-briefcase"></i> Persyaratan Teknis
                 </h4>
                 <div class="toolbar ml-auto">
-                   <!--Show document action if only status is Menunggu Dokumen (0) -->
-                    @if($permohonan->status == '0')
+                   <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                    @if($permohonan->status == '0' || $permohonan->status == '1')
                         <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#pullPTModal" title="Tarik Persyaratan Teknis">
                             <i class="fas fa-sync"></i> Tarik Persyaratan Teknis
                         </a>
@@ -28,9 +28,12 @@
                                     ({{ $pt->uid_verifikasi_pt }})
                                 </h5>
                                 <div class="toolbar ml-auto">
+                                    <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                    @if($permohonan->status == '0' || $permohonan->status == '1')
                                     <button type="button" class="btn btn-danger btn-xs btn-trigger-delete-persyaratan-teknis" data-uid-verifikasi-pt="{{ $pt->uid_verifikasi_pt }}" title="Hapus Sub Bidang" data-delete-confirmation-text="Hapus Persyaratan Teknis Sub Bidang {{ $pt->sub_bidang->nama_sub_bidang}}">
                                         <i class="fas fa-trash"></i>
                                     </button>
+                                    @endif
                                 </div>
                             </div>
                             <div class="card-body">
@@ -41,6 +44,8 @@
                                             A. Penanggung Jawab Teknik
                                         </h5>
                                         <div class="toolbar ml-auto">
+                                            <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                            @if($permohonan->status == '0' || $permohonan->status == '1')
                                             <button type="button" class="btn btn-light btn-xs btn-pull-ptpjt-trigger" title="Tarik Persyaratan Teknis Penanggung Jawab Teknik" data-uid-verifikasi-pt="{{ $pt->uid_verifikasi_pt }}" data-uid-permohonan="{{ $permohonan->uid_permohonan }}">
                                                 <i class="fas fa-sync"></i> Tarik PJT
                                             </button>
@@ -50,6 +55,7 @@
                                             <button type="button" class="btn btn-xs btn-light btn-pull-sertifikat-pt-pjt-trigger" title="Tarik Serkom" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
                                                 <i class="fa fa-sync"></i> Tarik Sertifikat PJT
                                             </button>
+                                            @endif
                                             
                                         </div>
                                     </div>
@@ -123,6 +129,8 @@
                                             B. Tenaga Teknik
                                         </h5>
                                         <div class="toolbar ml-auto">
+                                            <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                            @if($permohonan->status == '0' || $permohonan->status == '1')
                                             <button type="button" class="btn btn-light btn-xs btn-pull-pttt-trigger" title="Tarik Persyaratan Teknis Tenaga Teknik" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
                                                 <i class="fas fa-sync"></i> Tarik TT
                                             </button>
@@ -132,7 +140,7 @@
                                             <button type="button" class="btn btn-xs btn-light btn-pull-sertifikat-pt-tt-trigger" title="Tarik Serkom" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
                                                 <i class="fa fa-sync"></i> Tarik Sertifikat TT
                                             </button>
-                                            
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="card-body">

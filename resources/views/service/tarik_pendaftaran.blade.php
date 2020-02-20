@@ -38,6 +38,7 @@
                     <tr>
                         <th scope="col" style="width:5%;">#</th>
                         <th scope="col">Nama Badan Usaha</th>
+                        <th scope="col">Provinsi</th>
                         <th scope="col" style="width:15%;">Jenis Usaha</th>
                         <th scope="col" style="width:10%;">Jenis Sertifikasi</th>
                         <th scope="col" style="width:10%;">Perpanjangan Ke</th>
@@ -151,6 +152,7 @@
             columns :[
                 {data: 'rownum', name: 'rownum', searchable:false},
                 { data: 'nama_badan_usaha', name: 'badan_usaha.nama_badan_usaha', orderable:false },
+                { data: 'provinsi_badan_usaha', name: 'badan_usaha.kota.provinsi.nama_provinsi', orderable:true },
                 { data: 'nama_jenis_usaha', name: 'jenis_usaha.nama_jenis_usaha', orderable:false },
                 { data: 'jenis_sertifikasi', name: 'jenis_sertifikasi', orderable:false },
                 { data: 'perpanjangan_ke', name: 'perpanjangan_ke', orderable:false },

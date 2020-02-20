@@ -25,12 +25,12 @@ class StoreIdentitasBadanUsahaRequest extends FormRequest
     {
         return [
             'uid_permohonan'=>'required',
-            //'file_surat_permohonan_sbu'=>'required|file|mimes:pdf|max:1000',
-            'nomor_surat'=>'required',
-            'perihal'=>'required',
-            //'tanggal_surat'=>'required',
-            'nama_penandatangan_surat'=>'required',
-            'jabatan_penandatangan_surat'=>'required',
+            'file_surat_permohonan_sbu_edit'=>'file|mimes:pdf|max:1000',
+            // 'nomor_surat'=>'required',
+            // 'perihal'=>'required',
+            // 'tanggal_surat'=>'required',
+            // 'nama_penandatangan_surat'=>'required',
+            // 'jabatan_penandatangan_surat'=>'required',
         ];
     }
 }

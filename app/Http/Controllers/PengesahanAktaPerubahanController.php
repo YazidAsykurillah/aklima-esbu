@@ -65,7 +65,7 @@ class PengesahanAktaPerubahanController extends Controller
                 'form_params' => [
                     'uid_verifikasi_pa' => $persyaratan_administratif->uid_verifikasi_pa,
                     'uid_permohonan' => $persyaratan_administratif->permohonan->uid_permohonan,
-                    'file_pengesahan_akta_perubahan' => base64_encode(file_get_contents($request->file_pengesahan_akta_perubahan)),
+                    'file_pengesahan_akta_perubahan' => $request->has('file_pengesahan_akta_perubahan') ? base64_encode(file_get_contents($request->file_pengesahan_akta_perubahan)) : NULL,
                     'nomor' => $request->nomor,
                     'tentang' => $request->tentang,
                     'tanggal' => Carbon::parse($request->tanggal)->format('d-m-Y'),
@@ -79,7 +79,22 @@ class PengesahanAktaPerubahanController extends Controller
 
             
             if($decode->response == '1'){
-                
+                PengesahanAktaPerubahan::where('uid_verifikasi_pa', '=', $persyaratan_administratif->uid_verifikasi_pa)
+                    ->where('uid_permohonan', '=', $persyaratan_administratif->uid_permohonan)
+                    ->delete();
+                foreach($decode->result as $res){
+                    PengesahanAktaPerubahan::create(
+                        [
+                            'uid_verifikasi_pa'=>$res->uid_verifikasi_pa,
+                            'uid_permohonan'=>$res->uid_permohonan,
+                            'file_pengesahan_akta_perubahan'=>$res->file_pengesahan_akta_perubahan,
+                            'nomor'=>$res->nomor,
+                            'tentang'=>$res->tentang,
+                            'tanggal'=>$res->tanggal,
+                            'uid_pengesahan_akta_perubahan'=>$res->uid_pengesahan_akta_perubahan,
+                        ]
+                    );
+                }
             }
             $ajaxResponse['response'] = $decode->response;
             $ajaxResponse['message'] = $decode->message;
@@ -173,7 +188,22 @@ class PengesahanAktaPerubahanController extends Controller
 
             
             if($decode->response == '1'){
-                
+                PengesahanAktaPerubahan::where('uid_verifikasi_pa', '=', $persyaratan_administratif->uid_verifikasi_pa)
+                    ->where('uid_permohonan', '=', $persyaratan_administratif->uid_permohonan)
+                    ->delete();
+                foreach($decode->result as $res){
+                    PengesahanAktaPerubahan::create(
+                        [
+                            'uid_verifikasi_pa'=>$res->uid_verifikasi_pa,
+                            'uid_permohonan'=>$res->uid_permohonan,
+                            'file_pengesahan_akta_perubahan'=>$res->file_pengesahan_akta_perubahan,
+                            'nomor'=>$res->nomor,
+                            'tentang'=>$res->tentang,
+                            'tanggal'=>$res->tanggal,
+                            'uid_pengesahan_akta_perubahan'=>$res->uid_pengesahan_akta_perubahan,
+                        ]
+                    );
+                }
             }
             $ajaxResponse['response'] = $decode->response;
             $ajaxResponse['message'] = $decode->message;

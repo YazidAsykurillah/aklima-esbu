@@ -310,6 +310,18 @@ class PermohonanController extends Controller
         if($original_status == '0' && $next_status == '1'){
             return $this->call_api_kirim_ke_asesor_tt($request);
         }
+        //Frontdesk ke Verifikator (Asesor PJT)
+        /*else if($original_status == '1' && $next_status == '4'){
+            return $this->call_api_kirim_ke_asesor_pjt($request);
+        }*/
+        //Verifikator (Asesor PJT) ke Auditor (LSBU Pusat)
+        /*else if($original_status == '4' && $next_status == '5'){
+            return $this->call_api_kirim_ke_lsbu_pusat($request);
+        }*/
+        //Validator (LSBU Pusat) ke Evaluator (DJK Prepare)
+        /*else if($original_status == '6' && $next_status == '7'){
+            return $this->call_api_kirim_ke_djk_prepare($request);
+        }*/
         else{
             $permohonan = Permohonan::findOrFail($request->permohonan_id_to_change);
             $permohonan->status = $next_status;
@@ -323,6 +335,7 @@ class PermohonanController extends Controller
     }
 
     
+
 
     protected function call_api_kirim_ke_asesor_tt($request){
         
@@ -361,8 +374,146 @@ class PermohonanController extends Controller
             return redirect()->back()
                 ->with('successMessage', $decode->message);            
         }
-        catch(Exception $e){
-            return $e;
+        catch(GuzzleException $e){
+            $contents = $e->getResponse()->getBody()->getContents();
+            $decode = json_decode($contents);
+            return redirect()->back()
+                ->with('errorMessage', $decode->message);
+        }
+    }
+
+    protected function call_api_kirim_ke_asesor_pjt($request){
+        
+        try{
+            $token = getCurrentActiveToken()['token'];
+            $original_status = $request->permohonan_original_status;
+            $next_status = $request->permohonan_next_status;
+
+            $permohonan = Permohonan::findOrFail($request->permohonan_id_to_change);
+
+            $client = new Client([
+                // Base URI is used with relative requests
+                'base_uri' => config('app.gatrik_base_uri'),
+                'verify'=>false,
+                'headers'=>[
+                    'Content-Type'=>'multipart/form-data',
+                    'Enctype'=>'multipart/form-data',
+                    'X-Lsbu-Key'=>config('app.x_lsbu_key'),
+                    'Token'=> $token
+                ],
+                'form_params' => [
+                    'uid_permohonan' => $permohonan->uid_permohonan,
+                ]
+            ]);
+            $response = $client->post('Service/Kirim-Data-Pemohon-Ke-Asesor-PJT');
+            $code = $response->getStatusCode(); // 200
+            $body = $response->getBody();
+            $contents = $body->getContents();
+            $decode = json_decode($contents);
+            
+            $permohonan->status = $next_status;
+            $permohonan->save();
+
+            $this->insertLogPermohonan($request->permohonan_id_to_change, $original_status, $request->permohonan_next_status, $request->log_description);
+            
+            return redirect()->back()
+                ->with('successMessage', $decode->message);    
+        }
+        catch(GuzzleException $e){
+            $contents = $e->getResponse()->getBody()->getContents();
+            $decode = json_decode($contents);
+            return redirect()->back()
+                ->with('errorMessage', $decode->message);
+        }
+    }
+
+    protected function call_api_kirim_ke_lsbu_pusat($request){
+        
+        try{
+            $token = getCurrentActiveToken()['token'];
+            $original_status = $request->permohonan_original_status;
+            $next_status = $request->permohonan_next_status;
+
+            $permohonan = Permohonan::findOrFail($request->permohonan_id_to_change);
+
+            $client = new Client([
+                // Base URI is used with relative requests
+                'base_uri' => config('app.gatrik_base_uri'),
+                'verify'=>false,
+                'headers'=>[
+                    'Content-Type'=>'multipart/form-data',
+                    'Enctype'=>'multipart/form-data',
+                    'X-Lsbu-Key'=>config('app.x_lsbu_key'),
+                    'Token'=> $token
+                ],
+                'form_params' => [
+                    'uid_permohonan' => $permohonan->uid_permohonan,
+                ]
+            ]);
+            $response = $client->post('Service/Kirim-Data-Pemohon-Ke-LSBU-Pusat');
+            $code = $response->getStatusCode(); // 200
+            $body = $response->getBody();
+            $contents = $body->getContents();
+            $decode = json_decode($contents);
+            
+            $permohonan->status = $next_status;
+            $permohonan->save();
+
+            $this->insertLogPermohonan($request->permohonan_id_to_change, $original_status, $request->permohonan_next_status, $request->log_description);
+            
+            return redirect()->back()
+                ->with('successMessage', $decode->message);    
+        }
+        catch(GuzzleException $e){
+            $contents = $e->getResponse()->getBody()->getContents();
+            $decode = json_decode($contents);
+            return redirect()->back()
+                ->with('errorMessage', $decode->message);
+        }
+    }
+
+    protected function call_api_kirim_ke_djk_prepare($request){
+        
+        try{
+            $token = getCurrentActiveToken()['token'];
+            $original_status = $request->permohonan_original_status;
+            $next_status = $request->permohonan_next_status;
+
+            $permohonan = Permohonan::findOrFail($request->permohonan_id_to_change);
+
+            $client = new Client([
+                // Base URI is used with relative requests
+                'base_uri' => config('app.gatrik_base_uri'),
+                'verify'=>false,
+                'headers'=>[
+                    'Content-Type'=>'multipart/form-data',
+                    'Enctype'=>'multipart/form-data',
+                    'X-Lsbu-Key'=>config('app.x_lsbu_key'),
+                    'Token'=> $token
+                ],
+                'form_params' => [
+                    'uid_permohonan' => $permohonan->uid_permohonan,
+                ]
+            ]);
+            $response = $client->post('Service/Kirim-Data-Pemohon-Ke-DJK-Prepare');
+            $code = $response->getStatusCode(); // 200
+            $body = $response->getBody();
+            $contents = $body->getContents();
+            $decode = json_decode($contents);
+            
+            $permohonan->status = $next_status;
+            $permohonan->save();
+
+            $this->insertLogPermohonan($request->permohonan_id_to_change, $original_status, $request->permohonan_next_status, $request->log_description);
+            
+            return redirect()->back()
+                ->with('successMessage', $decode->message);    
+        }
+        catch(GuzzleException $e){
+            $contents = $e->getResponse()->getBody()->getContents();
+            $decode = json_decode($contents);
+            return redirect()->back()
+                ->with('errorMessage', $decode->message);
         }
     }
 
@@ -400,7 +551,7 @@ class PermohonanController extends Controller
             return redirect()->back()
                 ->with('successMessage', "Status permohonan berhasil diubah");            
         }
-        catch(Exception $e){
+        catch(GuzzleException $e){
             return $e;
         }
     }
@@ -725,11 +876,11 @@ class PermohonanController extends Controller
 
             
             if($decode->response == '1'){
-                
+                $permohonan->nomor_agenda = $decode->nomor_agenda;
+                $permohonan->save();
             }
             $ajaxResponse['response'] = $decode->response;
             $ajaxResponse['message'] = $decode->message;
-            $ajaxResponse['result'] = $decode->result;
             
         }
         catch(GuzzleException $e){
@@ -764,7 +915,7 @@ class PermohonanController extends Controller
                     'uid_permohonan' => $permohonan->uid_permohonan,
                 ]
             ]);
-            $response = $client->post('Service/Tarik-Status-Permohonan');
+            $response = $client->post('Service/Tarik-Nomor-Sertifikat');
             $code = $response->getStatusCode(); // 200
             $body = $response->getBody();
             $contents = $body->getContents();
@@ -772,7 +923,21 @@ class PermohonanController extends Controller
 
             
             if($decode->response == '1'){
-                
+                Sertifikat::where('uid_permohonan', '=', $request->uid_permohonan)->delete();
+                foreach($decode->sertifikat as $ser){
+                    Sertifikat::create([
+                        'uid_permohonan'=>$ser->uid_permohonan,
+                        'nomor_sertifikat'=>$ser->nomor_sertifikat,
+                        'nomor_registrasi'=>$ser->nomor_registrasi,
+                        'tanggal_terbit'=>$ser->tanggal_terbit,
+                        'tanggal_expired'=>$ser->tanggal_expired,
+                        'uid_jenis_usaha'=>$ser->uid_jenis_usaha,
+                        'uid_bidang'=>$ser->uid_bidang,
+                        'uid_sub_bidang'=>$ser->uid_sub_bidang,
+                        'kualifikasi'=>$ser->kualifikasi,
+                        'status_sertifikat'=>$ser->status_sertifikat,
+                    ]);
+                }
             }
             $ajaxResponse['response'] = $decode->response;
             $ajaxResponse['message'] = $decode->message;

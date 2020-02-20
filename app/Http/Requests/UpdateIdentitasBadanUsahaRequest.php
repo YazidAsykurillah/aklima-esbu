@@ -27,11 +27,11 @@ class UpdateIdentitasBadanUsahaRequest extends FormRequest
             'uid_verifikasi_ibu'=>'required',
             'uid_permohonan'=>'required',
             'file_surat_permohonan_sbu_edit'=>'file|mimes:pdf|max:1000',
-            'nomor_surat_edit'=>'required',
-            'perihal_edit'=>'required',
-            //'tanggal_surat_edit'=>'required',
-            'nama_penandatangan_surat_edit'=>'required',
-            'jabatan_penandatangan_surat_edit'=>'required',
+            // 'nomor_surat_edit'=>'required',
+            // 'perihal_edit'=>'required',
+            // 'tanggal_surat_edit'=>'required',
+            // 'nama_penandatangan_surat_edit'=>'required',
+            // 'jabatan_penandatangan_surat_edit'=>'required',
         ];
     }
 }
