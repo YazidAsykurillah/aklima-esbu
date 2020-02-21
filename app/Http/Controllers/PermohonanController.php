@@ -936,6 +936,7 @@ class PermohonanController extends Controller
                         'uid_sub_bidang'=>$ser->uid_sub_bidang,
                         'kualifikasi'=>$ser->kualifikasi,
                         'status_sertifikat'=>$ser->status_sertifikat,
+                        'qrcode'=>$ser->qrcode,
                     ]);
                 }
             }

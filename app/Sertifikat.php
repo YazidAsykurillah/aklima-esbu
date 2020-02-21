@@ -11,7 +11,7 @@ class Sertifikat extends Model
     protected $fillable = [
     	'uid_permohonan', 'nomor_sertifikat', 'nomor_registrasi',
     	'tanggal_terbit', 'tanggal_expired', 'uid_jenis_usaha', 'uid_bidang', 'uid_sub_bidang',
-    	'kualifikasi', 'status_sertifikat'
+    	'kualifikasi', 'status_sertifikat', 'qrcode'
     ];
 
     public function permohonan()

@@ -163,7 +163,7 @@
 	<table style="width: 100%;">
 		<tr>
 			<td style="width: 15%; text-align: left;">
-				<img src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(150)->generate('https://sbudjk.esdm.go.id')) }} ">
+				<img src="data:image/png;base64, {{ base64_encode(QrCode::format('png')->size(150)->generate(''.$sertifikat->qrcode.'')) }} ">
 			</td>
 			<td style="text-align: center; vertical-align: top;">
 				
