@@ -1,98 +1,117 @@
+@extends('permohonan.show')
+
+@section('sub-content')
+<!--Row Tabs-->
 <div class="row">
     <div class="col-md-12">
-        <div class="card">
-            <div class="card-header d-flex">
-                <h4 class="card-header-title">
-                    <i class="fas fa-briefcase"></i> Identitas Badan Usaha
-                </h4>
-                <div class="toolbar ml-auto">
-                    <!--Show document action if only status is Menunggu Dokumen (0) -->
-                    @if($permohonan->status == '0')
-                        <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#pullIBUModal">
-                            <i class="fas fa-sync"></i> Tarik
-                        </a>
-                        @if(is_null($permohonan->identitas_badan_usaha))
-                            
-                            <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#addIBUModal">
-                                <i class="fas fa-plus-circle"></i> Tambah
-                            </a>
-                        @else
-                            <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#editIBUModal">
-                                <i class="fas fa-edit"></i> Edit
-                            </a>
-                            
-                        @endif
-                    @endif
+        <div class="section-block">
+            <h5 class="section-title">Data Verifikasi</h5>
+            <p></p>
+        </div>
+        <div class="tab-outline">
+            @include('permohonan.components.nav-tabs')
+            <div class="tab-content" id="myTabContent2">
+                <!--Tab Pane Identitas Badan Usaha-->
+                <div class="tab-pane fade show active" id="outline-identitas-badan-usaha" role="tabpanel" aria-labelledby="tab-outline-identitas-badan-usaha">
+                    <div class="card">
+                        <div class="card-header d-flex">
+                            <h4 class="card-header-title">
+                                Identitas Badan Usaha
+                            </h4>
+                            <div class="toolbar ml-auto">
+                                <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                @if($permohonan->status == '0' || $permohonan->status == '1')
+                                    <button type="button" id="btn-pull-ibu-trigger" class="btn btn-light btn-xs" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
+                                        <i class="fas fa-sync"></i> Tarik
+                                    </button>
+                                    @if(is_null($permohonan->identitas_badan_usaha))
+                                        
+                                        <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#addIBUModal">
+                                            <i class="fas fa-plus-circle"></i> Tambah
+                                        </a>
+                                    @else
+                                        <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#editIBUModal">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+                                        
+                                    @endif
+                                @endif
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                @if(!is_null($identitas_badan_usaha))
+                                <table class="table">
+                                    <tr>
+                                        <td style="width: 30%;">UID Verifikasi IBU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="ibu_holder_uid_verifikasi_ibu">
+                                            {{ $identitas_badan_usaha->uid_verifikasi_ibu }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">File Surat Permohoan SBU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="ibu_holder_file_surat_permohonan_sbu">
+                                            <a href="{{ $identitas_badan_usaha->file_surat_permohonan_sbu }}">
+                                                {{ $identitas_badan_usaha->file_surat_permohonan_sbu }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor Surat</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="ibu_holder_nomor_surat">
+                                            {{ $identitas_badan_usaha->nomor_surat }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Perihal</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="ibu_holder_perihal">
+                                            {{ $identitas_badan_usaha->perihal }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Tanggal Surat</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="ibu_holder_tanggal_surat">
+                                            {{ indonesian_date($identitas_badan_usaha->tanggal_surat) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nama Penandatanganan Surat</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="ibu_holder_nama_penandatangan_surat">
+                                            {{ $identitas_badan_usaha->nama_penandatangan_surat }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Jabatan Penandatanganan Surat</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="ibu_holder_jabatan_penandatangan_surat">
+                                            {{ $identitas_badan_usaha->jabatan_penandatangan_surat }}
+                                        </td>
+                                    </tr>
+                                </table>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    @if(!is_null($identitas_badan_usaha))
-                    <table class="table">
-                        <tr>
-                            <td style="width: 30%;">UID Verifikasi IBU</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="ibu_holder_uid_verifikasi_ibu">
-                                {{ $identitas_badan_usaha->uid_verifikasi_ibu }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">File Surat Permohoan SBU</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="ibu_holder_file_surat_permohonan_sbu">
-                                <a href="{{ $identitas_badan_usaha->file_surat_permohonan_sbu }}">
-                                    {{ $identitas_badan_usaha->file_surat_permohonan_sbu }}
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Nomor Surat</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="ibu_holder_nomor_surat">
-                                {{ $identitas_badan_usaha->nomor_surat }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Perihal</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="ibu_holder_perihal">
-                                {{ $identitas_badan_usaha->perihal }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Tanggal Surat</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="ibu_holder_tanggal_surat">
-                                {{ indonesian_date($identitas_badan_usaha->tanggal_surat) }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Nama Penandatanganan Surat</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="ibu_holder_nama_penandatangan_surat">
-                                {{ $identitas_badan_usaha->nama_penandatangan_surat }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Jabatan Penandatanganan Surat</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="ibu_holder_jabatan_penandatangan_surat">
-                                {{ $identitas_badan_usaha->jabatan_penandatangan_surat }}
-                            </td>
-                        </tr>
-                    </table>
-                    @endif
-                </div>
+                <!--ENDTab Pane Identitas Badan Usaha-->
+
             </div>
         </div>
     </div>
 </div>
+<!--ENDRow Tabs-->
 
 <!--Modal Tarik Identitas Badan Usaha-->
 <div class="modal fade" id="pullIBUModal" tabindex="-1" role="dialog" aria-labelledby="pullIBUModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <form id="form-pull-identitas-badan-usaha" method="post" enctype="multipart/form-data" action="{{ url('identitas-badan-usaha/pull-from-gatrik/'.$permohonan->uid_permohonan.'') }}">
+            <form id="form-pull-identitas-badan-usaha" method="post" enctype="multipart/form-data" action="{{ url('identitas-badan-usaha/pull-from-gatrik') }}">
                 <div class="modal-header">
                     <h5 class="modal-title" id="pullIBUModalLabel">Tarik Identitas Badan Usaha</h5>
                     <a href="#" class="close" data-dismiss="modal" aria-label="Close">
@@ -104,6 +123,7 @@
                     <p>Tarik data Identitas Badan Usaha dari gatrik</p>
                 </div>
                 <div class="modal-footer">
+                    <input type="hidden" name="uid_permohonan">
                     <button class="btn btn-secondary btn-xs" data-dismiss="modal">Batal</button>
                     <button type="submit" class="btn btn-primary btn-xs" id="btn-pull-ibu">Tarik</button>
                 </div>
@@ -221,4 +241,6 @@
     </div>
 </div>
 <!--ENDModal Edit Identitas Badan Usaha-->
+@endSection
+
 

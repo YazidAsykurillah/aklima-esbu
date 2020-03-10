@@ -1,208 +1,227 @@
+@extends('permohonan.show')
+
+@section('sub-content')
+<!--Row Tabs-->
 <div class="row">
     <div class="col-md-12">
-        <div class="card">
-            <div class="card-header d-flex">
-                <h4 class="card-header-title">
-                    <i class="fas fa-briefcase"></i> Data Pengurus
-                </h4>
-                <div class="toolbar ml-auto">
+        <div class="section-block">
+            <h5 class="section-title">Data Verifikasi</h5>
+            <p></p>
+        </div>
+        <div class="tab-outline">
+            @include('permohonan.components.nav-tabs')
+            <div class="tab-content" id="myTabContent2">
+                <!--Tab Pane Data Pengurus-->
+                <div class="tab-pane fade show active" id="outline-data-pengurus" role="tabpanel" aria-labelledby="tab-outline-data-pengurus">
+                    <div class="card">
+                        <div class="card-header d-flex">
+                            <h4 class="card-header-title">
+                                Data Pengurus
+                            </h4>
+                            <div class="toolbar ml-auto">
 
-                </div>
-            </div>
-            <div class="card-body">
-                <!--Block Dewan Komisaris-->
-                <div class="card">
-                    <div class="card-header d-flex">
-                        <h4 class="card-header-title">
-                            A. Dewan Komisaris
-                        </h4>
-                        <div class="toolbar ml-auto">
-                            <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
-                            @if($permohonan->status == '0' || $permohonan->status == '1')
-                            <button class="btn btn-light btn-xs" id="btn-pull-dp-dk-trigger" title="Tarik Data Pengurus Dewan Komisaris" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
-                                <i class="fas fa-sync"></i> Tarik
-                            </button>
-                            <a href="#" class="btn btn-light btn-xs" title="Tambah Data Pengurus Dewan Komisaris"  data-toggle="modal" data-target="#addDpDkModal">
-                                <i class="fas fa-plus-circle"></i> Tambah 
-                            </a>
-                            @endif
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th style="width:15%;">Nama</th>
-                                        <th>Jenis Identitas / No.Identitas</th>
-                                        <th>Jabatan</th>
-                                        <th style="width: 5%;">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @if($data_pengurus_dewan_komisaris->count())
-                                    @foreach($data_pengurus_dewan_komisaris as $dp_dk)
-                                    <tr>
-                                        <td>{{ $dp_dk->nama }}</td>
-                                        <td>
-                                            {{ $dp_dk->jenis_identitas}} /
-                                            @if($dp_dk->jenis_identitas == 'KTP')
-                                                {{ $dp_dk->nomor_ktp }}
+                        <div class="card-body">
+                            <!--Block Dewan Komisaris-->
+                            <div class="card">
+                                <div class="card-header d-flex">
+                                    <h4 class="card-header-title">
+                                        A. Dewan Komisaris
+                                    </h4>
+                                    <div class="toolbar ml-auto">
+                                        <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                        @if($permohonan->status == '0' || $permohonan->status == '1')
+                                        <button class="btn btn-light btn-xs" id="btn-pull-dp-dk-trigger" title="Tarik Data Pengurus Dewan Komisaris" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
+                                            <i class="fas fa-sync"></i> Tarik
+                                        </button>
+                                        <a href="#" class="btn btn-light btn-xs" title="Tambah Data Pengurus Dewan Komisaris"  data-toggle="modal" data-target="#addDpDkModal">
+                                            <i class="fas fa-plus-circle"></i> Tambah 
+                                        </a>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:15%;">Nama</th>
+                                                    <th>Jenis Identitas / No.Identitas</th>
+                                                    <th>Jabatan</th>
+                                                    <th style="width: 5%;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            @if($data_pengurus_dewan_komisaris->count())
+                                                @foreach($data_pengurus_dewan_komisaris as $dp_dk)
+                                                <tr>
+                                                    <td>{{ $dp_dk->nama }}</td>
+                                                    <td>
+                                                        {{ $dp_dk->jenis_identitas}} /
+                                                        @if($dp_dk->jenis_identitas == 'KTP')
+                                                            {{ $dp_dk->nomor_ktp }}
+                                                        @else
+                                                            {{ $dp_dk->nomor_passpor }}
+                                                        @endif
+
+                                                    </td>
+                                                    <td>{{ $dp_dk->jabatan }}</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-danger btn-xs btn-delete-dp-dk-trigger" title="Hapus Data Pengurus Dewan Komisaris" data-id="{{ $dp_dk->id }}">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
                                             @else
-                                                {{ $dp_dk->nomor_passpor }}
+                                                <tr>
+                                                    <td colspan="4">Tidak ada data</td>
+                                                </tr>
                                             @endif
+                                            </tbody>
+                                        </table>    
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <!--ENDBlock Dewan Komisaris-->
 
-                                        </td>
-                                        <td>{{ $dp_dk->jabatan }}</td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger btn-xs btn-delete-dp-dk-trigger" title="Hapus Data Pengurus Dewan Komisaris" data-id="{{ $dp_dk->id }}">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                @else
-                                    <tr>
-                                        <td colspan="4">Tidak ada data</td>
-                                    </tr>
-                                @endif
-                                </tbody>
-                            </table>    
-                        </div>
-                        
-                    </div>
-                </div>
-                <!--ENDBlock Dewan Komisaris-->
+                            <!--Block Dewan Direksi-->
+                            <div class="card">
+                                <div class="card-header d-flex">
+                                    <h4 class="card-header-title">
+                                        B. Dewan Direksi
+                                    </h4>
+                                    <div class="toolbar ml-auto">
+                                        <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                        @if($permohonan->status == '0' || $permohonan->status == '1')
+                                        <button class="btn btn-light btn-xs" id="btn-pull-dp-dd-trigger" title="Tarik Data Pengurus Dewan Direksi" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
+                                            <i class="fas fa-sync"></i> Tarik
+                                        </button>
+                                        <a href="#" class="btn btn-light btn-xs" title="Tambah Data Pengurus Dewan Direksi"  data-toggle="modal" data-target="#addDpDdModal">
+                                            <i class="fas fa-plus-circle"></i> Tambah 
+                                        </a>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:15%;">Nama</th>
+                                                <th>Jenis Identitas / No.Identitas</th>
+                                                <th>Jabatan</th>
+                                                <th style="width: 5%;">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if($data_pengurus_dewan_direksi->count())
+                                                @foreach($data_pengurus_dewan_direksi as $dp_dd)
+                                                <tr>
+                                                    <td>{{ $dp_dd->nama }}</td>
+                                                    <td>
+                                                        {{ $dp_dd->jenis_identitas}} /
+                                                        @if($dp_dd->jenis_identitas == 'KTP')
+                                                            {{ $dp_dd->nomor_ktp }}
+                                                        @else
+                                                            {{ $dp_dd->nomor_passpor }}
+                                                        @endif
 
-                <!--Block Dewan Direksi-->
-                <div class="card">
-                    <div class="card-header d-flex">
-                        <h4 class="card-header-title">
-                            B. Dewan Direksi
-                        </h4>
-                        <div class="toolbar ml-auto">
-                            <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
-                            @if($permohonan->status == '0' || $permohonan->status == '1')
-                            <button class="btn btn-light btn-xs" id="btn-pull-dp-dd-trigger" title="Tarik Data Pengurus Dewan Direksi" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
-                                <i class="fas fa-sync"></i> Tarik
-                            </button>
-                            <a href="#" class="btn btn-light btn-xs" title="Tambah Data Pengurus Dewan Direksi"  data-toggle="modal" data-target="#addDpDdModal">
-                                <i class="fas fa-plus-circle"></i> Tambah 
-                            </a>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th style="width:15%;">Nama</th>
-                                    <th>Jenis Identitas / No.Identitas</th>
-                                    <th>Jabatan</th>
-                                    <th style="width: 5%;">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if($data_pengurus_dewan_direksi->count())
-                                    @foreach($data_pengurus_dewan_direksi as $dp_dd)
-                                    <tr>
-                                        <td>{{ $dp_dd->nama }}</td>
-                                        <td>
-                                            {{ $dp_dd->jenis_identitas}} /
-                                            @if($dp_dd->jenis_identitas == 'KTP')
-                                                {{ $dp_dd->nomor_ktp }}
+                                                    </td>
+                                                    <td>{{ $dp_dd->jabatan }}</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-danger btn-xs btn-delete-dp-dd-trigger"  title="Hapus Data Pengurus Dewan direksi" data-id="{{ $dp_dd->id }}">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
                                             @else
-                                                {{ $dp_dd->nomor_passpor }}
+                                                <tr>
+                                                    <td colspan="4">Tidak ada data</td>
+                                                </tr>
                                             @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--ENDBlock Dewan Direksi-->
 
-                                        </td>
-                                        <td>{{ $dp_dd->jabatan }}</td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger btn-xs btn-delete-dp-dd-trigger"  title="Hapus Data Pengurus Dewan direksi" data-id="{{ $dp_dd->id }}">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                @else
-                                    <tr>
-                                        <td colspan="4">Tidak ada data</td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <!--ENDBlock Dewan Direksi-->
+                            <!--Block Dewan Pemegang Saham-->
+                            <div class="card">
+                                <div class="card-header d-flex">
+                                    <h4 class="card-header-title">
+                                        C. Pemegang Saham
+                                    </h4>
+                                    <div class="toolbar ml-auto">
+                                        <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                        @if($permohonan->status == '0' || $permohonan->status == '1')
+                                        <button class="btn btn-light btn-xs" id="btn-pull-dp-ps-trigger" title="Tarik Data Pengurus Pemegang Saham" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
+                                            <i class="fas fa-sync"></i> Tarik
+                                        </button>
+                                        <a href="#" class="btn btn-light btn-xs" title="Tambah Data Pengurus Pemegang Saham"  data-toggle="modal" data-target="#addDpPsModal">
+                                            <i class="fas fa-plus-circle"></i> Tambah 
+                                        </a>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:15%;">Nama</th>
+                                                <th>Negara</th>
+                                                <th>Jenis Identitas / No.Identitas</th>
+                                                <th>Prosentase Kepemilikan Saham</th>
+                                                <th>Nominal Kepemilikan Saham</th>
+                                                <th style="width: 5%;">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if($data_pengurus_pemegang_saham->count())
+                                                @foreach($data_pengurus_pemegang_saham as $dp_ps)
+                                                <tr>
+                                                    <td>{{ $dp_ps->nama }}</td>
+                                                    <td>{{ $dp_ps->negara }}</td>
+                                                    <td>
+                                                        {{ $dp_ps->jenis_identitas}} /
+                                                        @if($dp_ps->jenis_identitas == 'KTP')
+                                                            {{ $dp_ps->nomor_ktp }}
+                                                        @else
+                                                            {{ $dp_ps->nomor_passpor }}
+                                                        @endif
 
-                <!--Block Dewan Pemegang Saham-->
-                <div class="card">
-                    <div class="card-header d-flex">
-                        <h4 class="card-header-title">
-                            C. Pemegang Saham
-                        </h4>
-                        <div class="toolbar ml-auto">
-                            <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
-                            @if($permohonan->status == '0' || $permohonan->status == '1')
-                            <button class="btn btn-light btn-xs" id="btn-pull-dp-ps-trigger" title="Tarik Data Pengurus Pemegang Saham" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
-                                <i class="fas fa-sync"></i> Tarik
-                            </button>
-                            <a href="#" class="btn btn-light btn-xs" title="Tambah Data Pengurus Pemegang Saham"  data-toggle="modal" data-target="#addDpPsModal">
-                                <i class="fas fa-plus-circle"></i> Tambah 
-                            </a>
-                            @endif
+                                                    </td>
+                                                    <td>{{ $dp_ps->prosentase_kepemilikan_saham }}</td>
+                                                    <td>{{ rupiah($dp_ps->nominal_kepemilikan_saham) }}</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-danger btn-xs btn-delete-dp-ps-trigger"  title="Hapus Data Pengurus Pemegang Saham" data-id="{{ $dp_ps->id }}">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td colspan="4">Tidak ada data</td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--ENDBlock Dewan Pemegang Saham-->
                         </div>
                     </div>
-                    <div class="card-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th style="width:15%;">Nama</th>
-                                    <th>Negara</th>
-                                    <th>Jenis Identitas / No.Identitas</th>
-                                    <th>Prosentase Kepemilikan Saham</th>
-                                    <th>Nominal Kepemilikan Saham</th>
-                                    <th style="width: 5%;">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if($data_pengurus_pemegang_saham->count())
-                                    @foreach($data_pengurus_pemegang_saham as $dp_ps)
-                                    <tr>
-                                        <td>{{ $dp_ps->nama }}</td>
-                                        <td>{{ $dp_ps->negara }}</td>
-                                        <td>
-                                            {{ $dp_ps->jenis_identitas}} /
-                                            @if($dp_ps->jenis_identitas == 'KTP')
-                                                {{ $dp_ps->nomor_ktp }}
-                                            @else
-                                                {{ $dp_ps->nomor_passpor }}
-                                            @endif
-
-                                        </td>
-                                        <td>{{ $dp_ps->prosentase_kepemilikan_saham }}</td>
-                                        <td>{{ rupiah($dp_ps->nominal_kepemilikan_saham) }}</td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger btn-xs btn-delete-dp-ps-trigger"  title="Hapus Data Pengurus Pemegang Saham" data-id="{{ $dp_ps->id }}">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                @else
-                                    <tr>
-                                        <td colspan="4">Tidak ada data</td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
-                <!--ENDBlock Dewan Pemegang Saham-->
+                <!--ENDTab Pane Data Pengurus-->
+
             </div>
         </div>
     </div>
 </div>
+<!--ENDRow Tabs-->
 
 <!--Modal Tambah Data Pengurus Dewan Komisaris-->
 <div class="modal fade" id="addDpDkModal" tabindex="-1" role="dialog" aria-labelledby="addDpDkModalLabel" aria-hidden="true">
@@ -454,3 +473,4 @@
     </div>
 </div>
 <!--ENDModal Delete Data Pengurus Pemegang Saham-->
+@endSection

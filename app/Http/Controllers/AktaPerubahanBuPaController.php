@@ -73,7 +73,7 @@ class AktaPerubahanBuPaController extends Controller
                     'file_akta_perubahan_bu' => $request->has('file_akta_perubahan_bu') ? base64_encode(file_get_contents($request->file_akta_perubahan_bu)) : NULL
                 ]
             ]);
-            $response = $client->post('Service/Permohonan/Persyaratan-Administratif/Akta-Perubahan-Badan-Usaja/Tambah');
+            $response = $client->post('Service/Permohonan/Persyaratan-Administratif/Akta-Perubahan-Badan-Usaha/Tambah');
             $code = $response->getStatusCode(); // 200
             $body = $response->getBody();
             $contents = $body->getContents();
@@ -187,7 +187,7 @@ class AktaPerubahanBuPaController extends Controller
                     'uid_permohonan' => $persyaratan_administratif->permohonan->uid_permohonan,
                 ]
             ]);
-            $response = $client->post('Service/Permohonan/Persyaratan-Administratif/Akta-Perubahan-Badan-Usaja/Tarik');
+            $response = $client->post('Service/Permohonan/Persyaratan-Administratif/Akta-Perubahan-Badan-Usaha/Tarik');
             $code = $response->getStatusCode(); // 200
             $body = $response->getBody();
             $contents = $body->getContents();

@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_header_title')
-    <h2 class="pageheader-title">Detail Permohonan</h2>
+<h2 class="pageheader-title">Detail Permohonan</h2>
 @endsection
 
 @section('additional_styles')
@@ -37,78 +37,67 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <tr>
-                                    <td style="width: 30%;">Jenis Usaha</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">{{ $permohonan->jenis_usaha->nama_jenis_usaha }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Jenis Sertifikasi</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">{{ $permohonan->jenis_sertifikasi }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Perpanjangan ke</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">{{ $permohonan->perpanjangan_ke }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Nama Badan Usaha</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">{{ $permohonan->badan_usaha->nama_badan_usaha }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Bentuk Badan Usaha</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">{{ $permohonan->badan_usaha->bentuk_badan_usaha->nama_bentuk_badan_usaha }}</td>
-                                </tr>
-                                
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <tr>
-                                    <td style="width: 30%;">Provinsi</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">
-                                        {!! $permohonan->badan_usaha->kota->provinsi->nama_provinsi !!}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Alamat</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">
-                                        {!! $permohonan->badan_usaha->full_address !!}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Status</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">
-                                        {{ translate_status_permohonan($permohonan->status) }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Nomor Agenda</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">
-                                        {{ $permohonan->nomor_agenda }}
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <td style="width: 30%;">Jenis Usaha</td>
+                            <td style="width: 5%;">:</td>
+                            <td style="">{{ $permohonan->jenis_usaha->nama_jenis_usaha }}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;">Jenis Sertifikasi</td>
+                            <td style="width: 5%;">:</td>
+                            <td style="">{{ $permohonan->jenis_sertifikasi }}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;">Perpanjangan ke</td>
+                            <td style="width: 5%;">:</td>
+                            <td style="">{{ $permohonan->perpanjangan_ke }}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;">Nama Badan Usaha</td>
+                            <td style="width: 5%;">:</td>
+                            <td style="">{{ $permohonan->badan_usaha->nama_badan_usaha }}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;">Bentuk Badan Usaha</td>
+                            <td style="width: 5%;">:</td>
+                            <td style="">{{ $permohonan->badan_usaha->bentuk_badan_usaha->nama_bentuk_badan_usaha }}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;">Provinsi</td>
+                            <td style="width: 5%;">:</td>
+                            <td style="">
+                                {!! $permohonan->badan_usaha->kota->provinsi->nama_provinsi !!}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;">Alamat</td>
+                            <td style="width: 5%;">:</td>
+                            <td style="">
+                                {!! $permohonan->badan_usaha->full_address !!}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;">Status</td>
+                            <td style="width: 5%;">:</td>
+                            <td style="">
+                                {{ translate_status_permohonan($permohonan->status) }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;">Nomor Agenda</td>
+                            <td style="width: 5%;">:</td>
+                            <td style="">
+                                {{ $permohonan->nomor_agenda }}
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-                
             </div>
         </div>
     </div>
+    
 </div>
 
 <!--Row Asesor-->
@@ -179,7 +168,1066 @@
 </div>
 <!--ENDRow Asesor-->
 
-@yield('sub-content')
+<!--Row Tabs-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="section-block">
+            <h5 class="section-title">Data Verifikasi</h5>
+            <p></p>
+        </div>
+        <div class="tab-outline">
+            <ul class="nav nav-tabs" id="myTab2" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-outline-identitas-badan-usaha" data-toggle="tab" href="#outline-identitas-badan-usaha" role="tab" aria-selected="true">
+                        <i class="fas fa-file-alt"></i> Identitas Badan Usaha
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-outline-persyaratan-administratif" data-toggle="tab" href="#outline-persyaratan-administratif" role="tab">
+                        <i class="fas fa-file-alt"></i> Persyaratan Administratif
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-outline-persyaratan-teknis" data-toggle="tab" href="#outline-persyaratan-teknis" role="tab">
+                        <i class="fas fa-file-alt"></i> Persyaratan Teknis
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab-outline-data-pengurus" data-toggle="tab" href="#outline-data-pengurus" role="tab">
+                        <i class="fas fa-file-alt"></i> Data Pengurus
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent2">
+                <!--Tab Pane Identitas Badan Usaha-->
+                <div class="tab-pane fade" id="outline-identitas-badan-usaha" role="tabpanel" aria-labelledby="tab-outline-identitas-badan-usaha">
+                    <div class="card">
+                        <div class="card-header d-flex">
+                            <h4 class="card-header-title">
+                                Identitas Badan Usaha
+                            </h4>
+                            <div class="toolbar ml-auto">
+                                <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                @if($permohonan->status == '0' || $permohonan->status == '1')
+                                    <button type="button" id="btn-pull-ibu-trigger" class="btn btn-light btn-xs" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
+                                        <i class="fas fa-sync"></i> Tarik
+                                    </button>
+                                    @if(is_null($permohonan->identitas_badan_usaha))
+                                        
+                                        <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#addIBUModal">
+                                            <i class="fas fa-plus-circle"></i> Tambah
+                                        </a>
+                                    @else
+                                        <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#editIBUModal">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+                                        
+                                    @endif
+                                @endif
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                @if(!is_null($identitas_badan_usaha))
+                                <table class="table">
+                                    <tr>
+                                        <td style="width: 30%;">UID Verifikasi IBU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="ibu_holder_uid_verifikasi_ibu">
+                                            {{ $identitas_badan_usaha->uid_verifikasi_ibu }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">File Surat Permohoan SBU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="ibu_holder_file_surat_permohonan_sbu">
+                                            <a href="{{ $identitas_badan_usaha->file_surat_permohonan_sbu }}">
+                                                {{ $identitas_badan_usaha->file_surat_permohonan_sbu }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor Surat</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="ibu_holder_nomor_surat">
+                                            {{ $identitas_badan_usaha->nomor_surat }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Perihal</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="ibu_holder_perihal">
+                                            {{ $identitas_badan_usaha->perihal }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Tanggal Surat</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="ibu_holder_tanggal_surat">
+                                            {{ indonesian_date($identitas_badan_usaha->tanggal_surat) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nama Penandatanganan Surat</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="ibu_holder_nama_penandatangan_surat">
+                                            {{ $identitas_badan_usaha->nama_penandatangan_surat }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Jabatan Penandatanganan Surat</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="ibu_holder_jabatan_penandatangan_surat">
+                                            {{ $identitas_badan_usaha->jabatan_penandatangan_surat }}
+                                        </td>
+                                    </tr>
+                                </table>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--ENDTab Pane Identitas Badan Usaha-->
+
+                <!--Tab Pane Persyaratan Administratif-->
+                <div class="tab-pane fade" id="outline-persyaratan-administratif" role="tabpanel" aria-labelledby="tab-outline-persyaratan-administratif">
+                    <div class="card">
+                        <div class="card-header d-flex">
+                            <h4 class="card-header-title">
+                               Persyaratan Administratif
+                            </h4>
+                            <div class="toolbar ml-auto">
+                                <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                @if($permohonan->status == '0' || $permohonan->status == '1')
+                                    <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#pullPAModal">
+                                        <i class="fa fa-sync"></i> Tarik
+                                    </a>
+                                    @if(is_null($permohonan->persyaratan_administratif))
+                                        
+                                        <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#addPAModal">
+                                            <i class="fa fa-plus-circle"></i> Tambah
+                                        </a>
+                                    @else
+                                        <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#editPAModal">
+                                            <i class="fa fa-edit"></i> Edit
+                                        </a>
+                                    @endif
+                                @endif
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                @if(!is_null($persyaratan_administratif))
+                                <table class="table">
+                                    <tr>
+                                        <td style="width: 30%;">UID Verifikasi PA</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_uid_verifikasi_pa">
+                                            {{ $persyaratan_administratif->uid_verifikasi_pa }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">File Akta Pendirian BU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_file_akta_pendirian_bu">
+                                            <a href="{{ $persyaratan_administratif->file_akta_pendirian_bu }}">
+                                                {{ $persyaratan_administratif->file_akta_pendirian_bu }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nama Notaris</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nama_notaris">
+                                            {{ $persyaratan_administratif->nama_notaris }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Judul Akta</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_judul_akta">
+                                            {{ $persyaratan_administratif->judul_akta }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Tanggal Akta</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_tanggal_akta">
+                                            {{ indonesian_date($persyaratan_administratif->tanggal_akta) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor Akta</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nomor_akta">
+                                            {{ $persyaratan_administratif->nomor_akta }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Maksud Tujuan Akta</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_maksud_tujuan_akta">
+                                            {{ $persyaratan_administratif->maksud_tujuan_akta }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">File Pengesahan Sebagai Badan Hukum</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_file_pengesahan_sebagai_badan_hukum">
+                                            <a href="{{ $persyaratan_administratif->file_pengesahan_sebagai_badan_hukum }}">
+                                                {{ $persyaratan_administratif->file_pengesahan_sebagai_badan_hukum }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor Badan Hukum</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nomor_badan_hukum">
+                                            {{ $persyaratan_administratif->nomor_badan_hukum }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Tentang Badan Hukum</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_tentang_badan_hukum">
+                                            {{ $persyaratan_administratif->tentang_badan_hukum }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Tanggal Badan Hukum</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_tanggal_badan_hukum">
+                                            {{ indonesian_date($persyaratan_administratif->tanggal_badan_hukum) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">File NPWP</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_file_npwp">
+                                            <a href="{{ $persyaratan_administratif->file_npwp }}">
+                                                {{ $persyaratan_administratif->file_npwp }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor NPWP</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nomor_npwp">
+                                            {{ $persyaratan_administratif->nomor_npwp }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">File SKDU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_file_skdu">
+                                            <a href="{{ $persyaratan_administratif->file_skdu }}">
+                                                {{ $persyaratan_administratif->file_skdu }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Instansi Penerbit SKDU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_instansi_penerbit_skdu">
+                                            {{ $persyaratan_administratif->instansi_penerbit_skdu }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor SKDU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nomor_skdu">
+                                            {{ $persyaratan_administratif->nomor_skdu }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Tanggal SKDU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_tanggal_skdu">
+                                            {{ indonesian_date($persyaratan_administratif->tanggal_skdu) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Masa Berlaku SKDU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_masa_berlaku_skdu">
+                                            {{ indonesian_date($persyaratan_administratif->masa_berlaku_skdu) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">File PJBU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_file_pjbu">
+                                            <a href="{{ $persyaratan_administratif->file_pjbu }}">
+                                                {{ $persyaratan_administratif->file_pjbu }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nama PJBU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nama_pjbu">
+                                            {{ $persyaratan_administratif->nama_pjbu }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Jenis Identitas PJBU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_jenis_identitas_pjbu">
+                                            {{ $persyaratan_administratif->jenis_identitas_pjbu }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor KTP PJBU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nomor_ktp_pjbu">
+                                            {{ $persyaratan_administratif->nomor_ktp_pjbu }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor Paspor PJBU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nomor_paspor_pjbu">
+                                            {{ $persyaratan_administratif->nomor_paspor_pjbu }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">File Laporan Keuangan</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_file_laporan_keuangan">
+                                            <a href="{{ $persyaratan_administratif->file_laporan_keuangan }}">
+                                                {{ $persyaratan_administratif->file_laporan_keuangan }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Kekayaan Bersih</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_kekayaan_bersih">
+                                            {{ rupiah($persyaratan_administratif->kekayaan_bersih) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Modal Disetor</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_modal_disetor">
+                                            {{ rupiah($persyaratan_administratif->modal_disetor) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nama Kantor Akuntan Publik</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nama_kantor_akuntan_publik">
+                                            {{ $persyaratan_administratif->nama_kantor_akuntan_publik }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Alamat Kantor Akuntan Publik</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_alamat_kantor_akuntan_pulik">
+                                            {{ $persyaratan_administratif->alamat_kantor_akuntan_pulik }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor Telepon Kantor Akuntan Publik</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nomor_telepon_kantor_akuntan_publik">
+                                            {{ $persyaratan_administratif->nomor_telepon_kantor_akuntan_publik }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nama Akuntan</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nama_akuntan">
+                                            {{ $persyaratan_administratif->nama_akuntan }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor Laporan Keuangan</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nomor_laporan_keuangan">
+                                            {{ $persyaratan_administratif->nomor_laporan_keuangan }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Tanggal Laporan Keuangan</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_tanggal_laporan_keuangan">
+                                            {{ indonesian_date($persyaratan_administratif->tanggal_laporan_keuangan) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Pendapat Akuntan</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_pendapat_akuntan">
+                                            {{ $persyaratan_administratif->pendapat_akuntan }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">File Struktur Organisasi Badan Usaha</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_file_struktur_organisasi_badan_usaha">
+                                            <a href="{{ $persyaratan_administratif->file_struktur_organisasi_badan_usaha }}">
+                                                {{ $persyaratan_administratif->file_struktur_organisasi_badan_usaha }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">File Profile Badan Usaha</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_file_profile_badan_usaha">
+                                            <a href="{{ $persyaratan_administratif->file_profile_badan_usaha }}">
+                                                {{ $persyaratan_administratif->file_profile_badan_usaha }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">File PPM</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_file_ppm">
+                                            <a href="{{ $persyaratan_administratif->file_ppm }}">
+                                                {{ $persyaratan_administratif->file_ppm }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor PPM</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nomor_ppm">
+                                            {{ $persyaratan_administratif->nomor_ppm }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Tanggal PPM</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_tanggal_ppm">
+                                            {{ indonesian_date($persyaratan_administratif->tanggal_ppm) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Prosentase Saham PMA PPM</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_prosentase_saham_pma_ppm">
+                                            {{ $persyaratan_administratif->prosentase_saham_pma_ppm }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">File PPM Perubahan</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_file_ppm_perubahan">
+                                            <a href="{{ $persyaratan_administratif->file_ppm_perubahan }}">
+                                                {{ $persyaratan_administratif->file_ppm_perubahan }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor PPM Perubahan</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nomor_ppm_perubahan">
+                                            {{ $persyaratan_administratif->nomor_ppm_perubahan }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Tanggal PPM Perubahan</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_tanggal_ppm_perubahan">
+                                            {{ indonesian_date($persyaratan_administratif->tanggal_ppm_perubahan) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Prosentase Saham PMA PPM Perubahan</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_prosentase_saham_pma_ppm_perubahan">
+                                            {{ $persyaratan_administratif->prosentase_saham_pma_ppm_perubahan }}
+                                        </td>
+                                    </tr>
+                                </table>
+                                @else
+                                <p class="alert alert-warning">
+                                    Data Persyaratan Administratif tidak ditemukan, silahkan tarik data atau tambahkan
+                                </p>
+                                @endif
+                            </div>
+
+                            <!--Block Akta Perubahan BU Persyaratan Administratif-->
+                            <div class="card">
+                                <div class="card-header d-flex">
+                                    <h4 class="card-header-title">
+                                        <i class="fa fa-file-alt"></i> Akta Perubahan Badan Usaha
+                                    </h4>
+                                    <div class="toolbar ml-auto">
+                                        <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                        @if($permohonan->status == '0' || $permohonan->status == '1')
+                                            @if(!is_null($persyaratan_administratif))
+                                            <button class="btn btn-light btn-xs" id="btn-pull-akta-perubahan-bu-pa" title="Tarik Akta Perubahan BU" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
+                                                <i class="fa fa-sync"></i> Tarik
+                                            </button>
+                                            <button class="btn btn-light btn-xs" id="btn-add-akta-perubahan-bu-pa-trigger" title="Tambah Akta Perubahan BU" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
+                                                <i class="fa fa-plus-circle"></i> Tambah
+                                            </button>
+                                            @endif
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    @if($akta_perubahan_bu_pa)
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width: 30%;">Nama Notaris</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td style="">
+                                                        {{ $akta_perubahan_bu_pa->nama_notaris }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 30%;">Judul Akta</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td style="">
+                                                        {{ $akta_perubahan_bu_pa->judul_akta }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 30%;">Tanggal Akta</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td style="">
+                                                        {{ $akta_perubahan_bu_pa->tanggal_akta }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 30%;">Nomor Akta</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td style="">
+                                                        {{ $akta_perubahan_bu_pa->nomor_akta }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 30%;">Hal Yang Diubah</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td style="">
+                                                        {{ $akta_perubahan_bu_pa->hal_yang_diubah }}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    @else
+                                        <p class="alert alert-warning">
+                                            Tidak ada data
+                                        </p>
+                                    @endif
+                                </div>
+                            </div>
+                            <!--ENDBlock Akta Perubahan BU Persyaratan Administratif-->
+
+                            <!--Block Pengesahan Akta Perubahan-->
+                            <div class="card">
+                                <div class="card-header d-flex">
+                                    <h4 class="card-header-title">
+                                        <i class="fa fa-file-alt"></i> Pengesahan Akta Perubahan
+                                    </h4>
+                                    <div class="toolbar ml-auto">
+                                        <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                        @if($permohonan->status == '0' || $permohonan->status == '1')
+                                            @if(!is_null($persyaratan_administratif))
+                                            <button class="btn btn-light btn-xs" id="btn-pull-pengesahan-akta-perubahan" title="Tarik Pengesahan Akta Perubahan" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
+                                                <i class="fa fa-sync"></i> Tarik
+                                            </button>
+                                            <button class="btn btn-light btn-xs" id="btn-add-pengesahan-akta-perubahan-trigger" title="Tambah Pengesahan Akta Perubahan" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
+                                                <i class="fa fa-plus-circle"></i> Tambah
+                                            </button>
+                                            @endif
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    @if($pengesahan_akta_perubahan)
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td style="width: 30%;">File Pengesahan Akta Perubahan</td>
+                                                <td style="width: 5%;">:</td>
+                                                <td style="">
+                                                    {{ $pengesahan_akta_perubahan->file_pengesahan_akta_perubahan }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 30%;">Nomor</td>
+                                                <td style="width: 5%;">:</td>
+                                                <td style="">
+                                                    {{ $pengesahan_akta_perubahan->nomor }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 30%;">Tentang</td>
+                                                <td style="width: 5%;">:</td>
+                                                <td style="">
+                                                    {{ $pengesahan_akta_perubahan->tentang }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 30%;">Tanggal</td>
+                                                <td style="width: 5%;">:</td>
+                                                <td style="">
+                                                    {{ $pengesahan_akta_perubahan->tanggal }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    @else
+                                        <p class="alert alert-warning">
+                                            Tidak ada data
+                                        </p>
+                                    @endif
+                                </div>
+                            </div>
+                            <!--ENDBlock Pengesahan Akta Perubahan-->
+                        </div>
+                    </div>
+                </div>
+                <!--ENDTab Pane Persyaratan Administratif-->
+
+                <!--Tab Pane Persyaratan Teknis-->
+                <div class="tab-pane fade" id="outline-persyaratan-teknis" role="tabpanel" aria-labelledby="tab-outline-persyaratan-teknis">
+                    <div class="card">
+                        <div class="card-header d-flex">
+                            <h4 class="card-header-title">
+                                Persyaratan Teknis
+                            </h4>
+                            <div class="toolbar ml-auto">
+                               <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                @if($permohonan->status == '0' || $permohonan->status == '1')
+                                    <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#pullPTModal" title="Tarik Persyaratan Teknis">
+                                        <i class="fas fa-sync"></i> Tarik
+                                    </a>
+                                    <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#addPTModal">
+                                        <i class="fas fa-plus-circle"></i> Tambah
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            @if(!is_null($persyaratan_teknis))
+                                @foreach($persyaratan_teknis as $pt)
+                                    <!--Block Persyaratan Teknis-->
+                                    <div class="card">
+                                        <div class="card-header d-flex">
+                                            <h5 class="card-header-title">
+                                                {{ $pt->sub_bidang->nama_sub_bidang }}
+                                                ({{ $pt->uid_verifikasi_pt }})
+                                            </h5>
+                                            <div class="toolbar ml-auto">
+                                                <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                                @if($permohonan->status == '0' || $permohonan->status == '1')
+                                                <button type="button" class="btn btn-danger btn-xs btn-trigger-delete-persyaratan-teknis" data-uid-verifikasi-pt="{{ $pt->uid_verifikasi_pt }}" title="Hapus Sub Bidang" data-delete-confirmation-text="Hapus Persyaratan Teknis Sub Bidang {{ $pt->sub_bidang->nama_sub_bidang}}">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <!--Block Persyaratan Teknis Penanggung Jawab Teknis-->
+                                            <div class="card">
+                                                <div class="card-header d-flex">
+                                                    <h5 class="card-header-title">
+                                                        A. Penanggung Jawab Teknik
+                                                    </h5>
+                                                    <div class="toolbar ml-auto">
+                                                        <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                                        @if($permohonan->status == '0' || $permohonan->status == '1')
+                                                        <button type="button" class="btn btn-light btn-xs btn-pull-ptpjt-trigger" title="Tarik Persyaratan Teknis Penanggung Jawab Teknik" data-uid-verifikasi-pt="{{ $pt->uid_verifikasi_pt }}" data-uid-permohonan="{{ $permohonan->uid_permohonan }}">
+                                                            <i class="fas fa-sync"></i> Tarik PJT
+                                                        </button>
+                                                        <button type="button" class="btn btn-light btn-xs btn-add-ptpjt-trigger" title="Tambah Persyaratan Teknis Penanggung Jawab Teknik" data-uid-verifikasi-pt="{{ $pt->uid_verifikasi_pt }}" data-uid-permohonan="{{ $permohonan->uid_permohonan }}">
+                                                            <i class="fas fa-plus-circle"></i> Tambah PJT
+                                                        </button>
+                                                        <button type="button" class="btn btn-xs btn-light btn-pull-sertifikat-pt-pjt-trigger" title="Tarik Serkom" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
+                                                            <i class="fa fa-sync"></i> Tarik Sertifikat PJT
+                                                        </button>
+                                                        @endif
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Nama</th>
+                                                                <th>Jenis Identitas / No.Identitas</th>
+                                                                <th>No. HP</th>
+                                                                <th style="width: 25%;text-align: center;">Sertifikat</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if($pt->persyaratan_teknis_penanggung_jawab_teknis->count())
+                                                            @foreach($pt->persyaratan_teknis_penanggung_jawab_teknis as $ptpjt)
+                                                            <tr>
+                                                                <td>{{ $ptpjt->nama }}</td>
+                                                                <td>
+                                                                    {{ $ptpjt->jenis_identitas }} /
+                                                                    @if($ptpjt->jenis_identitas == 'KTP')
+                                                                        {{ $ptpjt->nomor_ktp }}
+                                                                    @else
+                                                                        {{ $ptpjt->nomor_passpor }}
+                                                                    @endif
+                                                                </td>
+                                                                <td>{{ $ptpjt->nomor_hp }}</td>
+                                                                <td>
+                                                                    @if($ptpjt->sertifikat_pt_pjt->count())
+                                                                        <p>
+                                                                            Nomor Sertifikat : {{ $ptpjt->sertifikat_pt_pjt->first()->no_serkom }}
+                                                                        </p>
+                                                                        <p>
+                                                                            Nomor Registrasi : {{ $ptpjt->sertifikat_pt_pjt->first()->noreg_serkom }}
+                                                                        </p>
+                                                                        <button type="button" class="btn btn-xs btn-danger btn-delete-sertifikat-pt-pjt-trigger" title="Hapus Serkom" data-uid_permohonan="{{ $permohonan->uid_permohonan}}" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_ver_pt_pjt="{{ $ptpjt->uid_ver_pt_pjt }}" data-id="{{ $ptpjt->sertifikat_pt_pjt->first()->id }}">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </button>
+                                                                    @else
+                                                                        <button type="button" class="btn btn-xs btn-primary btn-add-sertifikat-pt-pjt-trigger" title="Upload Serkom" data-uid_permohonan="{{ $permohonan->uid_permohonan}}" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_ver_pt_pjt="{{ $ptpjt->uid_ver_pt_pjt }}">
+                                                                            <i class="fa fa-plus-circle"></i>
+                                                                        </button>
+                                                                    @endif
+                                                                    
+                                                                    
+                                                                </td>
+                                                                <td>
+                                                                    <button type="button" class="btn btn-rounded btn-danger btn-xs btn-delete-ptpjt-trigger" title="Hapus Penanggung Jawab Teknik" data-uid-ver-pt-pjt="{{ $ptpjt->uid_ver_pt_pjt }}" data-uid-verifikasi-pt="{{ $ptpjt->uid_verifikasi_pt }}" data-uid-permohonan="{{ $ptpjt->uid_permohonan }}">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        @else
+                                                            <tr>
+                                                                <td colspan="5">Tidak ada data</td>
+                                                            </tr>
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                
+                                                </div>
+                                            </div>
+                                            <!--Block Persyaratan Teknis Penanggung Jawab Teknis-->
+
+                                            <!--Block Persyaratan Teknis Tenaga Teknik-->
+                                            <div class="card">
+                                                <div class="card-header d-flex">
+                                                    <h5 class="card-header-title">
+                                                        B. Tenaga Teknik
+                                                    </h5>
+                                                    <div class="toolbar ml-auto">
+                                                        <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                                        @if($permohonan->status == '0' || $permohonan->status == '1')
+                                                        <button type="button" class="btn btn-light btn-xs btn-pull-pttt-trigger" title="Tarik Persyaratan Teknis Tenaga Teknik" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
+                                                            <i class="fas fa-sync"></i> Tarik TT
+                                                        </button>
+                                                        <button type="button" class="btn btn-light btn-xs btn-add-pttt-trigger" title="Tambah Persyaratan Teknis Tenaga Teknik" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
+                                                            <i class="fas fa-plus-circle"></i> Tambah TT
+                                                        </button>
+                                                        <button type="button" class="btn btn-xs btn-light btn-pull-sertifikat-pt-tt-trigger" title="Tarik Serkom" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
+                                                            <i class="fa fa-sync"></i> Tarik Sertifikat TT
+                                                        </button>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Nama</th>
+                                                                <th>Jenis Identitas / No.Identitas</th>
+                                                                <th>No. HP</th>
+                                                                <th style="width: 25%;text-align: center;">Sertifikat</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @if($pt->persyaratan_teknis_tenaga_teknik->count())
+                                                                @foreach($pt->persyaratan_teknis_tenaga_teknik as $pttt)
+                                                                <tr>
+                                                                    <td>{{ $pttt->nama }}</td>
+                                                                    <td>
+                                                                        {{ $pttt->jenis_identitas }} /
+                                                                        @if($pttt->jenis_identitas == 'KTP')
+                                                                            {{ $pttt->nomor_ktp }}
+                                                                        @else
+                                                                            {{ $pttt->nomor_passpor }}
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>{{ $pttt->nomor_hp }}</td>
+                                                                    <td>
+                                                                        @if($pttt->sertifikat_pt_tt->count())
+                                                                            <p>
+                                                                                Nomor Sertifikat : {{ $pttt->sertifikat_pt_tt->first()->no_serkom }}
+                                                                            </p>
+                                                                            <p>
+                                                                                Nomor Registrasi : {{ $pttt->sertifikat_pt_tt->first()->noreg_serkom }}
+                                                                            </p>
+                                                                            <button type="button" class="btn btn-xs btn-danger btn-delete-sertifikat-pt-tt-trigger" title="Hapus Serkom" data-uid_permohonan="{{ $permohonan->uid_permohonan}}" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_ver_pt_tt="{{ $pttt->uid_ver_pt_tt }}" data-id="{{ $pttt->sertifikat_pt_tt->first()->id }}">
+                                                                                <i class="fa fa-trash"></i>
+                                                                            </button>
+                                                                        @else
+                                                                            <button type="button" class="btn btn-xs btn-primary btn-add-sertifikat-pt-tt-trigger" title="Upload Serkom" data-uid_permohonan="{{ $permohonan->uid_permohonan}}" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_ver_pt_tt="{{ $pttt->uid_ver_pt_tt }}">
+                                                                                <i class="fa fa-plus-circle"></i>
+                                                                            </button>
+                                                                        @endif
+                                                                        
+                                                                    </td>
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-rounded btn-danger btn-xs btn-delete-pttt-trigger" title="Hapus Tenaga Teknik" data-uid_ver_pt_tt="{{ $pttt->uid_ver_pt_tt }}" data-uid_verifikasi_pt="{{ $pttt->uid_verifikasi_pt }}" data-uid_permohonan="{{ $pttt->uid_permohonan }}">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                                @endforeach
+                                                            @else
+                                                                <tr>
+                                                                    <td colspan="5">Tidak ada data</td>
+                                                                </tr>
+                                                            @endif
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <!--ENDBlock Persyaratan Teknis Tenaga Teknik-->
+                                        </div>
+                                    </div>
+                                    <!--ENDBlock Persyaratan Teknis-->
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <!--ENDTab Pane Persyaratan Administratif-->
+
+                <!--Tab Pane Data Pengurus-->
+                <div class="tab-pane fade" id="outline-data-pengurus" role="tabpanel" aria-labelledby="tab-outline-data-pengurus">
+                    <div class="card">
+                        <div class="card-header d-flex">
+                            <h4 class="card-header-title">
+                                Data Pengurus
+                            </h4>
+                            <div class="toolbar ml-auto">
+
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <!--Block Dewan Komisaris-->
+                            <div class="card">
+                                <div class="card-header d-flex">
+                                    <h4 class="card-header-title">
+                                        A. Dewan Komisaris
+                                    </h4>
+                                    <div class="toolbar ml-auto">
+                                        <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                        @if($permohonan->status == '0' || $permohonan->status == '1')
+                                        <button class="btn btn-light btn-xs" id="btn-pull-dp-dk-trigger" title="Tarik Data Pengurus Dewan Komisaris" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
+                                            <i class="fas fa-sync"></i> Tarik
+                                        </button>
+                                        <a href="#" class="btn btn-light btn-xs" title="Tambah Data Pengurus Dewan Komisaris"  data-toggle="modal" data-target="#addDpDkModal">
+                                            <i class="fas fa-plus-circle"></i> Tambah 
+                                        </a>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:15%;">Nama</th>
+                                                    <th>Jenis Identitas / No.Identitas</th>
+                                                    <th>Jabatan</th>
+                                                    <th style="width: 5%;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            @if($data_pengurus_dewan_komisaris->count())
+                                                @foreach($data_pengurus_dewan_komisaris as $dp_dk)
+                                                <tr>
+                                                    <td>{{ $dp_dk->nama }}</td>
+                                                    <td>
+                                                        {{ $dp_dk->jenis_identitas}} /
+                                                        @if($dp_dk->jenis_identitas == 'KTP')
+                                                            {{ $dp_dk->nomor_ktp }}
+                                                        @else
+                                                            {{ $dp_dk->nomor_passpor }}
+                                                        @endif
+
+                                                    </td>
+                                                    <td>{{ $dp_dk->jabatan }}</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-danger btn-xs btn-delete-dp-dk-trigger" title="Hapus Data Pengurus Dewan Komisaris" data-id="{{ $dp_dk->id }}">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td colspan="4">Tidak ada data</td>
+                                                </tr>
+                                            @endif
+                                            </tbody>
+                                        </table>    
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <!--ENDBlock Dewan Komisaris-->
+
+                            <!--Block Dewan Direksi-->
+                            <div class="card">
+                                <div class="card-header d-flex">
+                                    <h4 class="card-header-title">
+                                        B. Dewan Direksi
+                                    </h4>
+                                    <div class="toolbar ml-auto">
+                                        <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                        @if($permohonan->status == '0' || $permohonan->status == '1')
+                                        <button class="btn btn-light btn-xs" id="btn-pull-dp-dd-trigger" title="Tarik Data Pengurus Dewan Direksi" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
+                                            <i class="fas fa-sync"></i> Tarik
+                                        </button>
+                                        <a href="#" class="btn btn-light btn-xs" title="Tambah Data Pengurus Dewan Direksi"  data-toggle="modal" data-target="#addDpDdModal">
+                                            <i class="fas fa-plus-circle"></i> Tambah 
+                                        </a>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:15%;">Nama</th>
+                                                <th>Jenis Identitas / No.Identitas</th>
+                                                <th>Jabatan</th>
+                                                <th style="width: 5%;">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if($data_pengurus_dewan_direksi->count())
+                                                @foreach($data_pengurus_dewan_direksi as $dp_dd)
+                                                <tr>
+                                                    <td>{{ $dp_dd->nama }}</td>
+                                                    <td>
+                                                        {{ $dp_dd->jenis_identitas}} /
+                                                        @if($dp_dd->jenis_identitas == 'KTP')
+                                                            {{ $dp_dd->nomor_ktp }}
+                                                        @else
+                                                            {{ $dp_dd->nomor_passpor }}
+                                                        @endif
+
+                                                    </td>
+                                                    <td>{{ $dp_dd->jabatan }}</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-danger btn-xs btn-delete-dp-dd-trigger"  title="Hapus Data Pengurus Dewan direksi" data-id="{{ $dp_dd->id }}">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td colspan="4">Tidak ada data</td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--ENDBlock Dewan Direksi-->
+
+                            <!--Block Dewan Pemegang Saham-->
+                            <div class="card">
+                                <div class="card-header d-flex">
+                                    <h4 class="card-header-title">
+                                        C. Pemegang Saham
+                                    </h4>
+                                    <div class="toolbar ml-auto">
+                                        <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                        @if($permohonan->status == '0' || $permohonan->status == '1')
+                                        <button class="btn btn-light btn-xs" id="btn-pull-dp-ps-trigger" title="Tarik Data Pengurus Pemegang Saham" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
+                                            <i class="fas fa-sync"></i> Tarik
+                                        </button>
+                                        <a href="#" class="btn btn-light btn-xs" title="Tambah Data Pengurus Pemegang Saham"  data-toggle="modal" data-target="#addDpPsModal">
+                                            <i class="fas fa-plus-circle"></i> Tambah 
+                                        </a>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:15%;">Nama</th>
+                                                <th>Negara</th>
+                                                <th>Jenis Identitas / No.Identitas</th>
+                                                <th>Prosentase Kepemilikan Saham</th>
+                                                <th>Nominal Kepemilikan Saham</th>
+                                                <th style="width: 5%;">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if($data_pengurus_pemegang_saham->count())
+                                                @foreach($data_pengurus_pemegang_saham as $dp_ps)
+                                                <tr>
+                                                    <td>{{ $dp_ps->nama }}</td>
+                                                    <td>{{ $dp_ps->negara }}</td>
+                                                    <td>
+                                                        {{ $dp_ps->jenis_identitas}} /
+                                                        @if($dp_ps->jenis_identitas == 'KTP')
+                                                            {{ $dp_ps->nomor_ktp }}
+                                                        @else
+                                                            {{ $dp_ps->nomor_passpor }}
+                                                        @endif
+
+                                                    </td>
+                                                    <td>{{ $dp_ps->prosentase_kepemilikan_saham }}</td>
+                                                    <td>{{ rupiah($dp_ps->nominal_kepemilikan_saham) }}</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-danger btn-xs btn-delete-dp-ps-trigger"  title="Hapus Data Pengurus Pemegang Saham" data-id="{{ $dp_ps->id }}">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td colspan="4">Tidak ada data</td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--ENDBlock Dewan Pemegang Saham-->
+                        </div>
+                    </div>
+                </div>
+                <!--ENDTab Pane Data Pengurus-->
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--ENDRow Tabs-->
+
+<!--Component Identitas Badan Usaha-->
+@include('permohonan.components.component-identitas-badan-usaha')
+<!--ENDComponent Identitas Badan Usaha-->
+
+<!--Component Persyaratan Administratif-->
+@include('permohonan.components.component-persyaratan-administratif')
+<!--ENDComponent Persyaratan Administratif-->
+
+<!--Component Persyaratan Teknis-->
+@include('permohonan.components.component-persyaratan-teknis')
+<!--ENDComponent Persyaratan Teknis-->
+
+<!--Component Persyaratan Teknis-->
+@include('permohonan.components.component-data-pengurus')
+<!--ENDComponent Persyaratan Teknis-->
 
 <!--Row Change Next Status-->
 <div class="row">
@@ -540,14 +1588,14 @@
 <script type="text/javascript" src="{{ url('assets/vendor/autonumeric/autoNumeric.js')}}"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-        
-    //Block Identitas Badan Usaha
         //Prepare all datetime picker instances
         if ($("#tanggal_surat").length) {
             $('#tanggal_surat').datetimepicker({
                 format: 'YYYY-MM-DD'
             });
         }
+
+    //Block Identitas Badan Usaha
         //Handler Tambah Identitas Badan Usaha
         $('#form-tambah-identitas-badan-usaha').on('submit', function(event){
             event.preventDefault();
@@ -1180,6 +2228,8 @@
 
         });
         //ENDBlock Pull Pengesahan Akta Perubahan
+
+
 
     //ENDBlock Persyaratan Administratif
 
@@ -2715,6 +3765,8 @@
 
         });
         //ENDBlock Tarik Nomor Sertifikat
+
+        $('.nav-tabs a[href="#outline-identitas-badan-usaha"]').tab('show');
     });
 
     

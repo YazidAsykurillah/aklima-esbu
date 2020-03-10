@@ -106,7 +106,14 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('permohonan/{uid_permohonan}/print-certificate', 'PermohonanController@printCertificate');
 	Route::post('permohonan/change-status', 'PermohonanController@changeStatus');
 	Route::get('permohonan/{uid_permohonan}/persyaratan-administratif', 'PermohonanController@fetchPersyaratanAdministratif');
+
 	Route::get('permohonan/{uid_permohonan}/identitas-badan-usaha', 'PermohonanController@getIdentitasBadanUsaha');
+
+	//Outline renderers
+		Route::get('permohonan/{uid_permohonan}/outline-persyaratan-administratif', 'PermohonanController@renderOutlinePersyaratanAdministratif');
+		Route::get('permohonan/{uid_permohonan}/outline-persyaratan-teknis', 'PermohonanController@renderOutlinePersyaratanTeknis');
+		Route::get('permohonan/{uid_permohonan}/outline-data-pengurus', 'PermohonanController@renderOutlineDataPengurus');
+
 	Route::get('permohonan/datatables', 'PermohonanController@datatables');
 	Route::resource('permohonan', 'PermohonanController');
 

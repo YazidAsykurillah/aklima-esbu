@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_header_title')
-    <h2 class="pageheader-title">Detail Permohonan</h2>
+<h2 class="pageheader-title">Detail Permohonan</h2>
 @endsection
 
 @section('additional_styles')
@@ -37,78 +37,67 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <tr>
-                                    <td style="width: 30%;">Jenis Usaha</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">{{ $permohonan->jenis_usaha->nama_jenis_usaha }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Jenis Sertifikasi</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">{{ $permohonan->jenis_sertifikasi }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Perpanjangan ke</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">{{ $permohonan->perpanjangan_ke }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Nama Badan Usaha</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">{{ $permohonan->badan_usaha->nama_badan_usaha }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Bentuk Badan Usaha</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">{{ $permohonan->badan_usaha->bentuk_badan_usaha->nama_bentuk_badan_usaha }}</td>
-                                </tr>
-                                
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <tr>
-                                    <td style="width: 30%;">Provinsi</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">
-                                        {!! $permohonan->badan_usaha->kota->provinsi->nama_provinsi !!}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Alamat</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">
-                                        {!! $permohonan->badan_usaha->full_address !!}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Status</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">
-                                        {{ translate_status_permohonan($permohonan->status) }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Nomor Agenda</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">
-                                        {{ $permohonan->nomor_agenda }}
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <td style="width: 30%;">Jenis Usaha</td>
+                            <td style="width: 5%;">:</td>
+                            <td style="">{{ $permohonan->jenis_usaha->nama_jenis_usaha }}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;">Jenis Sertifikasi</td>
+                            <td style="width: 5%;">:</td>
+                            <td style="">{{ $permohonan->jenis_sertifikasi }}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;">Perpanjangan ke</td>
+                            <td style="width: 5%;">:</td>
+                            <td style="">{{ $permohonan->perpanjangan_ke }}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;">Nama Badan Usaha</td>
+                            <td style="width: 5%;">:</td>
+                            <td style="">{{ $permohonan->badan_usaha->nama_badan_usaha }}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;">Bentuk Badan Usaha</td>
+                            <td style="width: 5%;">:</td>
+                            <td style="">{{ $permohonan->badan_usaha->bentuk_badan_usaha->nama_bentuk_badan_usaha }}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;">Provinsi</td>
+                            <td style="width: 5%;">:</td>
+                            <td style="">
+                                {!! $permohonan->badan_usaha->kota->provinsi->nama_provinsi !!}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;">Alamat</td>
+                            <td style="width: 5%;">:</td>
+                            <td style="">
+                                {!! $permohonan->badan_usaha->full_address !!}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;">Status</td>
+                            <td style="width: 5%;">:</td>
+                            <td style="">
+                                {{ translate_status_permohonan($permohonan->status) }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%;">Nomor Agenda</td>
+                            <td style="width: 5%;">:</td>
+                            <td style="">
+                                {{ $permohonan->nomor_agenda }}
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-                
             </div>
         </div>
     </div>
+    
 </div>
 
 <!--Row Asesor-->
@@ -179,7 +168,21 @@
 </div>
 <!--ENDRow Asesor-->
 
-@yield('sub-content')
+<!--Component Identitas Badan Usaha-->
+@include('permohonan.components.component-identitas-badan-usaha')
+<!--ENDComponent Identitas Badan Usaha-->
+
+<!--Component Persyaratan Administratif-->
+@include('permohonan.components.component-persyaratan-administratif')
+<!--ENDComponent Persyaratan Administratif-->
+
+<!--Component Persyaratan Teknis-->
+@include('permohonan.components.component-persyaratan-teknis')
+<!--ENDComponent Persyaratan Teknis-->
+
+<!--Component Persyaratan Teknis-->
+@include('permohonan.components.component-data-pengurus')
+<!--ENDComponent Persyaratan Teknis-->
 
 <!--Row Change Next Status-->
 <div class="row">
@@ -540,14 +543,14 @@
 <script type="text/javascript" src="{{ url('assets/vendor/autonumeric/autoNumeric.js')}}"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-        
-    //Block Identitas Badan Usaha
         //Prepare all datetime picker instances
         if ($("#tanggal_surat").length) {
             $('#tanggal_surat').datetimepicker({
                 format: 'YYYY-MM-DD'
             });
         }
+
+    //Block Identitas Badan Usaha
         //Handler Tambah Identitas Badan Usaha
         $('#form-tambah-identitas-badan-usaha').on('submit', function(event){
             event.preventDefault();
@@ -1180,6 +1183,8 @@
 
         });
         //ENDBlock Pull Pengesahan Akta Perubahan
+
+
 
     //ENDBlock Persyaratan Administratif
 
@@ -2715,6 +2720,7 @@
 
         });
         //ENDBlock Tarik Nomor Sertifikat
+
     });
 
     

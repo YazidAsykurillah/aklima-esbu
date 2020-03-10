@@ -10,7 +10,7 @@ class IdentitasBadanUsaha extends Model
 
     protected $fillable = [
     	'permohonan_uid', 'uid_verifikasi_ibu', 'file_surat_permohonan_sbu',
-    	'nomor_surat', 'perihal', 'tanggal_surat', 'nama_penandatangan_surat', 'jabatan_penandatangan_surat'
+    	'nomor_surat', 'perihal', 'tanggal_surat', 'nama_penandatangan_surat', 'jabatan_penandatangan_surat', 'updated_at'
     ];
         
     public function permohonan()

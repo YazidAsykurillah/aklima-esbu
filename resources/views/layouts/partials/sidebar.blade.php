@@ -37,7 +37,7 @@
                                 @if(\Auth::user()->can('view-permohonan-1'))
                                 <li class="nav-item">
                                      <a class="nav-link {{{ (Request::query('status') == '1' ? 'active' : '') }}}" href="{{ url('permohonan/?status=1') }}">
-                                        <span class=""></span>Front Desk
+                                        <span class=""></span>Verifikasi Asesor TT
                                     </a>
                                 </li>
                                 @endif
@@ -49,7 +49,7 @@
                                 @if(\Auth::user()->can('view-permohonan-4'))
                                 <li class="nav-item">
                                      <a class="nav-link {{{ (Request::query('status') == '4' ? 'active' : '') }}}" href="{{ url('permohonan/?status=4') }}">
-                                        <span class=""></span>Verifikator
+                                        <span class=""></span>Verifikasi Asesor PJT
                                     </a>
                                 </li>
                                 @endif

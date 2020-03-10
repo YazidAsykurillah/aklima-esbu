@@ -23,6 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        //generate token
+        \Artisan::call('integrator:generate-token');
+
         return view('home');
     }
 }

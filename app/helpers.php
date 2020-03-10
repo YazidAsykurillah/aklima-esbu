@@ -25,13 +25,13 @@
 					$result = "Menunggu Dokumen";
 					break;
 				case '1':
-					$result = "Front Desk";
+					$result = "Verifikasi Asesor TT";
 					break;
 				case '2':
 					$result = "Dokumen lengkap dan proses upload";
 					break;
 				case '4':
-					$result = "Verifikator";
+					$result = "Verifikasi Asesor PJT";
 					break;
 				case '5':
 					$result = "Auditor";
@@ -67,7 +67,7 @@
 			$result = "";
 			switch ($from_to) {
 				case '0-1':
-					$result = "Dikirim ke Frontdesk";
+					$result = "Dikirim ke Asesor TT";
 					break;
 				case '1-4':
 					$result = "Approved by Frontdesk";

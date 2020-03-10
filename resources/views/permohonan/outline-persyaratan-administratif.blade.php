@@ -1,499 +1,517 @@
+@extends('permohonan.show')
+
+@section('sub-content')
+<!--Row Tabs-->
 <div class="row">
     <div class="col-md-12">
-        <div class="card">
-            <div class="card-header d-flex">
-                <h4 class="card-header-title">
-                   <i class="fa fa-file-alt"></i> Persyaratan Administratif
-                </h4>
-                <div class="toolbar ml-auto">
-                    <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
-                    @if($permohonan->status == '0' || $permohonan->status == '1')
-                        <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#pullPAModal">
-                            <i class="fa fa-sync"></i> Tarik
-                        </a>
-                        @if(is_null($permohonan->persyaratan_administratif))
-                            
-                            <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#addPAModal">
-                                <i class="fa fa-plus-circle"></i> Tambah
-                            </a>
-                        @else
-                            <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#editPAModal">
-                                <i class="fa fa-edit"></i> Edit
-                            </a>
-                        @endif
-                    @endif
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    @if(!is_null($persyaratan_administratif))
-                    <table class="table">
-                        <tr>
-                            <td style="width: 30%;">UID Verifikasi PA</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_uid_verifikasi_pa">
-                                {{ $persyaratan_administratif->uid_verifikasi_pa }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">File Akta Pendirian BU</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_file_akta_pendirian_bu">
-                                <a href="{{ $persyaratan_administratif->file_akta_pendirian_bu }}">
-                                    {{ $persyaratan_administratif->file_akta_pendirian_bu }}
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Nama Notaris</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_nama_notaris">
-                                {{ $persyaratan_administratif->nama_notaris }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Judul Akta</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_judul_akta">
-                                {{ $persyaratan_administratif->judul_akta }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Tanggal Akta</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_tanggal_akta">
-                                {{ indonesian_date($persyaratan_administratif->tanggal_akta) }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Nomor Akta</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_nomor_akta">
-                                {{ $persyaratan_administratif->nomor_akta }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Maksud Tujuan Akta</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_maksud_tujuan_akta">
-                                {{ $persyaratan_administratif->maksud_tujuan_akta }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">File Pengesahan Sebagai Badan Hukum</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_file_pengesahan_sebagai_badan_hukum">
-                                <a href="{{ $persyaratan_administratif->file_pengesahan_sebagai_badan_hukum }}">
-                                    {{ $persyaratan_administratif->file_pengesahan_sebagai_badan_hukum }}
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Nomor Badan Hukum</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_nomor_badan_hukum">
-                                {{ $persyaratan_administratif->nomor_badan_hukum }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Tentang Badan Hukum</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_tentang_badan_hukum">
-                                {{ $persyaratan_administratif->tentang_badan_hukum }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Tanggal Badan Hukum</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_tanggal_badan_hukum">
-                                {{ indonesian_date($persyaratan_administratif->tanggal_badan_hukum) }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">File NPWP</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_file_npwp">
-                                <a href="{{ $persyaratan_administratif->file_npwp }}">
-                                    {{ $persyaratan_administratif->file_npwp }}
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Nomor NPWP</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_nomor_npwp">
-                                {{ $persyaratan_administratif->nomor_npwp }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">File SKDU</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_file_skdu">
-                                <a href="{{ $persyaratan_administratif->file_skdu }}">
-                                    {{ $persyaratan_administratif->file_skdu }}
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Instansi Penerbit SKDU</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_instansi_penerbit_skdu">
-                                {{ $persyaratan_administratif->instansi_penerbit_skdu }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Nomor SKDU</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_nomor_skdu">
-                                {{ $persyaratan_administratif->nomor_skdu }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Tanggal SKDU</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_tanggal_skdu">
-                                {{ indonesian_date($persyaratan_administratif->tanggal_skdu) }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Masa Berlaku SKDU</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_masa_berlaku_skdu">
-                                {{ indonesian_date($persyaratan_administratif->masa_berlaku_skdu) }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">File PJBU</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_file_pjbu">
-                                <a href="{{ $persyaratan_administratif->file_pjbu }}">
-                                    {{ $persyaratan_administratif->file_pjbu }}
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Nama PJBU</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_nama_pjbu">
-                                {{ $persyaratan_administratif->nama_pjbu }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Jenis Identitas PJBU</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_jenis_identitas_pjbu">
-                                {{ $persyaratan_administratif->jenis_identitas_pjbu }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Nomor KTP PJBU</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_nomor_ktp_pjbu">
-                                {{ $persyaratan_administratif->nomor_ktp_pjbu }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Nomor Paspor PJBU</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_nomor_paspor_pjbu">
-                                {{ $persyaratan_administratif->nomor_paspor_pjbu }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">File Laporan Keuangan</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_file_laporan_keuangan">
-                                <a href="{{ $persyaratan_administratif->file_laporan_keuangan }}">
-                                    {{ $persyaratan_administratif->file_laporan_keuangan }}
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Kekayaan Bersih</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_kekayaan_bersih">
-                                {{ rupiah($persyaratan_administratif->kekayaan_bersih) }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Modal Disetor</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_modal_disetor">
-                                {{ rupiah($persyaratan_administratif->modal_disetor) }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Nama Kantor Akuntan Publik</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_nama_kantor_akuntan_publik">
-                                {{ $persyaratan_administratif->nama_kantor_akuntan_publik }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Alamat Kantor Akuntan Publik</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_alamat_kantor_akuntan_pulik">
-                                {{ $persyaratan_administratif->alamat_kantor_akuntan_pulik }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Nomor Telepon Kantor Akuntan Publik</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_nomor_telepon_kantor_akuntan_publik">
-                                {{ $persyaratan_administratif->nomor_telepon_kantor_akuntan_publik }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Nama Akuntan</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_nama_akuntan">
-                                {{ $persyaratan_administratif->nama_akuntan }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Nomor Laporan Keuangan</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_nomor_laporan_keuangan">
-                                {{ $persyaratan_administratif->nomor_laporan_keuangan }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Tanggal Laporan Keuangan</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_tanggal_laporan_keuangan">
-                                {{ indonesian_date($persyaratan_administratif->tanggal_laporan_keuangan) }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Pendapat Akuntan</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_pendapat_akuntan">
-                                {{ $persyaratan_administratif->pendapat_akuntan }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">File Struktur Organisasi Badan Usaha</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_file_struktur_organisasi_badan_usaha">
-                                <a href="{{ $persyaratan_administratif->file_struktur_organisasi_badan_usaha }}">
-                                    {{ $persyaratan_administratif->file_struktur_organisasi_badan_usaha }}
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">File Profile Badan Usaha</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_file_profile_badan_usaha">
-                                <a href="{{ $persyaratan_administratif->file_profile_badan_usaha }}">
-                                    {{ $persyaratan_administratif->file_profile_badan_usaha }}
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">File PPM</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_file_ppm">
-                                <a href="{{ $persyaratan_administratif->file_ppm }}">
-                                    {{ $persyaratan_administratif->file_ppm }}
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Nomor PPM</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_nomor_ppm">
-                                {{ $persyaratan_administratif->nomor_ppm }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Tanggal PPM</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_tanggal_ppm">
-                                {{ indonesian_date($persyaratan_administratif->tanggal_ppm) }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Prosentase Saham PMA PPM</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_prosentase_saham_pma_ppm">
-                                {{ $persyaratan_administratif->prosentase_saham_pma_ppm }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">File PPM Perubahan</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_file_ppm_perubahan">
-                                <a href="{{ $persyaratan_administratif->file_ppm_perubahan }}">
-                                    {{ $persyaratan_administratif->file_ppm_perubahan }}
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Nomor PPM Perubahan</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_nomor_ppm_perubahan">
-                                {{ $persyaratan_administratif->nomor_ppm_perubahan }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Tanggal PPM Perubahan</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_tanggal_ppm_perubahan">
-                                {{ indonesian_date($persyaratan_administratif->tanggal_ppm_perubahan) }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 30%;">Prosentase Saham PMA PPM Perubahan</td>
-                            <td style="width: 5%;">:</td>
-                            <td style="" id="pa_holder_prosentase_saham_pma_ppm_perubahan">
-                                {{ $persyaratan_administratif->prosentase_saham_pma_ppm_perubahan }}
-                            </td>
-                        </tr>
-                    </table>
-                    @else
-                    <p class="alert alert-warning">
-                        Data Persyaratan Administratif tidak ditemukan, silahkan tarik data atau tambahkan
-                    </p>
-                    @endif
-                </div>
-
-                <!--Block Akta Perubahan BU Persyaratan Administratif-->
-                <div class="card">
-                    <div class="card-header d-flex">
-                        <h4 class="card-header-title">
-                            <i class="fa fa-file-alt"></i> Akta Perubahan Badan Usaha
-                        </h4>
-                        <div class="toolbar ml-auto">
-                            <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
-                            @if($permohonan->status == '0' || $permohonan->status == '1')
-                                @if(!is_null($persyaratan_administratif))
-                                <button class="btn btn-light btn-xs" id="btn-pull-akta-perubahan-bu-pa" title="Tarik Akta Perubahan BU" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
-                                    <i class="fa fa-sync"></i> Tarik
-                                </button>
-                                <button class="btn btn-light btn-xs" id="btn-add-akta-perubahan-bu-pa-trigger" title="Tambah Akta Perubahan BU" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
-                                    <i class="fa fa-plus-circle"></i> Tambah
-                                </button>
+        <div class="section-block">
+            <h5 class="section-title">Data Verifikasi</h5>
+            <p></p>
+        </div>
+        <div class="tab-outline">
+            @include('permohonan.components.nav-tabs')
+            <div class="tab-content" id="myTabContent2">
+                <!--Tab Pane Persyaratan Administratif-->
+                <div class="tab-pane fade show active" id="outline-persyaratan-administratif" role="tabpanel" aria-labelledby="tab-outline-persyaratan-administratif">
+                    <div class="card">
+                        <div class="card-header d-flex">
+                            <h4 class="card-header-title">
+                               Persyaratan Administratif
+                            </h4>
+                            <div class="toolbar ml-auto">
+                                <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                @if($permohonan->status == '0' || $permohonan->status == '1')
+                                    <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#pullPAModal">
+                                        <i class="fa fa-sync"></i> Tarik
+                                    </a>
+                                    @if(is_null($permohonan->persyaratan_administratif))
+                                        
+                                        <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#addPAModal">
+                                            <i class="fa fa-plus-circle"></i> Tambah
+                                        </a>
+                                    @else
+                                        <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#editPAModal">
+                                            <i class="fa fa-edit"></i> Edit
+                                        </a>
+                                    @endif
                                 @endif
-                            @endif
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        @if($akta_perubahan_bu_pa)
-                            <table class="table">
-                                <tbody>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                @if(!is_null($persyaratan_administratif))
+                                <table class="table">
+                                    <tr>
+                                        <td style="width: 30%;">UID Verifikasi PA</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_uid_verifikasi_pa">
+                                            {{ $persyaratan_administratif->uid_verifikasi_pa }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">File Akta Pendirian BU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_file_akta_pendirian_bu">
+                                            <a href="{{ $persyaratan_administratif->file_akta_pendirian_bu }}">
+                                                {{ $persyaratan_administratif->file_akta_pendirian_bu }}
+                                            </a>
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <td style="width: 30%;">Nama Notaris</td>
                                         <td style="width: 5%;">:</td>
-                                        <td style="">
-                                            {{ $akta_perubahan_bu_pa->nama_notaris }}
+                                        <td style="" id="pa_holder_nama_notaris">
+                                            {{ $persyaratan_administratif->nama_notaris }}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="width: 30%;">Judul Akta</td>
                                         <td style="width: 5%;">:</td>
-                                        <td style="">
-                                            {{ $akta_perubahan_bu_pa->judul_akta }}
+                                        <td style="" id="pa_holder_judul_akta">
+                                            {{ $persyaratan_administratif->judul_akta }}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="width: 30%;">Tanggal Akta</td>
                                         <td style="width: 5%;">:</td>
-                                        <td style="">
-                                            {{ $akta_perubahan_bu_pa->tanggal_akta }}
+                                        <td style="" id="pa_holder_tanggal_akta">
+                                            {{ indonesian_date($persyaratan_administratif->tanggal_akta) }}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="width: 30%;">Nomor Akta</td>
                                         <td style="width: 5%;">:</td>
-                                        <td style="">
-                                            {{ $akta_perubahan_bu_pa->nomor_akta }}
+                                        <td style="" id="pa_holder_nomor_akta">
+                                            {{ $persyaratan_administratif->nomor_akta }}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="width: 30%;">Hal Yang Diubah</td>
+                                        <td style="width: 30%;">Maksud Tujuan Akta</td>
                                         <td style="width: 5%;">:</td>
-                                        <td style="">
-                                            {{ $akta_perubahan_bu_pa->hal_yang_diubah }}
+                                        <td style="" id="pa_holder_maksud_tujuan_akta">
+                                            {{ $persyaratan_administratif->maksud_tujuan_akta }}
                                         </td>
                                     </tr>
-                                </tbody>
-                            </table>
-                        @else
-                            <p class="alert alert-warning">
-                                Tidak ada data
-                            </p>
-                        @endif
-                    </div>
-                </div>
-                <!--ENDBlock Akta Perubahan BU Persyaratan Administratif-->
-
-                <!--Block Pengesahan Akta Perubahan-->
-                <div class="card">
-                    <div class="card-header d-flex">
-                        <h4 class="card-header-title">
-                            <i class="fa fa-file-alt"></i> Pengesahan Akta Perubahan
-                        </h4>
-                        <div class="toolbar ml-auto">
-                            <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
-                            @if($permohonan->status == '0' || $permohonan->status == '1')
-                                @if(!is_null($persyaratan_administratif))
-                                <button class="btn btn-light btn-xs" id="btn-pull-pengesahan-akta-perubahan" title="Tarik Pengesahan Akta Perubahan" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
-                                    <i class="fa fa-sync"></i> Tarik
-                                </button>
-                                <button class="btn btn-light btn-xs" id="btn-add-pengesahan-akta-perubahan-trigger" title="Tambah Pengesahan Akta Perubahan" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
-                                    <i class="fa fa-plus-circle"></i> Tambah
-                                </button>
+                                    <tr>
+                                        <td style="width: 30%;">File Pengesahan Sebagai Badan Hukum</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_file_pengesahan_sebagai_badan_hukum">
+                                            <a href="{{ $persyaratan_administratif->file_pengesahan_sebagai_badan_hukum }}">
+                                                {{ $persyaratan_administratif->file_pengesahan_sebagai_badan_hukum }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor Badan Hukum</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nomor_badan_hukum">
+                                            {{ $persyaratan_administratif->nomor_badan_hukum }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Tentang Badan Hukum</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_tentang_badan_hukum">
+                                            {{ $persyaratan_administratif->tentang_badan_hukum }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Tanggal Badan Hukum</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_tanggal_badan_hukum">
+                                            {{ indonesian_date($persyaratan_administratif->tanggal_badan_hukum) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">File NPWP</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_file_npwp">
+                                            <a href="{{ $persyaratan_administratif->file_npwp }}">
+                                                {{ $persyaratan_administratif->file_npwp }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor NPWP</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nomor_npwp">
+                                            {{ $persyaratan_administratif->nomor_npwp }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">File SKDU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_file_skdu">
+                                            <a href="{{ $persyaratan_administratif->file_skdu }}">
+                                                {{ $persyaratan_administratif->file_skdu }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Instansi Penerbit SKDU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_instansi_penerbit_skdu">
+                                            {{ $persyaratan_administratif->instansi_penerbit_skdu }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor SKDU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nomor_skdu">
+                                            {{ $persyaratan_administratif->nomor_skdu }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Tanggal SKDU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_tanggal_skdu">
+                                            {{ indonesian_date($persyaratan_administratif->tanggal_skdu) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Masa Berlaku SKDU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_masa_berlaku_skdu">
+                                            {{ indonesian_date($persyaratan_administratif->masa_berlaku_skdu) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">File PJBU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_file_pjbu">
+                                            <a href="{{ $persyaratan_administratif->file_pjbu }}">
+                                                {{ $persyaratan_administratif->file_pjbu }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nama PJBU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nama_pjbu">
+                                            {{ $persyaratan_administratif->nama_pjbu }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Jenis Identitas PJBU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_jenis_identitas_pjbu">
+                                            {{ $persyaratan_administratif->jenis_identitas_pjbu }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor KTP PJBU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nomor_ktp_pjbu">
+                                            {{ $persyaratan_administratif->nomor_ktp_pjbu }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor Paspor PJBU</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nomor_paspor_pjbu">
+                                            {{ $persyaratan_administratif->nomor_paspor_pjbu }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">File Laporan Keuangan</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_file_laporan_keuangan">
+                                            <a href="{{ $persyaratan_administratif->file_laporan_keuangan }}">
+                                                {{ $persyaratan_administratif->file_laporan_keuangan }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Kekayaan Bersih</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_kekayaan_bersih">
+                                            {{ rupiah($persyaratan_administratif->kekayaan_bersih) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Modal Disetor</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_modal_disetor">
+                                            {{ rupiah($persyaratan_administratif->modal_disetor) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nama Kantor Akuntan Publik</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nama_kantor_akuntan_publik">
+                                            {{ $persyaratan_administratif->nama_kantor_akuntan_publik }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Alamat Kantor Akuntan Publik</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_alamat_kantor_akuntan_pulik">
+                                            {{ $persyaratan_administratif->alamat_kantor_akuntan_pulik }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor Telepon Kantor Akuntan Publik</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nomor_telepon_kantor_akuntan_publik">
+                                            {{ $persyaratan_administratif->nomor_telepon_kantor_akuntan_publik }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nama Akuntan</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nama_akuntan">
+                                            {{ $persyaratan_administratif->nama_akuntan }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor Laporan Keuangan</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nomor_laporan_keuangan">
+                                            {{ $persyaratan_administratif->nomor_laporan_keuangan }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Tanggal Laporan Keuangan</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_tanggal_laporan_keuangan">
+                                            {{ indonesian_date($persyaratan_administratif->tanggal_laporan_keuangan) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Pendapat Akuntan</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_pendapat_akuntan">
+                                            {{ $persyaratan_administratif->pendapat_akuntan }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">File Struktur Organisasi Badan Usaha</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_file_struktur_organisasi_badan_usaha">
+                                            <a href="{{ $persyaratan_administratif->file_struktur_organisasi_badan_usaha }}">
+                                                {{ $persyaratan_administratif->file_struktur_organisasi_badan_usaha }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">File Profile Badan Usaha</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_file_profile_badan_usaha">
+                                            <a href="{{ $persyaratan_administratif->file_profile_badan_usaha }}">
+                                                {{ $persyaratan_administratif->file_profile_badan_usaha }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">File PPM</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_file_ppm">
+                                            <a href="{{ $persyaratan_administratif->file_ppm }}">
+                                                {{ $persyaratan_administratif->file_ppm }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor PPM</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nomor_ppm">
+                                            {{ $persyaratan_administratif->nomor_ppm }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Tanggal PPM</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_tanggal_ppm">
+                                            {{ indonesian_date($persyaratan_administratif->tanggal_ppm) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Prosentase Saham PMA PPM</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_prosentase_saham_pma_ppm">
+                                            {{ $persyaratan_administratif->prosentase_saham_pma_ppm }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">File PPM Perubahan</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_file_ppm_perubahan">
+                                            <a href="{{ $persyaratan_administratif->file_ppm_perubahan }}">
+                                                {{ $persyaratan_administratif->file_ppm_perubahan }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Nomor PPM Perubahan</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_nomor_ppm_perubahan">
+                                            {{ $persyaratan_administratif->nomor_ppm_perubahan }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Tanggal PPM Perubahan</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_tanggal_ppm_perubahan">
+                                            {{ indonesian_date($persyaratan_administratif->tanggal_ppm_perubahan) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%;">Prosentase Saham PMA PPM Perubahan</td>
+                                        <td style="width: 5%;">:</td>
+                                        <td style="" id="pa_holder_prosentase_saham_pma_ppm_perubahan">
+                                            {{ $persyaratan_administratif->prosentase_saham_pma_ppm_perubahan }}
+                                        </td>
+                                    </tr>
+                                </table>
+                                @else
+                                <p class="alert alert-warning">
+                                    Data Persyaratan Administratif tidak ditemukan, silahkan tarik data atau tambahkan
+                                </p>
                                 @endif
-                            @endif
+                            </div>
+
+                            <!--Block Akta Perubahan BU Persyaratan Administratif-->
+                            <div class="card">
+                                <div class="card-header d-flex">
+                                    <h4 class="card-header-title">
+                                        <i class="fa fa-file-alt"></i> Akta Perubahan Badan Usaha
+                                    </h4>
+                                    <div class="toolbar ml-auto">
+                                        <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                        @if($permohonan->status == '0' || $permohonan->status == '1')
+                                            @if(!is_null($persyaratan_administratif))
+                                            <button class="btn btn-light btn-xs" id="btn-pull-akta-perubahan-bu-pa" title="Tarik Akta Perubahan BU" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
+                                                <i class="fa fa-sync"></i> Tarik
+                                            </button>
+                                            <button class="btn btn-light btn-xs" id="btn-add-akta-perubahan-bu-pa-trigger" title="Tambah Akta Perubahan BU" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
+                                                <i class="fa fa-plus-circle"></i> Tambah
+                                            </button>
+                                            @endif
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    @if($akta_perubahan_bu_pa)
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width: 30%;">Nama Notaris</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td style="">
+                                                        {{ $akta_perubahan_bu_pa->nama_notaris }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 30%;">Judul Akta</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td style="">
+                                                        {{ $akta_perubahan_bu_pa->judul_akta }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 30%;">Tanggal Akta</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td style="">
+                                                        {{ $akta_perubahan_bu_pa->tanggal_akta }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 30%;">Nomor Akta</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td style="">
+                                                        {{ $akta_perubahan_bu_pa->nomor_akta }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 30%;">Hal Yang Diubah</td>
+                                                    <td style="width: 5%;">:</td>
+                                                    <td style="">
+                                                        {{ $akta_perubahan_bu_pa->hal_yang_diubah }}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    @else
+                                        <p class="alert alert-warning">
+                                            Tidak ada data
+                                        </p>
+                                    @endif
+                                </div>
+                            </div>
+                            <!--ENDBlock Akta Perubahan BU Persyaratan Administratif-->
+
+                            <!--Block Pengesahan Akta Perubahan-->
+                            <div class="card">
+                                <div class="card-header d-flex">
+                                    <h4 class="card-header-title">
+                                        <i class="fa fa-file-alt"></i> Pengesahan Akta Perubahan
+                                    </h4>
+                                    <div class="toolbar ml-auto">
+                                        <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                        @if($permohonan->status == '0' || $permohonan->status == '1')
+                                            @if(!is_null($persyaratan_administratif))
+                                            <button class="btn btn-light btn-xs" id="btn-pull-pengesahan-akta-perubahan" title="Tarik Pengesahan Akta Perubahan" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
+                                                <i class="fa fa-sync"></i> Tarik
+                                            </button>
+                                            <button class="btn btn-light btn-xs" id="btn-add-pengesahan-akta-perubahan-trigger" title="Tambah Pengesahan Akta Perubahan" data-uid_verifikasi_pa="{{ $persyaratan_administratif ? $persyaratan_administratif->uid_verifikasi_pa : null }}">
+                                                <i class="fa fa-plus-circle"></i> Tambah
+                                            </button>
+                                            @endif
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    @if($pengesahan_akta_perubahan)
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td style="width: 30%;">File Pengesahan Akta Perubahan</td>
+                                                <td style="width: 5%;">:</td>
+                                                <td style="">
+                                                    {{ $pengesahan_akta_perubahan->file_pengesahan_akta_perubahan }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 30%;">Nomor</td>
+                                                <td style="width: 5%;">:</td>
+                                                <td style="">
+                                                    {{ $pengesahan_akta_perubahan->nomor }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 30%;">Tentang</td>
+                                                <td style="width: 5%;">:</td>
+                                                <td style="">
+                                                    {{ $pengesahan_akta_perubahan->tentang }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 30%;">Tanggal</td>
+                                                <td style="width: 5%;">:</td>
+                                                <td style="">
+                                                    {{ $pengesahan_akta_perubahan->tanggal }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    @else
+                                        <p class="alert alert-warning">
+                                            Tidak ada data
+                                        </p>
+                                    @endif
+                                </div>
+                            </div>
+                            <!--ENDBlock Pengesahan Akta Perubahan-->
                         </div>
                     </div>
-                    <div class="card-body">
-                        @if($pengesahan_akta_perubahan)
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <td style="width: 30%;">File Pengesahan Akta Perubahan</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">
-                                        {{ $pengesahan_akta_perubahan->file_pengesahan_akta_perubahan }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Nomor</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">
-                                        {{ $pengesahan_akta_perubahan->nomor }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Tentang</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">
-                                        {{ $pengesahan_akta_perubahan->tentang }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Tanggal</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">
-                                        {{ $pengesahan_akta_perubahan->tanggal }}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        @else
-                            <p class="alert alert-warning">
-                                Tidak ada data
-                            </p>
-                        @endif
-                    </div>
                 </div>
-                <!--ENDBlock Pengesahan Akta Perubahan-->
+                <!--ENDTab Pane Persyaratan Administratif-->
+
             </div>
         </div>
     </div>
 </div>
-
+<!--ENDRow Tabs-->
 
 <!--Modal Tarik Persyaratan Administratif-->
 <div class="modal fade" id="pullPAModal" tabindex="-1" role="dialog" aria-labelledby="pullPAModalLabel" aria-hidden="true">
@@ -1083,3 +1101,6 @@
     </div>
 </div>
 <!--ENDModal Tambah Pengesahan Akta Perubahan-->
+@endSection
+
+

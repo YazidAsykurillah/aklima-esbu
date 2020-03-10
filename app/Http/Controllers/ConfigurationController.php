@@ -66,7 +66,7 @@ class ConfigurationController extends Controller
 		    ]
 		    
 		]);
-
+		
 		try{
 			$response = $client->post('Service/Auth/Generate-Token');
 			$code = $response->getStatusCode(); // 200
@@ -77,9 +77,9 @@ class ConfigurationController extends Controller
 			$message = $data->message;
 			$token = $data->token;
 			$expired = $data->expired;
-
+			ServiceIntegrator::truncate();
 			//create or update service integrator
-			$serviceIntegrator = ServiceIntegrator::updateOrCreate(
+			$serviceIntegrator = ServiceIntegrator::create(
 			    ['token' => $token, 'expired' => $expired ,'is_active'=>TRUE]
 			);
 

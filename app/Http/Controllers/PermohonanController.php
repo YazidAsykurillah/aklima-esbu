@@ -217,34 +217,96 @@ class PermohonanController extends Controller
         
         //Fire event PermohonanIsDisplayed
         Event::fire(new PermohonanIsDisplayed($permohonan));
-
+        
         $identitas_badan_usaha = $permohonan->identitas_badan_usaha;
-        $persyaratan_administratif = $permohonan->persyaratan_administratif;
-        $persyaratan_teknis = $permohonan->persyaratan_teknis;
-        $data_pengurus_dewan_komisaris = $permohonan->data_pengurus_dewan_komisaris;
-        $data_pengurus_dewan_direksi = $permohonan->data_pengurus_dewan_direksi;
-        $data_pengurus_pemegang_saham = $permohonan->data_pengurus_pemegang_saham;
         $sertifikat = $permohonan->sertifikat;
         $log_permohonan = $permohonan->log_permohonan;
+        $status_djk = $permohonan->status_djk;
+        //return $status_djk;
+
+        return view('permohonan.outline-identitas-badan-usaha')
+            ->with('permohonan', $permohonan)
+            ->with('identitas_badan_usaha', $identitas_badan_usaha)
+            ->with('log_permohonan', $log_permohonan)
+            ->with('sertifikat', $sertifikat)
+            ->with('status_djk', $status_djk);
+    }
+
+
+    //render outline Persyaratan Administratif
+    public function renderOutlinePersyaratanAdministratif($uid_permohonan)
+    {
+        $permohonan = Permohonan::findOrFail($uid_permohonan);
+        
+        //Fire event PermohonanIsDisplayed
+        Event::fire(new PermohonanIsDisplayed($permohonan));
+
+        $persyaratan_administratif = $permohonan->persyaratan_administratif;
         $akta_perubahan_bu_pa = $permohonan->akta_perubahan_bu_pa;
         $pengesahan_akta_perubahan = $permohonan->pengesahan_akta_perubahan;
+        $sertifikat = $permohonan->sertifikat;
+        $log_permohonan = $permohonan->log_permohonan;
+        
         
         
 
         $status_djk = $permohonan->status_djk;
         //return $status_djk;
 
-        return view('permohonan.show')
+        return view('permohonan.outline-persyaratan-administratif')
             ->with('permohonan', $permohonan)
-            ->with('identitas_badan_usaha', $identitas_badan_usaha)
             ->with('persyaratan_administratif', $persyaratan_administratif)
+            ->with('akta_perubahan_bu_pa', $akta_perubahan_bu_pa)
+            ->with('pengesahan_akta_perubahan', $pengesahan_akta_perubahan)
+            ->with('log_permohonan', $log_permohonan)
+            ->with('sertifikat', $sertifikat)
+            ->with('status_djk', $status_djk);
+    }
+
+
+    //render outline Persyaratan Administratif
+    public function renderOutlinePersyaratanTeknis($uid_permohonan)
+    {
+        $permohonan = Permohonan::findOrFail($uid_permohonan);
+        
+        //Fire event PermohonanIsDisplayed
+        Event::fire(new PermohonanIsDisplayed($permohonan));
+        $persyaratan_teknis = $permohonan->persyaratan_teknis;
+        $sertifikat = $permohonan->sertifikat;
+        $log_permohonan = $permohonan->log_permohonan;
+        $status_djk = $permohonan->status_djk;
+        //return $status_djk;
+
+        return view('permohonan.outline-persyaratan-teknis')
+            ->with('permohonan', $permohonan)
             ->with('persyaratan_teknis', $persyaratan_teknis)
+            ->with('log_permohonan', $log_permohonan)
+            ->with('sertifikat', $sertifikat)
+            ->with('status_djk', $status_djk);
+    }
+
+    //render outline Persyaratan Administratif
+    public function renderOutlineDataPengurus($uid_permohonan)
+    {
+        $permohonan = Permohonan::findOrFail($uid_permohonan);
+        
+        //Fire event PermohonanIsDisplayed
+        Event::fire(new PermohonanIsDisplayed($permohonan));
+
+        $data_pengurus_dewan_komisaris = $permohonan->data_pengurus_dewan_komisaris;
+        $data_pengurus_dewan_direksi = $permohonan->data_pengurus_dewan_direksi;
+        $data_pengurus_pemegang_saham = $permohonan->data_pengurus_pemegang_saham;
+        $sertifikat = $permohonan->sertifikat;
+        $log_permohonan = $permohonan->log_permohonan;
+        $status_djk = $permohonan->status_djk;
+        //return $status_djk;
+
+        return view('permohonan.outline-data-pengurus')
+            ->with('permohonan', $permohonan)
             ->with('data_pengurus_dewan_komisaris', $data_pengurus_dewan_komisaris)
             ->with('data_pengurus_dewan_direksi', $data_pengurus_dewan_direksi)
             ->with('data_pengurus_pemegang_saham', $data_pengurus_pemegang_saham)
             ->with('log_permohonan', $log_permohonan)
-            ->with('akta_perubahan_bu_pa', $akta_perubahan_bu_pa)
-            ->with('pengesahan_akta_perubahan', $pengesahan_akta_perubahan)
             ->with('sertifikat', $sertifikat)
             ->with('status_djk', $status_djk);
     }

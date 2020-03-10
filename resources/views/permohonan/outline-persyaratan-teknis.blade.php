@@ -1,219 +1,237 @@
+@extends('permohonan.show')
+
+@section('sub-content')
+<!--Row Tabs-->
 <div class="row">
     <div class="col-md-12">
-        <div class="card">
-            <div class="card-header d-flex">
-                <h4 class="card-header-title">
-                    <i class="fas fa-briefcase"></i> Persyaratan Teknis
-                </h4>
-                <div class="toolbar ml-auto">
-                   <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
-                    @if($permohonan->status == '0' || $permohonan->status == '1')
-                        <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#pullPTModal" title="Tarik Persyaratan Teknis">
-                            <i class="fas fa-sync"></i> Tarik Persyaratan Teknis
-                        </a>
-                        <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#addPTModal">
-                            <i class="fas fa-plus-circle"></i> Tambah
-                        </a>
-                    @endif
-                </div>
-            </div>
-            <div class="card-body">
-                @if(!is_null($persyaratan_teknis))
-                    @foreach($persyaratan_teknis as $pt)
-                        <!--Block Persyaratan Teknis-->
-                        <div class="card">
-                            <div class="card-header d-flex">
-                                <h5 class="card-header-title">
-                                    {{ $pt->sub_bidang->nama_sub_bidang }}
-                                    ({{ $pt->uid_verifikasi_pt }})
-                                </h5>
-                                <div class="toolbar ml-auto">
-                                    <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
-                                    @if($permohonan->status == '0' || $permohonan->status == '1')
-                                    <button type="button" class="btn btn-danger btn-xs btn-trigger-delete-persyaratan-teknis" data-uid-verifikasi-pt="{{ $pt->uid_verifikasi_pt }}" title="Hapus Sub Bidang" data-delete-confirmation-text="Hapus Persyaratan Teknis Sub Bidang {{ $pt->sub_bidang->nama_sub_bidang}}">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <!--Block Persyaratan Teknis Penanggung Jawab Teknis-->
-                                <div class="card">
-                                    <div class="card-header d-flex">
-                                        <h5 class="card-header-title">
-                                            A. Penanggung Jawab Teknik
-                                        </h5>
-                                        <div class="toolbar ml-auto">
-                                            <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
-                                            @if($permohonan->status == '0' || $permohonan->status == '1')
-                                            <button type="button" class="btn btn-light btn-xs btn-pull-ptpjt-trigger" title="Tarik Persyaratan Teknis Penanggung Jawab Teknik" data-uid-verifikasi-pt="{{ $pt->uid_verifikasi_pt }}" data-uid-permohonan="{{ $permohonan->uid_permohonan }}">
-                                                <i class="fas fa-sync"></i> Tarik PJT
-                                            </button>
-                                            <button type="button" class="btn btn-light btn-xs btn-add-ptpjt-trigger" title="Tambah Persyaratan Teknis Penanggung Jawab Teknik" data-uid-verifikasi-pt="{{ $pt->uid_verifikasi_pt }}" data-uid-permohonan="{{ $permohonan->uid_permohonan }}">
-                                                <i class="fas fa-plus-circle"></i> Tambah PJT
-                                            </button>
-                                            <button type="button" class="btn btn-xs btn-light btn-pull-sertifikat-pt-pjt-trigger" title="Tarik Serkom" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
-                                                <i class="fa fa-sync"></i> Tarik Sertifikat PJT
-                                            </button>
-                                            @endif
-                                            
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Nama</th>
-                                                    <th>Jenis Identitas / No.Identitas</th>
-                                                    <th>No. HP</th>
-                                                    <th style="width: 25%;text-align: center;">Sertifikat</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            @if($pt->persyaratan_teknis_penanggung_jawab_teknis->count())
-                                                @foreach($pt->persyaratan_teknis_penanggung_jawab_teknis as $ptpjt)
-                                                <tr>
-                                                    <td>{{ $ptpjt->nama }}</td>
-                                                    <td>
-                                                        {{ $ptpjt->jenis_identitas }} /
-                                                        @if($ptpjt->jenis_identitas == 'KTP')
-                                                            {{ $ptpjt->nomor_ktp }}
-                                                        @else
-                                                            {{ $ptpjt->nomor_passpor }}
-                                                        @endif
-                                                    </td>
-                                                    <td>{{ $ptpjt->nomor_hp }}</td>
-                                                    <td>
-                                                        @if($ptpjt->sertifikat_pt_pjt->count())
-                                                            <p>
-                                                                Nomor Sertifikat : {{ $ptpjt->sertifikat_pt_pjt->first()->no_serkom }}
-                                                            </p>
-                                                            <p>
-                                                                Nomor Registrasi : {{ $ptpjt->sertifikat_pt_pjt->first()->noreg_serkom }}
-                                                            </p>
-                                                            <button type="button" class="btn btn-xs btn-danger btn-delete-sertifikat-pt-pjt-trigger" title="Hapus Serkom" data-uid_permohonan="{{ $permohonan->uid_permohonan}}" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_ver_pt_pjt="{{ $ptpjt->uid_ver_pt_pjt }}" data-id="{{ $ptpjt->sertifikat_pt_pjt->first()->id }}">
-                                                                <i class="fa fa-trash"></i>
-                                                            </button>
-                                                        @else
-                                                            <button type="button" class="btn btn-xs btn-primary btn-add-sertifikat-pt-pjt-trigger" title="Upload Serkom" data-uid_permohonan="{{ $permohonan->uid_permohonan}}" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_ver_pt_pjt="{{ $ptpjt->uid_ver_pt_pjt }}">
-                                                                <i class="fa fa-plus-circle"></i>
-                                                            </button>
-                                                        @endif
-                                                        
-                                                        
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-rounded btn-danger btn-xs btn-delete-ptpjt-trigger" title="Hapus Penanggung Jawab Teknik" data-uid-ver-pt-pjt="{{ $ptpjt->uid_ver_pt_pjt }}" data-uid-verifikasi-pt="{{ $ptpjt->uid_verifikasi_pt }}" data-uid-permohonan="{{ $ptpjt->uid_permohonan }}">
-                                                            <i class="fa fa-trash"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            @else
-                                                <tr>
-                                                    <td colspan="5">Tidak ada data</td>
-                                                </tr>
-                                            @endif
-                                            </tbody>
-                                        </table>
-                                    
-                                    </div>
-                                </div>
-                                <!--Block Persyaratan Teknis Penanggung Jawab Teknis-->
-
-                                <!--Block Persyaratan Teknis Tenaga Teknik-->
-                                <div class="card">
-                                    <div class="card-header d-flex">
-                                        <h5 class="card-header-title">
-                                            B. Tenaga Teknik
-                                        </h5>
-                                        <div class="toolbar ml-auto">
-                                            <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
-                                            @if($permohonan->status == '0' || $permohonan->status == '1')
-                                            <button type="button" class="btn btn-light btn-xs btn-pull-pttt-trigger" title="Tarik Persyaratan Teknis Tenaga Teknik" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
-                                                <i class="fas fa-sync"></i> Tarik TT
-                                            </button>
-                                            <button type="button" class="btn btn-light btn-xs btn-add-pttt-trigger" title="Tambah Persyaratan Teknis Tenaga Teknik" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
-                                                <i class="fas fa-plus-circle"></i> Tambah TT
-                                            </button>
-                                            <button type="button" class="btn btn-xs btn-light btn-pull-sertifikat-pt-tt-trigger" title="Tarik Serkom" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
-                                                <i class="fa fa-sync"></i> Tarik Sertifikat TT
-                                            </button>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Nama</th>
-                                                    <th>Jenis Identitas / No.Identitas</th>
-                                                    <th>No. HP</th>
-                                                    <th style="width: 25%;text-align: center;">Sertifikat</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @if($pt->persyaratan_teknis_tenaga_teknik->count())
-                                                    @foreach($pt->persyaratan_teknis_tenaga_teknik as $pttt)
-                                                    <tr>
-                                                        <td>{{ $pttt->nama }}</td>
-                                                        <td>
-                                                            {{ $pttt->jenis_identitas }} /
-                                                            @if($pttt->jenis_identitas == 'KTP')
-                                                                {{ $pttt->nomor_ktp }}
-                                                            @else
-                                                                {{ $pttt->nomor_passpor }}
-                                                            @endif
-                                                        </td>
-                                                        <td>{{ $pttt->nomor_hp }}</td>
-                                                        <td>
-                                                            @if($pttt->sertifikat_pt_tt->count())
-                                                                <p>
-                                                                    Nomor Sertifikat : {{ $pttt->sertifikat_pt_tt->first()->no_serkom }}
-                                                                </p>
-                                                                <p>
-                                                                    Nomor Registrasi : {{ $pttt->sertifikat_pt_tt->first()->noreg_serkom }}
-                                                                </p>
-                                                                <button type="button" class="btn btn-xs btn-danger btn-delete-sertifikat-pt-tt-trigger" title="Hapus Serkom" data-uid_permohonan="{{ $permohonan->uid_permohonan}}" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_ver_pt_tt="{{ $pttt->uid_ver_pt_tt }}" data-id="{{ $pttt->sertifikat_pt_tt->first()->id }}">
-                                                                    <i class="fa fa-trash"></i>
-                                                                </button>
-                                                            @else
-                                                                <button type="button" class="btn btn-xs btn-primary btn-add-sertifikat-pt-tt-trigger" title="Upload Serkom" data-uid_permohonan="{{ $permohonan->uid_permohonan}}" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_ver_pt_tt="{{ $pttt->uid_ver_pt_tt }}">
-                                                                    <i class="fa fa-plus-circle"></i>
-                                                                </button>
-                                                            @endif
-                                                            
-                                                        </td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-rounded btn-danger btn-xs btn-delete-pttt-trigger" title="Hapus Tenaga Teknik" data-uid_ver_pt_tt="{{ $pttt->uid_ver_pt_tt }}" data-uid_verifikasi_pt="{{ $pttt->uid_verifikasi_pt }}" data-uid_permohonan="{{ $pttt->uid_permohonan }}">
-                                                                <i class="fa fa-trash"></i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                @else
-                                                    <tr>
-                                                        <td colspan="5">Tidak ada data</td>
-                                                    </tr>
-                                                @endif
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <!--ENDBlock Persyaratan Teknis Tenaga Teknik-->
+        <div class="section-block">
+            <h5 class="section-title">Data Verifikasi</h5>
+            <p></p>
+        </div>
+        <div class="tab-outline">
+            @include('permohonan.components.nav-tabs')
+            <div class="tab-content" id="myTabContent2">
+                <!--Tab Pane Persyaratan Teknis-->
+                <div class="tab-pane fade show active" id="outline-persyaratan-teknis" role="tabpanel" aria-labelledby="tab-outline-persyaratan-teknis">
+                    <div class="card">
+                        <div class="card-header d-flex">
+                            <h4 class="card-header-title">
+                                Persyaratan Teknis
+                            </h4>
+                            <div class="toolbar ml-auto">
+                               <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                @if($permohonan->status == '0' || $permohonan->status == '1')
+                                    <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#pullPTModal" title="Tarik Persyaratan Teknis">
+                                        <i class="fas fa-sync"></i> Tarik
+                                    </a>
+                                    <a href="#" class="btn btn-light btn-xs"  data-toggle="modal" data-target="#addPTModal">
+                                        <i class="fas fa-plus-circle"></i> Tambah
+                                    </a>
+                                @endif
                             </div>
                         </div>
-                        <!--ENDBlock Persyaratan Teknis-->
-                    @endforeach
-                @endif
+                        <div class="card-body">
+                            @if(!is_null($persyaratan_teknis))
+                                @foreach($persyaratan_teknis as $pt)
+                                    <!--Block Persyaratan Teknis-->
+                                    <div class="card">
+                                        <div class="card-header d-flex">
+                                            <h5 class="card-header-title">
+                                                {{ $pt->sub_bidang->nama_sub_bidang }}
+                                                ({{ $pt->uid_verifikasi_pt }})
+                                            </h5>
+                                            <div class="toolbar ml-auto">
+                                                <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                                @if($permohonan->status == '0' || $permohonan->status == '1')
+                                                <button type="button" class="btn btn-danger btn-xs btn-trigger-delete-persyaratan-teknis" data-uid-verifikasi-pt="{{ $pt->uid_verifikasi_pt }}" title="Hapus Sub Bidang" data-delete-confirmation-text="Hapus Persyaratan Teknis Sub Bidang {{ $pt->sub_bidang->nama_sub_bidang}}">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <!--Block Persyaratan Teknis Penanggung Jawab Teknis-->
+                                            <div class="card">
+                                                <div class="card-header d-flex">
+                                                    <h5 class="card-header-title">
+                                                        A. Penanggung Jawab Teknik
+                                                    </h5>
+                                                    <div class="toolbar ml-auto">
+                                                        <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                                        @if($permohonan->status == '0' || $permohonan->status == '1')
+                                                        <button type="button" class="btn btn-light btn-xs btn-pull-ptpjt-trigger" title="Tarik Persyaratan Teknis Penanggung Jawab Teknik" data-uid-verifikasi-pt="{{ $pt->uid_verifikasi_pt }}" data-uid-permohonan="{{ $permohonan->uid_permohonan }}">
+                                                            <i class="fas fa-sync"></i> Tarik PJT
+                                                        </button>
+                                                        <button type="button" class="btn btn-light btn-xs btn-add-ptpjt-trigger" title="Tambah Persyaratan Teknis Penanggung Jawab Teknik" data-uid-verifikasi-pt="{{ $pt->uid_verifikasi_pt }}" data-uid-permohonan="{{ $permohonan->uid_permohonan }}">
+                                                            <i class="fas fa-plus-circle"></i> Tambah PJT
+                                                        </button>
+                                                        <button type="button" class="btn btn-xs btn-light btn-pull-sertifikat-pt-pjt-trigger" title="Tarik Serkom" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
+                                                            <i class="fa fa-sync"></i> Tarik Sertifikat PJT
+                                                        </button>
+                                                        @endif
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Nama</th>
+                                                                <th>Jenis Identitas / No.Identitas</th>
+                                                                <th>No. HP</th>
+                                                                <th style="width: 25%;text-align: center;">Sertifikat</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @if($pt->persyaratan_teknis_penanggung_jawab_teknis->count())
+                                                            @foreach($pt->persyaratan_teknis_penanggung_jawab_teknis as $ptpjt)
+                                                            <tr>
+                                                                <td>{{ $ptpjt->nama }}</td>
+                                                                <td>
+                                                                    {{ $ptpjt->jenis_identitas }} /
+                                                                    @if($ptpjt->jenis_identitas == 'KTP')
+                                                                        {{ $ptpjt->nomor_ktp }}
+                                                                    @else
+                                                                        {{ $ptpjt->nomor_passpor }}
+                                                                    @endif
+                                                                </td>
+                                                                <td>{{ $ptpjt->nomor_hp }}</td>
+                                                                <td>
+                                                                    @if($ptpjt->sertifikat_pt_pjt->count())
+                                                                        <p>
+                                                                            Nomor Sertifikat : {{ $ptpjt->sertifikat_pt_pjt->first()->no_serkom }}
+                                                                        </p>
+                                                                        <p>
+                                                                            Nomor Registrasi : {{ $ptpjt->sertifikat_pt_pjt->first()->noreg_serkom }}
+                                                                        </p>
+                                                                        <button type="button" class="btn btn-xs btn-danger btn-delete-sertifikat-pt-pjt-trigger" title="Hapus Serkom" data-uid_permohonan="{{ $permohonan->uid_permohonan}}" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_ver_pt_pjt="{{ $ptpjt->uid_ver_pt_pjt }}" data-id="{{ $ptpjt->sertifikat_pt_pjt->first()->id }}">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </button>
+                                                                    @else
+                                                                        <button type="button" class="btn btn-xs btn-primary btn-add-sertifikat-pt-pjt-trigger" title="Upload Serkom" data-uid_permohonan="{{ $permohonan->uid_permohonan}}" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_ver_pt_pjt="{{ $ptpjt->uid_ver_pt_pjt }}">
+                                                                            <i class="fa fa-plus-circle"></i>
+                                                                        </button>
+                                                                    @endif
+                                                                    
+                                                                    
+                                                                </td>
+                                                                <td>
+                                                                    <button type="button" class="btn btn-rounded btn-danger btn-xs btn-delete-ptpjt-trigger" title="Hapus Penanggung Jawab Teknik" data-uid-ver-pt-pjt="{{ $ptpjt->uid_ver_pt_pjt }}" data-uid-verifikasi-pt="{{ $ptpjt->uid_verifikasi_pt }}" data-uid-permohonan="{{ $ptpjt->uid_permohonan }}">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                            @endforeach
+                                                        @else
+                                                            <tr>
+                                                                <td colspan="5">Tidak ada data</td>
+                                                            </tr>
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                
+                                                </div>
+                                            </div>
+                                            <!--Block Persyaratan Teknis Penanggung Jawab Teknis-->
+
+                                            <!--Block Persyaratan Teknis Tenaga Teknik-->
+                                            <div class="card">
+                                                <div class="card-header d-flex">
+                                                    <h5 class="card-header-title">
+                                                        B. Tenaga Teknik
+                                                    </h5>
+                                                    <div class="toolbar ml-auto">
+                                                        <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
+                                                        @if($permohonan->status == '0' || $permohonan->status == '1')
+                                                        <button type="button" class="btn btn-light btn-xs btn-pull-pttt-trigger" title="Tarik Persyaratan Teknis Tenaga Teknik" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
+                                                            <i class="fas fa-sync"></i> Tarik TT
+                                                        </button>
+                                                        <button type="button" class="btn btn-light btn-xs btn-add-pttt-trigger" title="Tambah Persyaratan Teknis Tenaga Teknik" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
+                                                            <i class="fas fa-plus-circle"></i> Tambah TT
+                                                        </button>
+                                                        <button type="button" class="btn btn-xs btn-light btn-pull-sertifikat-pt-tt-trigger" title="Tarik Serkom" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
+                                                            <i class="fa fa-sync"></i> Tarik Sertifikat TT
+                                                        </button>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Nama</th>
+                                                                <th>Jenis Identitas / No.Identitas</th>
+                                                                <th>No. HP</th>
+                                                                <th style="width: 25%;text-align: center;">Sertifikat</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @if($pt->persyaratan_teknis_tenaga_teknik->count())
+                                                                @foreach($pt->persyaratan_teknis_tenaga_teknik as $pttt)
+                                                                <tr>
+                                                                    <td>{{ $pttt->nama }}</td>
+                                                                    <td>
+                                                                        {{ $pttt->jenis_identitas }} /
+                                                                        @if($pttt->jenis_identitas == 'KTP')
+                                                                            {{ $pttt->nomor_ktp }}
+                                                                        @else
+                                                                            {{ $pttt->nomor_passpor }}
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>{{ $pttt->nomor_hp }}</td>
+                                                                    <td>
+                                                                        @if($pttt->sertifikat_pt_tt->count())
+                                                                            <p>
+                                                                                Nomor Sertifikat : {{ $pttt->sertifikat_pt_tt->first()->no_serkom }}
+                                                                            </p>
+                                                                            <p>
+                                                                                Nomor Registrasi : {{ $pttt->sertifikat_pt_tt->first()->noreg_serkom }}
+                                                                            </p>
+                                                                            <button type="button" class="btn btn-xs btn-danger btn-delete-sertifikat-pt-tt-trigger" title="Hapus Serkom" data-uid_permohonan="{{ $permohonan->uid_permohonan}}" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_ver_pt_tt="{{ $pttt->uid_ver_pt_tt }}" data-id="{{ $pttt->sertifikat_pt_tt->first()->id }}">
+                                                                                <i class="fa fa-trash"></i>
+                                                                            </button>
+                                                                        @else
+                                                                            <button type="button" class="btn btn-xs btn-primary btn-add-sertifikat-pt-tt-trigger" title="Upload Serkom" data-uid_permohonan="{{ $permohonan->uid_permohonan}}" data-uid_verifikasi_pt="{{ $pt->uid_verifikasi_pt }}" data-uid_ver_pt_tt="{{ $pttt->uid_ver_pt_tt }}">
+                                                                                <i class="fa fa-plus-circle"></i>
+                                                                            </button>
+                                                                        @endif
+                                                                        
+                                                                    </td>
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-rounded btn-danger btn-xs btn-delete-pttt-trigger" title="Hapus Tenaga Teknik" data-uid_ver_pt_tt="{{ $pttt->uid_ver_pt_tt }}" data-uid_verifikasi_pt="{{ $pttt->uid_verifikasi_pt }}" data-uid_permohonan="{{ $pttt->uid_permohonan }}">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                                @endforeach
+                                                            @else
+                                                                <tr>
+                                                                    <td colspan="5">Tidak ada data</td>
+                                                                </tr>
+                                                            @endif
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <!--ENDBlock Persyaratan Teknis Tenaga Teknik-->
+                                        </div>
+                                    </div>
+                                    <!--ENDBlock Persyaratan Teknis-->
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <!--ENDTab Pane Persyaratan Teknis-->
+
             </div>
         </div>
     </div>
 </div>
-
+<!--ENDRow Tabs-->
 <!--Modal Tarik Persyaratan Teknis-->
 <div class="modal fade" id="pullPTModal" tabindex="-1" role="dialog" aria-labelledby="pullPTModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -737,3 +755,4 @@
     </div>
 </div>
 <!--ENDModal Delete Sertifikat Persyaratan Teknis Tenaga Teknik-->
+@endSection

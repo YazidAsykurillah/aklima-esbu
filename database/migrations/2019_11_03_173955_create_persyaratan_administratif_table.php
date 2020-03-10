@@ -22,7 +22,7 @@ class CreatePersyaratanAdministratifTable extends Migration
             $table->string('judul_akta')->nullable();
             $table->date('tanggal_akta')->nullable();
             $table->string('nomor_akta')->nullable();
-            $table->string('maksud_tujuan_akta')->nullable();
+            $table->text('maksud_tujuan_akta')->nullable();
             $table->string('file_pengesahan_sebagai_badan_hukum')->nullable();
             $table->string('nomor_badan_hukum')->nullable();
             $table->string('tentang_badan_hukum')->nullable();
@@ -48,7 +48,7 @@ class CreatePersyaratanAdministratifTable extends Migration
             $table->string('nama_akuntan')->nullable();
             $table->string('nomor_laporan_keuangan')->nullable();
             $table->date('tanggal_laporan_keuangan')->nullable();
-            $table->string('pendapat_akuntan')->nullable();
+            $table->text('pendapat_akuntan')->nullable();
             $table->string('file_struktur_organisasi_badan_usaha')->nullable();
             $table->string('file_profile_badan_usaha')->nullable();
             $table->string('file_ppm')->nullable();
