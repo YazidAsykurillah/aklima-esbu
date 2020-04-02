@@ -136,6 +136,7 @@
     <!--Datepicker-->
     <script src="{{ url('assets/vendor/datepicker/moment.js') }}"></script>
     <script src="{{ url('assets/vendor/datepicker/tempusdominus-bootstrap-4.js') }}"></script>
+    <script type="text/javascript" src="{{ url('js/esbu.js') }}"></script>
     @yield('additional_scripts')
 </body>
  

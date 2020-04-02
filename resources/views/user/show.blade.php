@@ -26,7 +26,11 @@
         <div class="card">
             <div class="card-header d-flex">
                 <h4 class="card-header-title">User Detail</h4>
-                <div class="toolbar ml-auto"></div>
+                <div class="toolbar ml-auto">
+                    <a href="{{ url('user/'.$user->id.'/edit') }}" class="btn btn-xs btn-info">
+                        <i class="fa fa-edit"></i> Edit
+                    </a>
+                </div>
             </div>
             <div class="card-body">
                 <table class="table">
@@ -40,6 +44,16 @@
                             <td style="width: 10%;">Email</td>
                             <td style="width: 5%;">:</td>
                             <td style="">{{ $user->email }}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 10%;">Provinsi</td>
+                            <td style="width: 5%;">:</td>
+                            <td style="">
+                                @if($user->provinsi)
+                                {{ $user->provinsi->nama_provinsi }}
+                                @else
+                                @endif
+                            </td>
                         </tr>
                     </tbody>
                 </table>

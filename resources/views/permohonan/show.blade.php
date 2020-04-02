@@ -25,7 +25,7 @@
 @endsection
 
 @section('content')
-<div class="row">
+<div class="row sticky-top">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header d-flex">
@@ -38,68 +38,35 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="table-responsive">
                             <table class="table">
                                 <tr>
-                                    <td style="width: 30%;">Jenis Usaha</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">{{ $permohonan->jenis_usaha->nama_jenis_usaha }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Jenis Sertifikasi</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">{{ $permohonan->jenis_sertifikasi }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Perpanjangan ke</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">{{ $permohonan->perpanjangan_ke }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Nama Badan Usaha</td>
+                                    <td style="width: 20%;">Nama Badan Usaha</td>
                                     <td style="width: 5%;">:</td>
                                     <td style="">{{ $permohonan->badan_usaha->nama_badan_usaha }}</td>
+                                    <td colspan="3"></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 30%;">Bentuk Badan Usaha</td>
+                                    <td style="width: 20%;">Provinsi</td>
                                     <td style="width: 5%;">:</td>
-                                    <td style="">{{ $permohonan->badan_usaha->bentuk_badan_usaha->nama_bentuk_badan_usaha }}</td>
+                                    <td style="">{{ $permohonan->badan_usaha->kota->provinsi->nama_provinsi }}</td>
+                                    <td colspan="3"></td>
                                 </tr>
-                                
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="table-responsive">
-                            <table class="table">
                                 <tr>
-                                    <td style="width: 30%;">Provinsi</td>
+                                    <td style="width: 20%;">Nomor Agenda</td>
                                     <td style="width: 5%;">:</td>
                                     <td style="">
-                                        {!! $permohonan->badan_usaha->kota->provinsi->nama_provinsi !!}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Alamat</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">
-                                        {!! $permohonan->badan_usaha->full_address !!}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Status</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">
-                                        {{ translate_status_permohonan($permohonan->status) }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 30%;">Nomor Agenda</td>
-                                    <td style="width: 5%;">:</td>
-                                    <td style="">
+                                        @if($permohonan->nomor_agenda == NULL)
+                                            <i class="text text-danger">(Belum mendapat No. agenda)</i>
+                                        @else
                                         {{ $permohonan->nomor_agenda }}
+                                        @endif
+                                        
                                     </td>
+                                    <td style="width: 20%;">Jenis Sertifikasi</td>
+                                    <td style="width: 5%;">:</td>
+                                    <td style="">{{ translate_jenis_sertifikasi($permohonan->jenis_sertifikasi) }}</td>
                                 </tr>
                             </table>
                         </div>
@@ -182,6 +149,7 @@
 @yield('sub-content')
 
 <!--Row Change Next Status-->
+<br>
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -205,29 +173,25 @@
                 @elseif($permohonan->status == '4')
                     @if(\Auth::user()->can('view-permohonan-4'))
                         <a href="#" class="btn btn-primary btn-sm btn-change-status" data-next-status="5">
-                            <i class="fa fa-check-circle"></i>&nbsp;Approve By Verifikator
+                            <i class="fa fa-check-circle"></i>&nbsp;Kirim ke LSBU Pusat
                         </a>
+                        <!-- 
                         <a href="#" class="btn btn-danger btn-sm btn-change-status" data-next-status="1">
-                            <i class="far fa-window-close"></i> Kembalikan
-                        </a>
+                            <i class="far fa-window-close"></i> Kembalikan ke Asesor TT
+                        </a> 
+                        -->
                     @endif
                 @elseif($permohonan->status == '5')
                     @if(\Auth::user()->can('view-permohonan-5'))
-                        <a href="#" class="btn btn-primary btn-sm btn-change-status" data-next-status="6">
-                            <i class="fa fa-check-circle"></i>&nbsp; Approve by Auditor
-                        </a>
-                        <a href="#" class="btn btn-danger btn-sm btn-change-status" data-next-status="1">
-                             <i class="far fa-window-close"></i> Kembalikan
-                        </a>
-                    @endif
-                @elseif($permohonan->status == '6')
-                    @if(\Auth::user()->can('view-permohonan-6'))
                         <a href="#" class="btn btn-primary btn-sm btn-change-status" data-next-status="7">
-                            Approve By Validator
+                            <i class="fa fa-check-circle"></i>&nbsp; Kirim ke DJK
                         </a>
+                        <!-- 
                         <a href="#" class="btn btn-danger btn-sm btn-change-status" data-next-status="1">
-                            <i class="far fa-window-close"></i> Kembalikan
+                             <i class="far fa-window-close"></i> Kembalikan ke Asesor TT
                         </a>
+                        -->
+
                     @endif
                 @else
                     {{ translate_status_permohonan($permohonan->status) }}
@@ -238,36 +202,20 @@
 </div>
 <!--ENDRow Change Next Status-->
 
-<!--Row Fasilitas Generate Nomor Agenda dan Tarik Nomor Sertifikat-->
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-header-title">
-                    <i class="fa fa-th-list"></i> Generate Nomor Agenda dan Tarik Nomor Sertifikat
-                </h5>
-            </div>
-            <div class="card-body">
-                <button id="btn-generate-nomor-agenda" class="btn btn-info" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
-                    <i class="fa fa-barcode"></i> Generate Nomor Agenda
-                </button>
-                <button id="btn-tarik-nomor-sertifikat" class="btn btn-primary" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
-                    <i class="fa fa-barcode"></i> Tarik Nomor Sertifikat
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<!--ENDRow Fasilitas Generate Nomor Agenda dan Tarik Nomor Sertifikat-->
 
 <!--Row List Sertifikat-->
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header">
-                <h5 class="card-header-title">
+            <div class="card-header d-flex">
+                <h4 class="card-header-title">
                     <i class="fa fa-th-list"></i> List Sertifikat
-                </h5>
+                </h4>
+                <div class="toolbar ml-auto">
+                    <button id="btn-tarik-nomor-sertifikat" class="btn btn-xs btn-primary" data-uid_permohonan="{{ $permohonan->uid_permohonan }}">
+                        <i class="fa fa-barcode"></i> Tarik Nomor Sertifikat
+                    </button>
+                </div>
             </div>
             <div class="card-body">
                 @if($sertifikat->count())
@@ -290,9 +238,9 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-header-title">
+                <h4 class="card-header-title">
                     <i class="fa fa-clock"></i> Log Perubahan Status
-                </h5>
+                </h4>
             </div>
             <div class="card-body">
                 <table class="table">

@@ -51,11 +51,13 @@ class Permohonan extends Model
 
     public function getUidPermohonanTTAttribute()
     {
+
         $uid_permohonan_asesor_tt = NULL;
         if($this->asesor_tenaga_teknik){
             $query = \DB::table('asesor_permohonan')->select('uid_permohonan_asesor')
                 ->where('uid_asesor', '=', $this->asesor_tt_id)
                 ->where('type', '=', 'tt')
+                ->where('uid_permohonan', '=', $this->uid_permohonan)
                 ->get();
             if($query->count()){
                 $uid_permohonan_asesor_tt = $query->first()->uid_permohonan_asesor;
@@ -77,6 +79,7 @@ class Permohonan extends Model
             $query = \DB::table('asesor_permohonan')->select('uid_permohonan_asesor')
                 ->where('uid_asesor', '=', $this->asesor_pjt_id)
                 ->where('type', '=', 'pjt')
+                ->where('uid_permohonan', '=', $this->uid_permohonan)
                 ->get();
             if($query->count()){
                 $uid_permohonan_asesor_pjt = $query->first()->uid_permohonan_asesor;

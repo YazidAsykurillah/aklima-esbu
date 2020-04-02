@@ -34,13 +34,13 @@
 					$result = "Verifikasi Asesor PJT";
 					break;
 				case '5':
-					$result = "Auditor";
+					$result = "Verifikasi LSBU Pusat";
 					break;
 				case '6':
 					$result = "Validator";
 					break;
 				case '7':
-					$result = "Evaluator";
+					$result = "DJK (Prepare)";
 					break;
 				case '10':
 					$result = "Top Approval";
@@ -70,25 +70,19 @@
 					$result = "Dikirim ke Asesor TT";
 					break;
 				case '1-4':
-					$result = "Approved by Frontdesk";
+					$result = "Dikirim ke Asesor PJT";
 					break;
 				case '4-5':
-					$result = "Approved by Verifikator";
+					$result = "Dikirim ke LSBU Pusat";
 					break;
 				case '4-1':
-					$result = "Rejected by Verifikator";
+					$result = "Dikembalikan ke Asesor TT";
 					break;
-				case '5-6':
-					$result = "Approved by Auditor";
+				case '5-7':
+					$result = "Dikirim ke DJK (Prepare)";
 					break;
 				case '5-1':
-					$result = "Rejected by Auditor";
-					break;
-				case '6-7':
-					$result = "Approved by Validator";
-					break;
-				case '6-1':
-					$result = "Rejected by Validator";
+					$result = "Dikembalikan ke Asesor TT";
 					break;
 
 				default:
@@ -162,6 +156,29 @@
 			$output = 0;
 			if(!is_null($input)){
 				$output = number_format($input,0,',','.');
+			}
+			return $output;
+		}
+	}
+
+	if(!function_exists('translate_jenis_sertifikasi')){
+		function translate_jenis_sertifikasi($value = NULL){
+			$output = "";
+			if(!is_null($value)){
+				switch ($value) {
+					case '1':
+						$output = "Baru";
+						break;
+					case '2':
+						$output = "Perpanjangan";
+						break;
+					case '3':
+						$output = "Perubahan";
+						break;
+					default:
+						# code...
+						break;
+				}
 			}
 			return $output;
 		}

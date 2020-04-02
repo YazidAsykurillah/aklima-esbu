@@ -179,7 +179,7 @@ class AsesorController extends Controller
         }
     }
 
-    public function select2(Request $request)
+    /*public function select2(Request $request)
     {
         $provinsi = Provinsi::findOrFail($request->provinsi_id);
         $nama_provinsi = $provinsi ? $provinsi->nama_provinsi : NULL;
@@ -193,6 +193,32 @@ class AsesorController extends Controller
         }
         else{
             $data = Asesor::where('alamat', 'LIKE', "%$nama_provinsi%")->get();
+        }
+        return response()->json($data);
+    }*/
+
+    public function select2(Request $request)
+    {
+        $provinsi = Provinsi::findOrFail($request->provinsi_id);
+        $uid_asesor_array = [];
+        $users = User::where('is_asesor', TRUE)
+                    ->where('provinsi_id', '=', $request->provinsi_id)
+                    ->get();
+        if($users->count()){
+            foreach($users as $user){
+                $uid_asesor_array[] = $user->uid_asesor;
+            }
+        }
+        
+        $data = [];
+        if($request->has('q')){
+            $search = $request->q;
+            $data = Asesor::where('nama_asesor', 'LIKE', "%$search%")
+                    ->whereIn('uid_asesor', $uid_asesor_array)
+                    ->get();
+        }
+        else{
+            $data = Asesor::whereIn('uid_asesor', $uid_asesor_array)->get();
         }
         return response()->json($data);
     }

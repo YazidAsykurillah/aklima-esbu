@@ -43,7 +43,6 @@
                         <th scope="col" style="width:10%;">Perpanjangan Ke</th>
                         <th scope="col" style="width:10%;">Asesor TT</th>
                         <th scope="col" style="width:10%;">Asesor PJT</th>
-                        <th scope="col" style="width:15%; text-align: center;">Action</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -249,7 +248,6 @@
                 { data: 'perpanjangan_ke', name: 'perpanjangan_ke', orderable:false },
                 { data: 'asesor_tt_id', name: 'asesor_tt_id', orderable:false },
                 { data: 'asesor_pjt_id', name: 'asesor_pjt_id', orderable:false },
-                { data: 'actions', name: 'actions', orderable:false, searchable:false, className:'text-center' },   
             ]
         });
 

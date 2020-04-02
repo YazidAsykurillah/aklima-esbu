@@ -103,6 +103,9 @@ class PermohonanController extends Controller
             ->addColumn('nama_jenis_usaha', function($permohonan){
                 return $permohonan->jenis_usaha->nama_jenis_usaha;
             })
+            ->editColumn('jenis_sertifikasi', function($permohonan){
+                return translate_jenis_sertifikasi($permohonan->jenis_sertifikasi);
+            })
             ->addColumn('nama_badan_usaha', function($permohonan){
                 $disp = '';
                 $disp.= $permohonan->badan_usaha->nama_badan_usaha.'&nbsp;';
@@ -183,6 +186,32 @@ class PermohonanController extends Controller
         }
 
         return $data_permohonan->make(true);
+    }
+
+
+    public function counter(Request $request)
+    {
+        $response =[];
+
+        $response['permohonan_0_count'] = $this->countPermohonan0();
+        $response['permohonan_1_count'] = 0;
+        $response['permohonan_4_count'] = 0;
+        $response['permohonan_5_count'] = 0;
+        $response['permohonan_7_count'] = 0;
+        return response()->json($response);
+    }
+
+    protected function countPermohonan0(){
+        $result = 0;
+        //return $request->all();
+        $user = \Auth::user();
+        if($user->isSuperAdmin()){
+            $result = Permohonan::where('status','=', '0')
+                ->where('is_processed', '=', TRUE)
+                ->get()
+                ->count();
+        }
+        return $result;
     }
     /**
      * Show the form for creating a new resource.
@@ -373,17 +402,18 @@ class PermohonanController extends Controller
             return $this->call_api_kirim_ke_asesor_tt($request);
         }
         //Frontdesk ke Verifikator (Asesor PJT)
-        /*else if($original_status == '1' && $next_status == '4'){
+        else if($original_status == '1' && $next_status == '4'){
             return $this->call_api_kirim_ke_asesor_pjt($request);
-        }*/
+        }
         //Verifikator (Asesor PJT) ke Auditor (LSBU Pusat)
-        /*else if($original_status == '4' && $next_status == '5'){
+        else if($original_status == '4' && $next_status == '5'){
             return $this->call_api_kirim_ke_lsbu_pusat($request);
-        }*/
-        //Validator (LSBU Pusat) ke Evaluator (DJK Prepare)
-        /*else if($original_status == '6' && $next_status == '7'){
+        }
+        //Auditor (LSBU Pusat) ke Evaluator (DJK Prepare)
+        else if($original_status == '5' && $next_status == '7'){
+
             return $this->call_api_kirim_ke_djk_prepare($request);
-        }*/
+        }
         else{
             $permohonan = Permohonan::findOrFail($request->permohonan_id_to_change);
             $permohonan->status = $next_status;
@@ -535,7 +565,7 @@ class PermohonanController extends Controller
     }
 
     protected function call_api_kirim_ke_djk_prepare($request){
-        
+
         try{
             $token = getCurrentActiveToken()['token'];
             $original_status = $request->permohonan_original_status;
@@ -557,12 +587,13 @@ class PermohonanController extends Controller
                     'uid_permohonan' => $permohonan->uid_permohonan,
                 ]
             ]);
-            $response = $client->post('Service/Kirim-Data-Pemohon-Ke-DJK-Prepare');
+            $response = $client->post('Service/Generate-Nomor-Agenda');
             $code = $response->getStatusCode(); // 200
             $body = $response->getBody();
             $contents = $body->getContents();
             $decode = json_decode($contents);
-            
+
+            $permohonan->nomor_agenda = $decode->nomor_agenda;
             $permohonan->status = $next_status;
             $permohonan->save();
 
@@ -578,6 +609,9 @@ class PermohonanController extends Controller
                 ->with('errorMessage', $decode->message);
         }
     }
+
+
+    
 
     protected function call_api_proses_pendaftaran($request)
     {
@@ -694,9 +728,11 @@ class PermohonanController extends Controller
         try{
             $token = getCurrentActiveToken()['token'];
             $asesor_permohonan = AsesorPermohonan::findOrFail($request->uid_permohonan_asesor_tt);
-
+            //return $asesor_permohonan;
             //Check Permohonan
             $permohonan = Permohonan::findOrFail($asesor_permohonan->uid_permohonan);
+            //return $permohonan;
+
 
             $client = new Client([
                 // Base URI is used with relative requests
@@ -879,28 +915,33 @@ class PermohonanController extends Controller
             $token = getCurrentActiveToken()['token'];
 
             $permohonan = Permohonan::findOrFail($request->uid_permohonan);
-
-            $client = new Client([
-                // Base URI is used with relative requests
-                'base_uri' => config('app.gatrik_base_uri'),
-                'verify'=>false,
-                'headers'=>[
-                    'Content-Type'=>'multipart/form-data',
-                    'Enctype'=>'multipart/form-data',
-                    'X-Lsbu-Key'=>config('app.x_lsbu_key'),
-                    'Token'=> $token
-                ],
-                'form_params' => [
-                    'uid_permohonan' => $permohonan->uid_permohonan,
-                ]
-            ]);
-            $response = $client->post('Service/Pendaftaran/Proses');
-            
-            $permohonan->is_processed = TRUE;
-            $permohonan->save();
-            
-            return redirect()->back()
-            ->with('successMessage', "Permohonan berhasil diproses");         
+            try{
+                $client = new Client([
+                    // Base URI is used with relative requests
+                    'base_uri' => config('app.gatrik_base_uri'),
+                    'verify'=>false,
+                    'headers'=>[
+                        'Content-Type'=>'multipart/form-data',
+                        'Enctype'=>'multipart/form-data',
+                        'X-Lsbu-Key'=>config('app.x_lsbu_key'),
+                        'Token'=> $token
+                    ],
+                    'form_params' => [
+                        'uid_permohonan' => $permohonan->uid_permohonan,
+                    ]
+                ]);
+                $response = $client->post('Service/Pendaftaran/Proses');
+                $permohonan->is_processed = TRUE;
+                $permohonan->save();
+                
+                return redirect()->back()
+                ->with('successMessage', "Permohonan berhasil diproses");
+            }catch(GuzzleException $e){
+                $contents = $e->getResponse()->getBody()->getContents();
+                $decode = json_decode($contents);
+                return $decode;
+            }
+                     
         }
         catch(Exception $e){
             return $e;

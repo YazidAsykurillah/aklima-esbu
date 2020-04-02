@@ -39,6 +39,7 @@
                         <th scope="col">Username</th>
                         <th scope="col">Email</th>
                         <th scope="col">Roles</th>
+                        <th scope="col">Provinsi</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -68,6 +69,7 @@
                 { data: 'username', name: 'username' },
                 { data: 'email', name: 'email' },
                 { data: 'roles', name: 'roles.name' },
+                { data: 'provinsi_nama_provinsi', name: 'provinsi.nama_provinsi' },
             ]
         });
    });

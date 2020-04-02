@@ -58,4 +58,9 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Asesor', 'uid_asesor', 'uid_asesor');
     }
+
+    public function provinsi()
+    {
+        return $this->belongsTo('App\Provinsi', 'provinsi_id', 'uid_provinsi');
+    }
 }

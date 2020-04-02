@@ -7,6 +7,7 @@ use Yajra\Datatables\Datatables;
 use Carbon\Carbon;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 
 use App\User;
 use App\Role;
@@ -28,16 +29,20 @@ class UserController extends Controller
     public function datatables(Request $request)
     {
         \DB::statement(\DB::raw('set @rownum=0'));
-        $user = User::with(['roles'])->select([
+        $user = User::with(['roles', 'provinsi'])->select([
             \DB::raw('@rownum  := @rownum  + 1 AS rownum'),
             'users.*',
         ])->get();
 
         $data_user = Datatables::of($user)
+
             ->addColumn('roles', function (User $user) {
                     return $user->roles->map(function($role) {
                         return str_limit($role->name, 30, '...');
                     })->implode('<br>');
+            })
+            ->addColumn('provinsi_nama_provinsi', function($user){
+                return $user->provinsi ? $user->provinsi->nama_provinsi : NULL;
             })
         ;
 
@@ -109,7 +114,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $provinsi_options = Provinsi::all();
+        return view('user.edit')
+            ->with('provinsi_options', $provinsi_options)
+            ->with('user', $user);
     }
 
     /**
@@ -119,9 +128,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->provinsi_id = $request->provinsi_id;
+        $user->save();
+        return redirect('user/'.$id)
+            ->with('successMessage', 'User updated');
     }
 
     /**

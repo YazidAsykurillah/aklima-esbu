@@ -30,14 +30,14 @@
                                 @if(\Auth::user()->can('view-permohonan-0'))
                                 <li class="nav-item">
                                      <a class="nav-link {{{ (Request::query('status') == '0' ? 'active' : '') }}}" href="{{ url('permohonan/?status=0') }}">
-                                        <span class=""></span>Menunggu Dokumen
+                                        <span class=""></span>Menunggu Dokumen <text id="permohonan_0_count"></text>
                                     </a>
                                 </li>
                                 @endif
                                 @if(\Auth::user()->can('view-permohonan-1'))
                                 <li class="nav-item">
                                      <a class="nav-link {{{ (Request::query('status') == '1' ? 'active' : '') }}}" href="{{ url('permohonan/?status=1') }}">
-                                        <span class=""></span>Verifikasi Asesor TT
+                                        <span class=""></span>Verifikasi Asesor TT <text id="permohonan_1_count"></text>
                                     </a>
                                 </li>
                                 @endif
@@ -49,32 +49,32 @@
                                 @if(\Auth::user()->can('view-permohonan-4'))
                                 <li class="nav-item">
                                      <a class="nav-link {{{ (Request::query('status') == '4' ? 'active' : '') }}}" href="{{ url('permohonan/?status=4') }}">
-                                        <span class=""></span>Verifikasi Asesor PJT
+                                        <span class=""></span>Verifikasi Asesor PJT <text id="permohonan_4_count"></text>
                                     </a>
                                 </li>
                                 @endif
                                 @if(\Auth::user()->can('view-permohonan-5'))
                                 <li class="nav-item">
                                      <a class="nav-link {{{ (Request::query('status') == '5' ? 'active' : '') }}}" href="{{ url('permohonan/?status=5') }}">
-                                        <span class=""></span>Auditor
+                                        <span class=""></span>Verifikasi LSBU Pusat <text id="permohonan_5_count"></text>
                                     </a>
                                 </li>
                                 @endif
-                                @if(\Auth::user()->can('view-permohonan-6'))
+                                <!-- @if(\Auth::user()->can('view-permohonan-6'))
                                 <li class="nav-item">
                                      <a class="nav-link {{{ (Request::query('status') == '6' ? 'active' : '') }}}" href="{{ url('permohonan/?status=6') }}">
                                         <span class=""></span>Validator
                                     </a>
                                 </li>
-                                @endif
+                                @endif -->
                                 @if(\Auth::user()->can('view-permohonan-7'))
                                 <li class="nav-item">
                                      <a class="nav-link {{{ (Request::query('status') == '7' ? 'active' : '') }}}" href="{{ url('permohonan/?status=7') }}">
-                                        <span class=""></span>Evaluator
+                                        <span class=""></span>DJK Prepare <text id="permohonan_7_count"></text>
                                     </a>
                                 </li>
                                 @endif
-                                @if(\Auth::user()->can('view-permohonan-10'))
+                                <!-- @if(\Auth::user()->can('view-permohonan-10'))
                                 <li class="nav-item">
                                      <a class="nav-link {{{ (Request::query('status') == '10' ? 'active' : '') }}}" href="{{ url('permohonan/?status=10') }}">
                                         <span class=""></span>Top Approval
@@ -101,7 +101,7 @@
                                         <span class=""></span>SBU sudah diterima pemohon
                                     </a>
                                 </li>
-                                @endif
+                                @endif -->
                                 
                             </ul>
                         </div>

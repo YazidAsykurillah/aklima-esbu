@@ -12,5 +12,6 @@ class Asesor extends Model
     	'uid_asesor', 'nik', 'nama_asesor', 'alamat', 'email', 'nomor_handphone', 'is_active'
     ];
 
+    
 
 }
