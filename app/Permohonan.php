@@ -131,4 +131,126 @@ class Permohonan extends Model
     {
         return $this->hasOne('App\PengesahanAktaPerubahan', 'uid_permohonan');
     }
+
+
+    //custom medthods
+    public static function counter()
+    {
+        $result['permohonan_0_count'] = 'DUMMY NUMBER';
+        $result['permohonan_1_count'] = 'DUMMY NUMBER';
+        $result['permohonan_4_count'] = 'DUMMY NUMBER';
+        $result['permohonan_5_count'] = 'DUMMY NUMBER';
+        $result['permohonan_7_count'] = 'DUMMY NUMBER';
+
+        $user = \Auth::user();
+        $provinsi_id = $user->provinsi_id;
+
+        if($user->isSuperAdmin() == TRUE){
+            $result['permohonan_0_count'] = Permohonan::where('status','=', '0')
+                ->where('is_processed', '=', TRUE)
+                ->get()->count();
+
+            $result['permohonan_1_count'] = Permohonan::where('status','=', '1')
+                ->where('is_processed', '=', TRUE)
+                ->get()->count();
+
+            $result['permohonan_4_count'] = Permohonan::where('status','=', '4')
+                ->where('is_processed', '=', TRUE)
+                ->get()->count();
+
+            $result['permohonan_5_count'] = Permohonan::where('status','=', '5')
+                ->where('is_processed', '=', TRUE)
+                ->get()->count();
+            $result['permohonan_7_count'] = Permohonan::where('status','=', '7')
+                ->where('is_processed', '=', TRUE)
+                ->get()->count();
+        }
+        //User DPP
+        else if($user->isDpp() == TRUE){
+            $result['permohonan_0_count'] = Permohonan::where('status','=', '0')
+                ->where('is_processed', '=', TRUE)
+                ->get()->count();
+
+            $result['permohonan_1_count'] = Permohonan::where('status','=', '1')
+                ->where('is_processed', '=', TRUE)
+                ->get()->count();
+
+            $result['permohonan_4_count'] = Permohonan::where('status','=', '4')
+                ->where('is_processed', '=', TRUE)
+                ->get()->count();
+
+            $result['permohonan_5_count'] = Permohonan::where('status','=', '5')
+                ->where('is_processed', '=', TRUE)
+                ->get()->count();
+            $result['permohonan_7_count'] = Permohonan::where('status','=', '7')
+                ->where('is_processed', '=', TRUE)
+                ->get()->count();
+        }
+        //User DPD
+        else if($user->isDpd() == TRUE){
+            $result['permohonan_0_count'] = Permohonan::with(['badan_usaha', 'badan_usaha.kota.provinsi'])
+                ->where('status','=', '0')
+                ->where('is_processed', '=', TRUE)
+                ->where('badan_usaha_uid','!=', NULL)
+                ->whereHas('badan_usaha.kota.provinsi', function($query) use($provinsi_id){
+                    return $query->where('uid_provinsi','=', $provinsi_id);
+                })
+                ->get()->count();
+
+            $result['permohonan_1_count'] = Permohonan::with(['badan_usaha', 'badan_usaha.kota.provinsi'])
+                ->where('status','=', '1')
+                ->where('is_processed', '=', TRUE)
+                ->where('badan_usaha_uid','!=', NULL)
+                ->whereHas('badan_usaha.kota.provinsi', function($query) use($provinsi_id){
+                    return $query->where('uid_provinsi','=', $provinsi_id);
+                })
+                ->get()->count();
+
+            $result['permohonan_4_count'] = Permohonan::with(['badan_usaha', 'badan_usaha.kota.provinsi'])
+                ->where('status','=', '4')
+                ->where('is_processed', '=', TRUE)
+                ->where('badan_usaha_uid','!=', NULL)
+                ->whereHas('badan_usaha.kota.provinsi', function($query) use($provinsi_id){
+                    return $query->where('uid_provinsi','=', $provinsi_id);
+                })
+                ->get()->count();
+
+            $result['permohonan_5_count'] = Permohonan::with(['badan_usaha', 'badan_usaha.kota.provinsi'])
+                ->where('status','=', '5')
+                ->where('is_processed', '=', TRUE)
+                ->where('badan_usaha_uid','!=', NULL)
+                ->whereHas('badan_usaha.kota.provinsi', function($query) use($provinsi_id){
+                    return $query->where('uid_provinsi','=', $provinsi_id);
+                })
+                ->get()->count();
+
+            $result['permohonan_7_count'] = Permohonan::with(['badan_usaha', 'badan_usaha.kota.provinsi'])
+                ->where('status','=', '7')
+                ->where('is_processed', '=', TRUE)
+                ->where('badan_usaha_uid','!=', NULL)
+                ->whereHas('badan_usaha.kota.provinsi', function($query) use($provinsi_id){
+                    return $query->where('uid_provinsi','=', $provinsi_id);
+                })
+                ->get()->count();
+        }
+        //User ASESOR
+        else if($user->asesor->count()){
+            
+            $result['permohonan_1_count'] = Permohonan::where('status','=', '1')
+                ->where('is_processed', '=', TRUE)
+                ->where('asesor_tt_id', $user->asesor->uid_asesor)
+                ->get()->count();
+
+            $result['permohonan_4_count'] = Permohonan::where('status','=', '4')
+                ->where('is_processed', '=', TRUE)
+                ->where('asesor_pjt_id', $user->asesor->uid_asesor)
+                ->get()->count();
+        }
+        else{
+
+        }
+
+
+        return $result;
+    }
 }

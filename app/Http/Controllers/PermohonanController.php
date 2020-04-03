@@ -53,7 +53,7 @@ class PermohonanController extends Controller
             $asesor_id = $user->asesor->uid_asesor;
         }
 
-        //get dpd id = 
+        //get provinsi id = 
         $provinsi_id = $user->provinsi_id;
         //return $provinsi_id;
 
@@ -192,27 +192,16 @@ class PermohonanController extends Controller
     public function counter(Request $request)
     {
         $response =[];
+        $counter = Permohonan::counter();
 
-        $response['permohonan_0_count'] = $this->countPermohonan0();
-        $response['permohonan_1_count'] = 0;
-        $response['permohonan_4_count'] = 0;
-        $response['permohonan_5_count'] = 0;
-        $response['permohonan_7_count'] = 0;
+        $response['permohonan_0_count'] = $counter['permohonan_0_count'];
+        $response['permohonan_1_count'] = $counter['permohonan_1_count'];
+        $response['permohonan_4_count'] = $counter['permohonan_4_count'];
+        $response['permohonan_5_count'] = $counter['permohonan_5_count'];
+        $response['permohonan_7_count'] = $counter['permohonan_7_count'];
         return response()->json($response);
     }
 
-    protected function countPermohonan0(){
-        $result = 0;
-        //return $request->all();
-        $user = \Auth::user();
-        if($user->isSuperAdmin()){
-            $result = Permohonan::where('status','=', '0')
-                ->where('is_processed', '=', TRUE)
-                ->get()
-                ->count();
-        }
-        return $result;
-    }
     /**
      * Show the form for creating a new resource.
      *
@@ -246,6 +235,7 @@ class PermohonanController extends Controller
         
         //Fire event PermohonanIsDisplayed
         Event::fire(new PermohonanIsDisplayed($permohonan));
+
         
         $identitas_badan_usaha = $permohonan->identitas_badan_usaha;
         $sertifikat = $permohonan->sertifikat;
@@ -1032,6 +1022,7 @@ class PermohonanController extends Controller
                         'uid_permohonan'=>$ser->uid_permohonan,
                         'nomor_sertifikat'=>$ser->nomor_sertifikat,
                         'nomor_registrasi'=>$ser->nomor_registrasi,
+                        'nomor_seri'=>$ser->nomor_seri,
                         'tanggal_terbit'=>$ser->tanggal_terbit,
                         'tanggal_expired'=>$ser->tanggal_expired,
                         'uid_jenis_usaha'=>$ser->uid_jenis_usaha,

@@ -51,6 +51,22 @@ class User extends Authenticatable
         }
         return false;
     }
+
+    public function isDpp()
+    {
+        if ($this->roles->contains('name', 'DPP')) {
+            return true;
+        }
+        return false;
+    }
+
+    public function isDpd()
+    {
+        if ($this->roles->contains('name', 'DPD')) {
+            return true;
+        }
+        return false;
+    }
     //----ENDAuthorization blocks---
 
 

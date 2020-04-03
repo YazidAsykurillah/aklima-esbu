@@ -35,6 +35,7 @@ class CallApiTarikStatusPermohonan
     public function handle(PermohonanIsDisplayed $event)
     {
         $permohonan = $event->permohonan;
+        //return;
         try{
             $client = new Client([
                 // Base URI is used with relative requests
@@ -56,7 +57,7 @@ class CallApiTarikStatusPermohonan
             $contents = $body->getContents();
             $decode = json_decode($contents);
             //dd($decode);
-            $hasil_verifikasi_lsbu_ibu = $decode->hasil_verifikasi->lsbu->identitas_badan_usaha;
+            //$hasil_verifikasi_lsbu_ibu = $decode->hasil_verifikasi->lsbu->identitas_badan_usaha;
             //dd($hasil_verifikasi_lsbu_ibu);
 
             if($decode->response == '1'){
@@ -71,6 +72,8 @@ class CallApiTarikStatusPermohonan
                         'updated_at'=>Carbon::now()
                     ]
                 );
+
+                /*
                 foreach($hasil_verifikasi_lsbu_ibu as $hvli){
                     HasilVerifikasiLSBUIbu::updateOrCreate(
                         [
@@ -128,6 +131,7 @@ class CallApiTarikStatusPermohonan
                         ]
                     );
                 }
+                */
                 
             }
             //return $decode;

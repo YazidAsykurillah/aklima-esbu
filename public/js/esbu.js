@@ -27,4 +27,22 @@ jQuery(document).ready(function($) {
             console.log(objResponse);
         }
     });
+
+    $.ajax({
+        method: 'GET',
+        url: '/home/identitas-provinsi',
+        dataType: 'json',
+        beforeSend:function(){
+            
+        },
+        success: function(response){
+            console.log(response);
+            $('#identitas-provinsi').html(response.nama_provinsi);
+            
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            let objResponse = jqXHR.responseJSON;
+            console.log(objResponse);
+        }
+    });
 });

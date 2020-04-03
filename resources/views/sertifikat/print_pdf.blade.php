@@ -58,7 +58,7 @@
 			</td>
 			<td style="width: 20%; vertical-align: top;">
 				<img src="{{ url('assets/images/logo-esdm.png') }}" style="width: 130px; height: 100px;">
-				<div style="font-size: 10px;">No Seri: 12345678910111213</div>
+				<div style="font-size: 10px;"> NOMOR SERI: {{ $sertifikat->nomor_seri }}</div>
 			</td>
 		</tr>
 		<tr>
@@ -196,7 +196,7 @@
 				</div>
 			</td>
 			<td style="width: 25%;font-size: 10px; vertical-align: top; text-align: right;">
-				No Seri: 12345678910111213
+				No Seri: {{ $sertifikat->nomor_seri }}
 			</td>
 		</tr>
 	</table>

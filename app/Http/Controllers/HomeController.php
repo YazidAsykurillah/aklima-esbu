@@ -28,4 +28,13 @@ class HomeController extends Controller
 
         return view('home');
     }
+
+    public function getIdentitasProvinsi()
+    {
+        $response = [];
+        $user = \Auth::user();
+        $response['nama_provinsi'] = $user->provinsi ? $user->provinsi->nama_provinsi : 'PUSAT';
+        return response()->json($response);
+        
+    }
 }

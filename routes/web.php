@@ -18,6 +18,7 @@ Route::get('refreshcaptcha', 'CaptchaController@refresh');
 
 Auth::routes();
 
+Route::get('/home/identitas-provinsi', 'HomeController@getIdentitasProvinsi');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function(){

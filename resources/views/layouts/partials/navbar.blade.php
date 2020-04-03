@@ -2,8 +2,8 @@
     <nav class="navbar navbar-expand-lg bg-white fixed-top">
         <!-- <a class="navbar-brand" href="{{ url('home') }}">{{config('app.name')}}</a> -->
         <a class="navbar-brand" href="{{ url('home') }}">
-            <!-- <img src="{{ url('assets/images/logo_aklima.jpg') }}" width="155px;" height="35px;" alt=""> -->
-            AKLIMA
+            <!-- <img src="{{ url('assets/images/logo_aklima.jpg') }}" width="50px;" height="35px;" alt=""> -->
+            AKLIMA <small><text id="identitas-provinsi"></text></small>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
