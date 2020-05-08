@@ -216,5 +216,9 @@ Route::group(['middleware' => 'auth'], function(){
 	//Permission
 	Route::get('permission/datatables', 'PermissionController@datatables');
 	Route::resource('permission', 'PermissionController');
+
+
+	//Verifikasi IBU
+	Route::resource('verifikasi-ibu', 'VerifikasiIbuController');
 });
 

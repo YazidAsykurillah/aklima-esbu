@@ -13,6 +13,7 @@
             <div class="tab-content" id="myTabContent2">
                 <!--Tab Pane Identitas Badan Usaha-->
                 <div class="tab-pane fade show active" id="outline-identitas-badan-usaha" role="tabpanel" aria-labelledby="tab-outline-identitas-badan-usaha">
+                    <!--Card Data Identitas Badan Usaha-->
                     <div class="card">
                         <div class="card-header d-flex">
                             <h4 class="card-header-title">
@@ -53,9 +54,13 @@
                                         <td style="width: 30%;">File Surat Permohoan SBU</td>
                                         <td style="width: 5%;">:</td>
                                         <td style="" id="ibu_holder_file_surat_permohonan_sbu">
-                                            <a href="{{ $identitas_badan_usaha->file_surat_permohonan_sbu }}">
-                                                {{ $identitas_badan_usaha->file_surat_permohonan_sbu }}
+                                            @if($identitas_badan_usaha->file_surat_permohonan_sbu != NULL)
+                                            <a href="{{ $identitas_badan_usaha->file_surat_permohonan_sbu }}" class="btn btn-rounded btn-xs btn-info">
+                                                <i class="fa fa-external-link-alt"></i>
                                             </a>
+                                            @else
+                                                ---
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr>
@@ -98,6 +103,174 @@
                             </div>
                         </div>
                     </div>
+                    <!--ENDCard Data Identitas Badan Usaha-->
+
+                    <!--Card Form Verifikasi Identitas Badan Usaha-->
+                    <div class="card">
+                        <form id="form-save-verifikasi-ibu" method="post" enctype="multipart/form-data" action="{{ url('verifikasi-ibu/') }}">
+                        <div class="card-header d-flex">
+                            <h4 class="card-header-title">
+                                <i class="fa fa-tag"></i> Form Verifikasi Identitas Badan Usaha
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                @if(!is_null($identitas_badan_usaha))
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 20%;">Point Verifikasi</th>
+                                            <th style="width: 30%;">Isi Point</th>
+                                            <th style="width: 30%; text-align: center;">Sesuai / Tidak Sesuai</th>
+                                            <th>Catatan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>File Surat Permohoan SBU</td>
+                                            <td style="">
+                                                @if($identitas_badan_usaha->file_surat_permohonan_sbu != NULL)
+                                                <a href="{{ $identitas_badan_usaha->file_surat_permohonan_sbu }}" class="btn btn-rounded btn-xs btn-info">
+                                                    <i class="fa fa-external-link-alt"></i>
+                                                </a>
+                                                @else
+                                                    ---
+                                                @endif
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <label class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" name="hasil_ver_ibu_file_surat_permohonan_sbu" class="custom-control-input" value="1">
+                                                    <span class="custom-control-label">Sesuai</span>
+                                                </label>
+
+                                                <label class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" name="hasil_ver_ibu_file_surat_permohonan_sbu" class="custom-control-input" value="0">
+                                                    <span class="custom-control-label">Tidak Sesuai</span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <textarea name="catatan_ver_ibu_file_surat_permohonan_sbu" class="form-control"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nomor Surat</td>
+                                            <td style="">
+                                                {{ $identitas_badan_usaha->nomor_surat }}
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <label class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" name="hasil_ver_ibu_nomor_surat" class="custom-control-input" value="1">
+                                                    <span class="custom-control-label">Sesuai</span>
+                                                </label>
+
+                                                <label class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" name="hasil_ver_ibu_nomor_surat" class="custom-control-input" value="0">
+                                                    <span class="custom-control-label">Tidak Sesuai</span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <textarea name="catatan_ver_ibu_nomor_surat" class="form-control"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Perihal</td>
+                                            <td style="">
+                                                {{ $identitas_badan_usaha->perihal }}
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <label class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" name="hasil_ver_ibu_perihal" class="custom-control-input" value="1">
+                                                    <span class="custom-control-label">Sesuai</span>
+                                                </label>
+
+                                                <label class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" name="hasil_ver_ibu_perihal" class="custom-control-input" value="0">
+                                                    <span class="custom-control-label">Tidak Sesuai</span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <textarea name="catatan_ver_ibu_perihal" class="form-control"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tanggal Surat</td>
+                                            <td style="">
+                                                {{ indonesian_date($identitas_badan_usaha->tanggal_surat) }}
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <label class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" name="hasil_ver_ibu_tanggal_surat" class="custom-control-input" value="1">
+                                                    <span class="custom-control-label">Sesuai</span>
+                                                </label>
+
+                                                <label class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" name="hasil_ver_ibu_tanggal_surat" class="custom-control-input" value="0">
+                                                    <span class="custom-control-label">Tidak Sesuai</span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <textarea name="catatan_ver_ibu_tanggal_surat" class="form-control"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nama Penandatanganan Surat</td>
+                                            <td style="">
+                                                {{ $identitas_badan_usaha->nama_penandatangan_surat }}
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <label class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" name="hasil_ver_ibu_nama_penandatangan_surat" class="custom-control-input" value="1">
+                                                    <span class="custom-control-label">Sesuai</span>
+                                                </label>
+
+                                                <label class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" name="hasil_ver_ibu_nama_penandatangan_surat" class="custom-control-input" value="0">
+                                                    <span class="custom-control-label">Tidak Sesuai</span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <textarea name="catatan_ver_ibu_nama_penandatangan_surat" class="form-control"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Jabatan Penandatanganan Surat</td>
+                                            <td style="">
+                                                {{ $identitas_badan_usaha->jabatan_penandatangan_surat }}
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <label class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" name="hasil_ver_ibu_jabatan_penandatangan_surat" class="custom-control-input" value="1">
+                                                    <span class="custom-control-label">Sesuai</span>
+                                                </label>
+
+                                                <label class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" name="hasil_ver_ibu_jabatan_penandatangan_surat" class="custom-control-input" value="0">
+                                                    <span class="custom-control-label">Tidak Sesuai</span>
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <textarea name="catatan_ver_ibu_jabatan_penandatangan_surat" class="form-control"></textarea>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    
+                                </table>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="card-footer p-0 text-center">
+                            <div class="card-footer-item card-footer-item-bordered">
+                                @csrf
+                                <input type="" name="uid_permohonan" value="{{ $permohonan->uid_permohonan }}">
+                                <button type="submit" class="btn btn-block btn-primary">
+                                    <i class="fa fa-save"></i> Simpan Data Verifikasi
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                    <!--ENDCard Form Verifikasi Identitas Badan Usaha-->
+
                 </div>
                 <!--ENDTab Pane Identitas Badan Usaha-->
 

@@ -42,19 +42,16 @@
                         <div class="table-responsive">
                             <table class="table">
                                 <tr>
-                                    <td style="width: 20%;">Nama Badan Usaha</td>
+                                    <td style="width: 20%; font-weight: bold;">Nama Badan Usaha</td>
                                     <td style="width: 5%;">:</td>
                                     <td style="">{{ $permohonan->badan_usaha->nama_badan_usaha }}</td>
-                                    <td colspan="3"></td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 20%;">Provinsi</td>
+                                    
+                                    <td style="width: 20%; font-weight: bold;">Jenis Badan Usaha</td>
                                     <td style="width: 5%;">:</td>
-                                    <td style="">{{ $permohonan->badan_usaha->kota->provinsi->nama_provinsi }}</td>
-                                    <td colspan="3"></td>
+                                    <td style="">{{ $permohonan->badan_usaha->bentuk_badan_usaha->nama_singkat }}</td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 20%;">Nomor Agenda</td>
+                                    <td style="width: 20%; font-weight: bold;">Nomor Agenda</td>
                                     <td style="width: 5%;">:</td>
                                     <td style="">
                                         @if($permohonan->nomor_agenda == NULL)
@@ -64,9 +61,15 @@
                                         @endif
                                         
                                     </td>
-                                    <td style="width: 20%;">Jenis Sertifikasi</td>
+
+                                    <td style="width: 20%; font-weight: bold;">Jenis Sertifikasi</td>
                                     <td style="width: 5%;">:</td>
                                     <td style="">{{ translate_jenis_sertifikasi($permohonan->jenis_sertifikasi) }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20%; font-weight: bold;">Provinsi</td>
+                                    <td style="width: 5%;">:</td>
+                                    <td style="">{{ $permohonan->badan_usaha->kota->provinsi->nama_provinsi }}</td>
                                 </tr>
                             </table>
                         </div>

@@ -1,5 +1,5 @@
 <?php
-
+//return phpinfo();
 /**
  * Laravel - A PHP Framework For Web Artisans
  *
