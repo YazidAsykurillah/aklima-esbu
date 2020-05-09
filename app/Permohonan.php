@@ -133,6 +133,18 @@ class Permohonan extends Model
     }
 
 
+    public function verifikasi_ibu()
+    {
+        return $this->hasOne('App\VerifikasiIbu', 'uid_permohonan');
+    }
+
+
+    public function verifikasi_pa()
+    {
+        return $this->hasOne('App\VerifikasiPa', 'uid_permohonan');
+    }
+
+
     //custom medthods
     public static function counter()
     {

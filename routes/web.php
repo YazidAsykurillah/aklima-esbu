@@ -107,9 +107,10 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::post('permohonan/add-asesor-tt', 'PermohonanController@saveAsesorTT');
 	Route::get('permohonan/{uid_permohonan}/print-certificate', 'PermohonanController@printCertificate');
 	Route::post('permohonan/change-status', 'PermohonanController@changeStatus');
-	Route::get('permohonan/{uid_permohonan}/persyaratan-administratif', 'PermohonanController@fetchPersyaratanAdministratif');
 
+	Route::get('permohonan/{uid_permohonan}/persyaratan-administratif', 'PermohonanController@fetchPersyaratanAdministratif');
 	Route::get('permohonan/{uid_permohonan}/identitas-badan-usaha', 'PermohonanController@getIdentitasBadanUsaha');
+	Route::get('permohonan/{uid_permohonan}/verifikasi-ibu', 'PermohonanController@getVerifikasiIbu');
 
 	//Outline renderers
 		Route::get('permohonan/{uid_permohonan}/outline-persyaratan-administratif', 'PermohonanController@renderOutlinePersyaratanAdministratif');
@@ -220,5 +221,8 @@ Route::group(['middleware' => 'auth'], function(){
 
 	//Verifikasi IBU
 	Route::resource('verifikasi-ibu', 'VerifikasiIbuController');
+
+	//Verifikasi PA
+	Route::Resource('verifikasi-pa', 'VerifikasiPaController');
 });
 

@@ -55,8 +55,8 @@
                                         <td style="width: 5%;">:</td>
                                         <td style="" id="ibu_holder_file_surat_permohonan_sbu">
                                             @if($identitas_badan_usaha->file_surat_permohonan_sbu != NULL)
-                                            <a href="{{ $identitas_badan_usaha->file_surat_permohonan_sbu }}" class="btn btn-rounded btn-xs btn-info">
-                                                <i class="fa fa-external-link-alt"></i>
+                                            <a href="{{ $identitas_badan_usaha->file_surat_permohonan_sbu }}" class="btn btn-xs btn-rounded btn-info">
+                                                Download Lampiran
                                             </a>
                                             @else
                                                 ---
@@ -107,7 +107,7 @@
 
                     <!--Card Form Verifikasi Identitas Badan Usaha-->
                     <div class="card">
-                        <form id="form-save-verifikasi-ibu" method="post" enctype="multipart/form-data" action="{{ url('verifikasi-ibu/') }}">
+                        <form id="form-verifikasi-ibu" method="post" enctype="multipart/form-data" action="{{ url('verifikasi-ibu/') }}">
                         <div class="card-header d-flex">
                             <h4 class="card-header-title">
                                 <i class="fa fa-tag"></i> Form Verifikasi Identitas Badan Usaha
@@ -130,8 +130,8 @@
                                             <td>File Surat Permohoan SBU</td>
                                             <td style="">
                                                 @if($identitas_badan_usaha->file_surat_permohonan_sbu != NULL)
-                                                <a href="{{ $identitas_badan_usaha->file_surat_permohonan_sbu }}" class="btn btn-rounded btn-xs btn-info">
-                                                    <i class="fa fa-external-link-alt"></i>
+                                                <a href="{{ $identitas_badan_usaha->file_surat_permohonan_sbu }}" class="btn btn-xs btn-rounded btn-info">
+                                                    Download Lampiran
                                                 </a>
                                                 @else
                                                     ---
@@ -139,12 +139,12 @@
                                             </td>
                                             <td style="text-align: center;">
                                                 <label class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" name="hasil_ver_ibu_file_surat_permohonan_sbu" class="custom-control-input" value="1">
+                                                    <input type="radio" name="hasil_ver_ibu_file_surat_permohonan_sbu" class="custom-control-input hasil_ver_ibu_radio" value="1">
                                                     <span class="custom-control-label">Sesuai</span>
                                                 </label>
 
                                                 <label class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" name="hasil_ver_ibu_file_surat_permohonan_sbu" class="custom-control-input" value="0">
+                                                    <input type="radio" name="hasil_ver_ibu_file_surat_permohonan_sbu" class="custom-control-input hasil_ver_ibu_radio" value="0">
                                                     <span class="custom-control-label">Tidak Sesuai</span>
                                                 </label>
                                             </td>
@@ -159,12 +159,12 @@
                                             </td>
                                             <td style="text-align: center;">
                                                 <label class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" name="hasil_ver_ibu_nomor_surat" class="custom-control-input" value="1">
+                                                    <input type="radio" name="hasil_ver_ibu_nomor_surat" class="custom-control-input hasil_ver_ibu_radio" value="1">
                                                     <span class="custom-control-label">Sesuai</span>
                                                 </label>
 
                                                 <label class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" name="hasil_ver_ibu_nomor_surat" class="custom-control-input" value="0">
+                                                    <input type="radio" name="hasil_ver_ibu_nomor_surat" class="custom-control-input hasil_ver_ibu_radio" value="0">
                                                     <span class="custom-control-label">Tidak Sesuai</span>
                                                 </label>
                                             </td>
@@ -179,12 +179,12 @@
                                             </td>
                                             <td style="text-align: center;">
                                                 <label class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" name="hasil_ver_ibu_perihal" class="custom-control-input" value="1">
+                                                    <input type="radio" name="hasil_ver_ibu_perihal" class="custom-control-input hasil_ver_ibu_radio" value="1">
                                                     <span class="custom-control-label">Sesuai</span>
                                                 </label>
 
                                                 <label class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" name="hasil_ver_ibu_perihal" class="custom-control-input" value="0">
+                                                    <input type="radio" name="hasil_ver_ibu_perihal" class="custom-control-input hasil_ver_ibu_radio" value="0">
                                                     <span class="custom-control-label">Tidak Sesuai</span>
                                                 </label>
                                             </td>
@@ -199,12 +199,12 @@
                                             </td>
                                             <td style="text-align: center;">
                                                 <label class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" name="hasil_ver_ibu_tanggal_surat" class="custom-control-input" value="1">
+                                                    <input type="radio" name="hasil_ver_ibu_tanggal_surat" class="custom-control-input hasil_ver_ibu_radio" value="1">
                                                     <span class="custom-control-label">Sesuai</span>
                                                 </label>
 
                                                 <label class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" name="hasil_ver_ibu_tanggal_surat" class="custom-control-input" value="0">
+                                                    <input type="radio" name="hasil_ver_ibu_tanggal_surat" class="custom-control-input hasil_ver_ibu_radio" value="0">
                                                     <span class="custom-control-label">Tidak Sesuai</span>
                                                 </label>
                                             </td>
@@ -219,12 +219,12 @@
                                             </td>
                                             <td style="text-align: center;">
                                                 <label class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" name="hasil_ver_ibu_nama_penandatangan_surat" class="custom-control-input" value="1">
+                                                    <input type="radio" name="hasil_ver_ibu_nama_penandatangan_surat" class="custom-control-input hasil_ver_ibu_radio" value="1">
                                                     <span class="custom-control-label">Sesuai</span>
                                                 </label>
 
                                                 <label class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" name="hasil_ver_ibu_nama_penandatangan_surat" class="custom-control-input" value="0">
+                                                    <input type="radio" name="hasil_ver_ibu_nama_penandatangan_surat" class="custom-control-input hasil_ver_ibu_radio" value="0">
                                                     <span class="custom-control-label">Tidak Sesuai</span>
                                                 </label>
                                             </td>
@@ -239,12 +239,12 @@
                                             </td>
                                             <td style="text-align: center;">
                                                 <label class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" name="hasil_ver_ibu_jabatan_penandatangan_surat" class="custom-control-input" value="1">
+                                                    <input type="radio" name="hasil_ver_ibu_jabatan_penandatangan_surat" class="custom-control-input hasil_ver_ibu_radio" value="1">
                                                     <span class="custom-control-label">Sesuai</span>
                                                 </label>
 
                                                 <label class="custom-control custom-radio custom-control-inline">
-                                                    <input type="radio" name="hasil_ver_ibu_jabatan_penandatangan_surat" class="custom-control-input" value="0">
+                                                    <input type="radio" name="hasil_ver_ibu_jabatan_penandatangan_surat" class="custom-control-input hasil_ver_ibu_radio" value="0">
                                                     <span class="custom-control-label">Tidak Sesuai</span>
                                                 </label>
                                             </td>
@@ -253,6 +253,19 @@
                                             </td>
                                         </tr>
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <td style="text-align: center;">
+                                                <button type="button" id="btn-check-all-ver-ibu" class="btn btn-xs btn-success">
+                                                    Sesuai Semua
+                                                </button>
+                                                <button type="button" id="btn-uncheck-all-ver-ibu" class="btn btn-xs btn-secondary">
+                                                    Tidak Sesuai Semua
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
                                     
                                 </table>
                                 @endif
@@ -261,7 +274,7 @@
                         <div class="card-footer p-0 text-center">
                             <div class="card-footer-item card-footer-item-bordered">
                                 @csrf
-                                <input type="" name="uid_permohonan" value="{{ $permohonan->uid_permohonan }}">
+                                <input type="hidden" name="uid_permohonan" value="{{ $permohonan->uid_permohonan }}">
                                 <button type="submit" class="btn btn-block btn-primary">
                                     <i class="fa fa-save"></i> Simpan Data Verifikasi
                                 </button>

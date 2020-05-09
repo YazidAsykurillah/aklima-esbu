@@ -26,14 +26,14 @@ class CreateVerifikasiIbusTable extends Migration
             $table->boolean('hasil_ver_ibu_perihal')->nullable()->default(NULL);
             $table->text('catatan_ver_ibu_perihal')->nullable()->default(NULL);
 
-            $table->boolean('hasil_ver_tanggal_surat')->nullable()->default(NULL);
-            $table->text('catatan_ver_tanggal_surat')->nullable()->default(NULL);
+            $table->boolean('hasil_ver_ibu_tanggal_surat')->nullable()->default(NULL);
+            $table->text('catatan_ver_ibu_tanggal_surat')->nullable()->default(NULL);
 
-            $table->boolean('hasil_ver_nama_penandatangan_surat')->nullable()->default(NULL);
-            $table->text('catatan_ver_nama_penandatangan_surat')->nullable()->default(NULL);
+            $table->boolean('hasil_ver_ibu_nama_penandatangan_surat')->nullable()->default(NULL);
+            $table->text('catatan_ver_ibu_nama_penandatangan_surat')->nullable()->default(NULL);
 
-            $table->boolean('hasil_ver_jabatan_penandatangan_surat')->nullable()->default(NULL);
-            $table->text('catatan_ver_jabatan_penandatangan_surat')->nullable()->default(NULL);
+            $table->boolean('hasil_ver_ibu_jabatan_penandatangan_surat')->nullable()->default(NULL);
+            $table->text('catatan_ver_ibu_jabatan_penandatangan_surat')->nullable()->default(NULL);
 
 
 

@@ -2666,6 +2666,111 @@
 
         });
         //ENDBlock Tarik Nomor Sertifikat
+
+
+        //Block Verifikasi IBU
+            //Block get verifikasi ibu of permohonan
+            $.ajax({
+                type: 'GET',
+                url: '{{ url('permohonan') }}/{{ $permohonan->uid_permohonan }}/verifikasi-ibu', 
+                success: function (response) {
+                    console.log('Get Verifikasi IBU');
+                    console.log(response);
+                    if(response.data != null){
+                        //Data Verifikasi IBU
+                        let dVI = response.data;
+
+                        //---
+                        if(dVI.hasil_ver_ibu_file_surat_permohonan_sbu == true){
+                            $('#form-verifikasi-ibu').find('input[name=hasil_ver_ibu_file_surat_permohonan_sbu][value=1]').prop('checked', true);
+                        }else{
+                            $('#form-verifikasi-ibu').find('input[name=hasil_ver_ibu_file_surat_permohonan_sbu][value=0]').prop('checked', true);
+                        }
+                        $('#form-verifikasi-ibu').find('textarea[name=catatan_ver_ibu_file_surat_permohonan_sbu]').val(dVI.catatan_ver_ibu_file_surat_permohonan_sbu);
+                        //###
+
+                        //---
+                        if(dVI.hasil_ver_ibu_nomor_surat == true){
+                            $('#form-verifikasi-ibu').find('input[name=hasil_ver_ibu_nomor_surat][value=1]').prop('checked', true);
+                        }else{
+                            $('#form-verifikasi-ibu').find('input[name=hasil_ver_ibu_nomor_surat][value=0]').prop('checked', true);
+                        }
+                        $('#form-verifikasi-ibu').find('textarea[name=catatan_ver_ibu_nomor_surat]').val(dVI.catatan_ver_ibu_nomor_surat);
+                        //###
+
+                        //---
+                        if(dVI.hasil_ver_ibu_perihal == true){
+                            $('#form-verifikasi-ibu').find('input[name=hasil_ver_ibu_perihal][value=1]').prop('checked', true);
+                        }else{
+                            $('#form-verifikasi-ibu').find('input[name=hasil_ver_ibu_perihal][value=0]').prop('checked', true);
+                        }
+                        $('#form-verifikasi-ibu').find('textarea[name=catatan_ver_ibu_perihal]').val(dVI.catatan_ver_ibu_perihal);
+                        //###
+
+                        //---
+                        if(dVI.hasil_ver_ibu_tanggal_surat == true){
+                            $('#form-verifikasi-ibu').find('input[name=hasil_ver_ibu_tanggal_surat][value=1]').prop('checked', true);
+                        }else{
+                            $('#form-verifikasi-ibu').find('input[name=hasil_ver_ibu_tanggal_surat][value=0]').prop('checked', true);
+                        }
+                        $('#form-verifikasi-ibu').find('textarea[name=catatan_ver_ibu_tanggal_surat]').val(dVI.catatan_ver_ibu_tanggal_surat);
+                        //###
+
+                        //---
+                        if(dVI.hasil_ver_ibu_nama_penandatangan_surat == true){
+                            $('#form-verifikasi-ibu').find('input[name=hasil_ver_ibu_nama_penandatangan_surat][value=1]').prop('checked', true);
+                        }else{
+                            $('#form-verifikasi-ibu').find('input[name=hasil_ver_ibu_nama_penandatangan_surat][value=0]').prop('checked', true);
+                        }
+                        $('#form-verifikasi-ibu').find('textarea[name=catatan_ver_ibu_nama_penandatangan_surat]').val(dVI.catatan_ver_ibu_nama_penandatangan_surat);
+                        //###
+
+                        //--
+                        if(dVI.hasil_ver_ibu_jabatan_penandatangan_surat == true){
+                            $('#form-verifikasi-ibu').find('input[name=hasil_ver_ibu_jabatan_penandatangan_surat][value=1]').prop('checked', true);
+                        }else{
+                            $('#form-verifikasi-ibu').find('input[name=hasil_ver_ibu_jabatan_penandatangan_surat][value=0]').prop('checked', true);
+                        }
+                        $('#form-verifikasi-ibu').find('textarea[name=catatan_ver_ibu_jabatan_penandatangan_surat]').val(dVI.catatan_ver_ibu_jabatan_penandatangan_surat);
+                        //###
+                    }
+                },
+                error: function() { 
+                     console.log(response);
+                }
+            });
+
+
+            //ENDBlock get verifikasi ibu of permohonan
+            
+            //Block Verifikasi IBU check all & uncheck all
+            $('#btn-check-all-ver-ibu').on('click', function(event){
+                event.preventDefault();
+                $('#form-verifikasi-ibu').find('.hasil_ver_ibu_radio[value=1]').prop('checked', true);
+            });
+
+            $('#btn-uncheck-all-ver-ibu').on('click', function(event){
+                event.preventDefault();
+                $('#form-verifikasi-ibu').find('.hasil_ver_ibu_radio[value=0]').prop('checked', true);
+            });
+            //ENDBlock Verifikasi IBU check all & uncheck all
+
+        //ENDBlock Verifikasi IBU
+
+        //Block Verifikasi PA
+            //Block Verifikasi PA check all & uncheck all
+            $('#btn-check-all-ver-pa').on('click', function(event){
+                event.preventDefault();
+                $('#form-verifikasi-pa').find('.hasil_ver_pa_radio[value=1]').prop('checked', true);
+            });
+
+            $('#btn-uncheck-all-ver-pa').on('click', function(event){
+                event.preventDefault();
+                $('#form-verifikasi-pa').find('.hasil_ver_pa_radio[value=0]').prop('checked', true);
+            });
+            //ENDBlock Verifikasi PA check all & uncheck all
+        //ENDBlock Verifikasi PA
+
     });
 
     

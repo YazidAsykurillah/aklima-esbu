@@ -381,6 +381,14 @@ class PermohonanController extends Controller
     }
 
 
+    public function getVerifikasiIbu($uid_permohonan)
+    {
+        $permohonan = Permohonan::findOrFail($uid_permohonan);
+        return response()->json(
+            ['data'=>$permohonan->verifikasi_ibu]
+        );
+    }
+
     public function changeStatus(Request $request)
     {
 

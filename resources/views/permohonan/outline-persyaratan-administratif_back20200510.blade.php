@@ -13,7 +13,6 @@
             <div class="tab-content" id="myTabContent2">
                 <!--Tab Pane Persyaratan Administratif-->
                 <div class="tab-pane fade show active" id="outline-persyaratan-administratif" role="tabpanel" aria-labelledby="tab-outline-persyaratan-administratif">
-                    <!--Card Data Persyaratan Administratif-->
                     <div class="card">
                         <div class="card-header d-flex">
                             <h4 class="card-header-title">
@@ -505,11 +504,6 @@
                             <!--ENDBlock Pengesahan Akta Perubahan-->
                         </div>
                     </div>
-                    <!--ENDCard Data Persyaratan Administratif-->
-
-                    <!--Card Form Verifikasi Persyaratan Administratif-->
-                    @include('permohonan.components.form-verifikasi-pa')
-                    <!--ENDCard Form Verifikasi Persyaratan Administratif-->
                 </div>
                 <!--ENDTab Pane Persyaratan Administratif-->
 
