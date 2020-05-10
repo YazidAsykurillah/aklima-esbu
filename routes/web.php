@@ -111,6 +111,9 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('permohonan/{uid_permohonan}/persyaratan-administratif', 'PermohonanController@fetchPersyaratanAdministratif');
 	Route::get('permohonan/{uid_permohonan}/identitas-badan-usaha', 'PermohonanController@getIdentitasBadanUsaha');
 	Route::get('permohonan/{uid_permohonan}/verifikasi-ibu', 'PermohonanController@getVerifikasiIbu');
+	Route::get('permohonan/{uid_permohonan}/verifikasi-pa', 'PermohonanController@getVerifikasiPA');
+	Route::get('permohonan/{uid_permohonan}/verifikasi-pt', 'PermohonanController@getVerifikasiPT');
+	Route::get('permohonan/{uid_permohonan}/verifikasi-dp', 'PermohonanController@getVerifikasiDP');
 
 	//Outline renderers
 		Route::get('permohonan/{uid_permohonan}/outline-persyaratan-administratif', 'PermohonanController@renderOutlinePersyaratanAdministratif');
@@ -224,5 +227,12 @@ Route::group(['middleware' => 'auth'], function(){
 
 	//Verifikasi PA
 	Route::Resource('verifikasi-pa', 'VerifikasiPaController');
+
+	//Verifikasi PT
+	Route::Resource('verifikasi-pt', 'VerifikasiPtController');
+
+	//Verifikasi DP
+	Route::Resource('verifikasi-dp', 'VerifikasiDpController');
+
 });
 

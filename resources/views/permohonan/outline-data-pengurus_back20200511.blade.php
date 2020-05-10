@@ -14,7 +14,7 @@
                 <!--Tab Pane Data Pengurus-->
                 <div class="tab-pane fade show active" id="outline-data-pengurus" role="tabpanel" aria-labelledby="tab-outline-data-pengurus">
                     <div class="card">
-                    <form id="form-verifikasi-dp" method="post" enctype="multipart/form-data" action="{{ url('verifikasi-dp/') }}">
+                        
                         <div class="card-header d-flex">
                             <h4 class="card-header-title">
                                 Data Pengurus
@@ -84,47 +84,6 @@
                                         </table>    
                                     </div>
                                 </div>
-                                <div class="card-footer">
-                                    <!--Section Verifikasi Dewan Komisaris-->
-                                    <div class="table-responsive">
-                                        @if(!is_null($data_pengurus_dewan_komisaris))
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 20%;">Point Verifikasi</th>
-                                                    <th style="width: 30%;">Isi Point</th>
-                                                    <th style="width: 30%; text-align: center;">Sesuai / Tidak Sesuai</th>
-                                                    <th>Catatan</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Daftar Dewan Komisaris Badan Usaha</td>
-                                                    <td style="">
-                                                        Terlampir Diatas
-                                                    </td>
-                                                    <td style="text-align: center;">
-                                                        <label class="custom-control custom-radio custom-control-inline">
-                                                            <input type="radio" name="hasil_ver_dp_dk" class="custom-control-input hasil_ver_dp_radio" value="1">
-                                                            <span class="custom-control-label">Sesuai</span>
-                                                        </label>
-
-                                                        <label class="custom-control custom-radio custom-control-inline">
-                                                            <input type="radio" name="hasil_ver_dp_dk" class="custom-control-input hasil_ver_dp_radio" value="0">
-                                                            <span class="custom-control-label">Tidak Sesuai</span>
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="catatan_ver_dp_dk" class="form-control"></textarea>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            
-                                        </table>
-                                        @endif
-                                    </div>
-                                    <!--Section Verifikasi Dewan Komisaris-->
-                                </div>
                             </div>
                             <!--ENDBlock Dewan Komisaris-->
 
@@ -187,47 +146,6 @@
                                             @endif
                                         </tbody>
                                     </table>
-                                </div>
-                                <div class="card-footer">
-                                    <!--Section Verifikasi Dewan Direksi-->
-                                    <div class="table-responsive">
-                                        @if(!is_null($data_pengurus_dewan_direksi))
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 20%;">Point Verifikasi</th>
-                                                    <th style="width: 30%;">Isi Point</th>
-                                                    <th style="width: 30%; text-align: center;">Sesuai / Tidak Sesuai</th>
-                                                    <th>Catatan</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Daftar Dewan Direksi Badan Usaha</td>
-                                                    <td style="">
-                                                        Terlampir Diatas
-                                                    </td>
-                                                    <td style="text-align: center;">
-                                                        <label class="custom-control custom-radio custom-control-inline">
-                                                            <input type="radio" name="hasil_ver_dp_dd" class="custom-control-input hasil_ver_dp_radio" value="1">
-                                                            <span class="custom-control-label">Sesuai</span>
-                                                        </label>
-
-                                                        <label class="custom-control custom-radio custom-control-inline">
-                                                            <input type="radio" name="hasil_ver_dp_dd" class="custom-control-input hasil_ver_dp_radio" value="0">
-                                                            <span class="custom-control-label">Tidak Sesuai</span>
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="catatan_ver_dp_dd" class="form-control"></textarea>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            
-                                        </table>
-                                        @endif
-                                    </div>
-                                    <!--Section Verifikasi Dewan Direksi-->
                                 </div>
                             </div>
                             <!--ENDBlock Dewan Direksi-->
@@ -294,75 +212,9 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="card-footer">
-                                    <!--Section Verifikasi Pemegang Saham-->
-                                    <div class="table-responsive">
-                                        @if(!is_null($data_pengurus_pemegang_saham))
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 20%;">Point Verifikasi</th>
-                                                    <th style="width: 30%;">Isi Point</th>
-                                                    <th style="width: 30%; text-align: center;">Sesuai / Tidak Sesuai</th>
-                                                    <th>Catatan</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Daftar Pemegang Saham Badan Usaha</td>
-                                                    <td style="">
-                                                        Terlampir Diatas
-                                                    </td>
-                                                    <td style="text-align: center;">
-                                                        <label class="custom-control custom-radio custom-control-inline">
-                                                            <input type="radio" name="hasil_ver_dp_ps" class="custom-control-input hasil_ver_dp_radio" value="1">
-                                                            <span class="custom-control-label">Sesuai</span>
-                                                        </label>
-
-                                                        <label class="custom-control custom-radio custom-control-inline">
-                                                            <input type="radio" name="hasil_ver_dp_ps" class="custom-control-input hasil_ver_dp_radio" value="0">
-                                                            <span class="custom-control-label">Tidak Sesuai</span>
-                                                        </label>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="catatan_ver_dp_ps" class="form-control"></textarea>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            
-                                        </table>
-                                        @endif
-                                    </div>
-                                    <!--Section Verifikasi Pemegang Saham-->
-                                </div>
                             </div>
                             <!--ENDBlock Dewan Pemegang Saham-->
                         </div>
-                        <div class="card-footer p-0 text-center">
-                            <table class="table">
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="2"></td>
-                                        <td style="text-align: center;">
-                                            <button type="button" id="btn-check-all-ver-dp" class="btn btn-xs btn-success">
-                                                Sesuai Semua
-                                            </button>
-                                            <button type="button" id="btn-uncheck-all-ver-dp" class="btn btn-xs btn-secondary">
-                                                Tidak Sesuai Semua
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                            @csrf
-                            <input type="hidden" name="uid_permohonan" value="{{ $permohonan->uid_permohonan }}">
-                            <button type="submit" id="btn-submit-ver-dp" class="btn btn-block btn-primary">
-                                <i class="fa fa-save"></i> Simpan Verifikasi Data Pengurus
-                            </button>
-                            
-                        </div>
-
-                    </form>
                     </div>
 
                     

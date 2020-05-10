@@ -389,6 +389,30 @@ class PermohonanController extends Controller
         );
     }
 
+    public function getVerifikasiPA($uid_permohonan)
+    {
+        $permohonan = Permohonan::findOrFail($uid_permohonan);
+        return response()->json(
+            ['data'=>$permohonan->verifikasi_pa]
+        );
+    }
+
+    public function getVerifikasiPT($uid_permohonan)
+    {
+        $permohonan = Permohonan::findOrFail($uid_permohonan);
+        return response()->json(
+            ['data'=>$permohonan->verifikasi_pt]
+        );
+    }
+
+    public function getVerifikasiDP($uid_permohonan)
+    {
+        $permohonan = Permohonan::findOrFail($uid_permohonan);
+        return response()->json(
+            ['data'=>$permohonan->verifikasi_dp]
+        );
+    }
+
     public function changeStatus(Request $request)
     {
 

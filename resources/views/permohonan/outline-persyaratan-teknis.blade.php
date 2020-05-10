@@ -13,6 +13,7 @@
             <div class="tab-content" id="myTabContent2">
                 <!--Tab Pane Persyaratan Teknis-->
                 <div class="tab-pane fade show active" id="outline-persyaratan-teknis" role="tabpanel" aria-labelledby="tab-outline-persyaratan-teknis">
+                    <!--Card Data Persyaratan Teknis-->
                     <div class="card">
                         <div class="card-header d-flex">
                             <h4 class="card-header-title">
@@ -38,7 +39,7 @@
                                         <div class="card-header d-flex">
                                             <h5 class="card-header-title">
                                                 {{ $pt->sub_bidang->nama_sub_bidang }}
-                                                ({{ $pt->uid_verifikasi_pt }})
+                                                <!-- ({{ $pt->uid_verifikasi_pt }}) -->
                                             </h5>
                                             <div class="toolbar ml-auto">
                                                 <!--Show document action if only status is Menunggu Dokumen (0) or Frontdesk -->
@@ -224,6 +225,12 @@
                             @endif
                         </div>
                     </div>
+                    <!--ENDCard Data Persyaratan Teknis-->
+
+                    <!--Card Form Verifikasi Persyaratan Teknis-->
+                    @include('permohonan.components.form-verifikasi-pt')
+                    <!--ENDCard Form Verifikasi Persyaratan Teknis-->
+
                 </div>
                 <!--ENDTab Pane Persyaratan Teknis-->
 

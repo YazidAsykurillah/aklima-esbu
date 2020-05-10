@@ -2739,8 +2739,6 @@
                      console.log(response);
                 }
             });
-
-
             //ENDBlock get verifikasi ibu of permohonan
             
             //Block Verifikasi IBU check all & uncheck all
@@ -2755,9 +2753,409 @@
             });
             //ENDBlock Verifikasi IBU check all & uncheck all
 
+            //Block Submit Verifikasi Identitas Badan Usaha
+            $('#form-verifikasi-ibu').on('submit', function(){
+                $('#btn-submit-ver-ibu').prop('disabled', true);
+            });
+            //ENDBlock Submit Verifikasi Identitas Badan Usaha
+
         //ENDBlock Verifikasi IBU
 
         //Block Verifikasi PA
+            //Block get verifikasi PA of permohonan
+            $.ajax({
+                type: 'GET',
+                url: '{{ url('permohonan') }}/{{ $permohonan->uid_permohonan }}/verifikasi-pa', 
+                success: function (response) {
+                    console.log('Get Verifikasi PA');
+                    console.log(response);
+                    let dataVerPA = response.data;
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_file_akta_pendirian_bu == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_file_akta_pendirian_bu][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_file_akta_pendirian_bu][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_file_akta_pendirian_bu]').val(dataVerPA.catatan_ver_pa_file_akta_pendirian_bu);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_nama_notaris == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nama_notaris][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nama_notaris][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_nama_notaris]').val(dataVerPA.catatan_ver_pa_nama_notaris);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_judul_akta == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_judul_akta][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_judul_akta][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_judul_akta]').val(dataVerPA.catatan_ver_pa_judul_akta);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_tanggal_akta == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_tanggal_akta][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_tanggal_akta][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_tanggal_akta]').val(dataVerPA.catatan_ver_pa_tanggal_akta);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_nomor_akta == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nomor_akta][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nomor_akta][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_nomor_akta]').val(dataVerPA.catatan_ver_pa_nomor_akta);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_maksud_tujuan_akta == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_maksud_tujuan_akta][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_maksud_tujuan_akta][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_maksud_tujuan_akta]').val(dataVerPA.catatan_ver_pa_maksud_tujuan_akta);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_file_pengesahan_sebagai_badan_hukum == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_file_pengesahan_sebagai_badan_hukum][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_file_pengesahan_sebagai_badan_hukum][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_file_pengesahan_sebagai_badan_hukum]').val(dataVerPA.catatan_ver_pa_file_pengesahan_sebagai_badan_hukum);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_nomor_badan_hukum == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nomor_badan_hukum][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nomor_badan_hukum][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_nomor_badan_hukum]').val(dataVerPA.catatan_ver_pa_nomor_badan_hukum);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_tentang_badan_hukum == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_tentang_badan_hukum][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_tentang_badan_hukum][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_tentang_badan_hukum]').val(dataVerPA.catatan_ver_pa_tentang_badan_hukum);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_tanggal_badan_hukum == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_tanggal_badan_hukum][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_tanggal_badan_hukum][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_tanggal_badan_hukum]').val(dataVerPA.catatan_ver_pa_tanggal_badan_hukum);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_file_npwp == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_file_npwp][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_file_npwp][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_file_npwp]').val(dataVerPA.catatan_ver_pa_file_npwp);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_nomor_npwp == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nomor_npwp][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nomor_npwp][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_nomor_npwp]').val(dataVerPA.catatan_ver_pa_nomor_npwp);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_file_skdu == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_file_skdu][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_file_skdu][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_file_skdu]').val(dataVerPA.catatan_ver_pa_file_skdu);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_instansi_penerbit_skdu == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_instansi_penerbit_skdu][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_instansi_penerbit_skdu][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_instansi_penerbit_skdu]').val(dataVerPA.catatan_ver_pa_instansi_penerbit_skdu);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_nomor_skdu == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nomor_skdu][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nomor_skdu][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_nomor_skdu]').val(dataVerPA.catatan_ver_pa_nomor_skdu);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_tanggal_skdu == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_tanggal_skdu][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_tanggal_skdu][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_tanggal_skdu]').val(dataVerPA.catatan_ver_pa_tanggal_skdu);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_masa_berlaku_skdu == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_masa_berlaku_skdu][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_masa_berlaku_skdu][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_masa_berlaku_skdu]').val(dataVerPA.catatan_ver_pa_masa_berlaku_skdu);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_file_pjbu == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_file_pjbu][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_file_pjbu][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_file_pjbu]').val(dataVerPA.catatan_ver_pa_file_pjbu);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_nama_pjbu == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nama_pjbu][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nama_pjbu][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_nama_pjbu]').val(dataVerPA.catatan_ver_pa_nama_pjbu);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_jenis_identitas_pjbu == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_jenis_identitas_pjbu][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_jenis_identitas_pjbu][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_jenis_identitas_pjbu]').val(dataVerPA.catatan_ver_pa_jenis_identitas_pjbu);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_nomor_ktp_pjbu == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nomor_ktp_pjbu][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nomor_ktp_pjbu][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_nomor_ktp_pjbu]').val(dataVerPA.catatan_ver_pa_nomor_ktp_pjbu);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_nomor_paspor_pjbu == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nomor_paspor_pjbu][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nomor_paspor_pjbu][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_nomor_paspor_pjbu]').val(dataVerPA.catatan_ver_pa_nomor_paspor_pjbu);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_file_laporan_keuangan == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_file_laporan_keuangan][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_file_laporan_keuangan][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_file_laporan_keuangan]').val(dataVerPA.catatan_ver_pa_file_laporan_keuangan);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_kekayaan_bersih == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_kekayaan_bersih][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_kekayaan_bersih][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_kekayaan_bersih]').val(dataVerPA.catatan_ver_pa_kekayaan_bersih);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_modal_disetor == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_modal_disetor][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_modal_disetor][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_modal_disetor]').val(dataVerPA.catatan_ver_pa_modal_disetor);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_nama_kantor_akuntan_publik == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nama_kantor_akuntan_publik][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nama_kantor_akuntan_publik][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_nama_kantor_akuntan_publik]').val(dataVerPA.catatan_ver_pa_nama_kantor_akuntan_publik);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_alamat_kantor_akuntan_pulik == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_alamat_kantor_akuntan_pulik][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_alamat_kantor_akuntan_pulik][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_alamat_kantor_akuntan_pulik]').val(dataVerPA.catatan_ver_pa_alamat_kantor_akuntan_pulik);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_nomor_telepon_kantor_akuntan_publik == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nomor_telepon_kantor_akuntan_publik][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nomor_telepon_kantor_akuntan_publik][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_nomor_telepon_kantor_akuntan_publik]').val(dataVerPA.catatan_ver_pa_nomor_telepon_kantor_akuntan_publik);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_nama_akuntan == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nama_akuntan][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nama_akuntan][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_nama_akuntan]').val(dataVerPA.catatan_ver_pa_nama_akuntan);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_nomor_laporan_keuangan == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nomor_laporan_keuangan][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nomor_laporan_keuangan][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_nomor_laporan_keuangan]').val(dataVerPA.catatan_ver_pa_nomor_laporan_keuangan);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_tanggal_laporan_keuangan == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_tanggal_laporan_keuangan][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_tanggal_laporan_keuangan][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_tanggal_laporan_keuangan]').val(dataVerPA.catatan_ver_pa_tanggal_laporan_keuangan);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_pendapat_akuntan == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_pendapat_akuntan][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_pendapat_akuntan][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_pendapat_akuntan]').val(dataVerPA.catatan_ver_pa_pendapat_akuntan);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_file_struktur_organisasi_badan_usaha == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_file_struktur_organisasi_badan_usaha][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_file_struktur_organisasi_badan_usaha][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_file_struktur_organisasi_badan_usaha]').val(dataVerPA.catatan_ver_pa_file_struktur_organisasi_badan_usaha);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_file_profile_badan_usaha == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_file_profile_badan_usaha][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_file_profile_badan_usaha][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_file_profile_badan_usaha]').val(dataVerPA.catatan_ver_pa_file_profile_badan_usaha);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_file_ppm == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_file_ppm][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_file_ppm][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_file_ppm]').val(dataVerPA.catatan_ver_pa_file_ppm);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_nomor_ppm == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nomor_ppm][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nomor_ppm][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_nomor_ppm]').val(dataVerPA.catatan_ver_pa_nomor_ppm);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_tanggal_ppm == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_tanggal_ppm][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_tanggal_ppm][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_tanggal_ppm]').val(dataVerPA.catatan_ver_pa_tanggal_ppm);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_prosentase_saham_pma_ppm == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_prosentase_saham_pma_ppm][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_prosentase_saham_pma_ppm][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_prosentase_saham_pma_ppm]').val(dataVerPA.catatan_ver_pa_prosentase_saham_pma_ppm);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_file_ppm_perubahan == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_file_ppm_perubahan][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_file_ppm_perubahan][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_file_ppm_perubahan]').val(dataVerPA.catatan_ver_pa_file_ppm_perubahan);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_nomor_ppm_perubahan == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nomor_ppm_perubahan][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_nomor_ppm_perubahan][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_nomor_ppm_perubahan]').val(dataVerPA.catatan_ver_pa_nomor_ppm_perubahan);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_tanggal_ppm_perubahan == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_tanggal_ppm_perubahan][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_tanggal_ppm_perubahan][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_tanggal_ppm_perubahan]').val(dataVerPA.catatan_ver_pa_tanggal_ppm_perubahan);
+                    //###
+
+                    //--
+                    if(dataVerPA.hasil_ver_pa_prosentase_saham_pma_ppm_perubahan == true){
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_prosentase_saham_pma_ppm_perubahan][value=1]').prop('checked', true);
+                    }else{
+                        $('#form-verifikasi-pa').find('input[name=hasil_ver_pa_prosentase_saham_pma_ppm_perubahan][value=0]').prop('checked', true);
+                    }
+                    $('#form-verifikasi-pa').find('textarea[name=catatan_ver_pa_prosentase_saham_pma_ppm_perubahan]').val(dataVerPA.catatan_ver_pa_prosentase_saham_pma_ppm_perubahan);
+                    //###
+                    
+                },
+                error: function() { 
+                     console.log(response);
+                }
+            });
+            //ENDBlock get verifikasi PA of permohonan
+
             //Block Verifikasi PA check all & uncheck all
             $('#btn-check-all-ver-pa').on('click', function(event){
                 event.preventDefault();
@@ -2769,7 +3167,130 @@
                 $('#form-verifikasi-pa').find('.hasil_ver_pa_radio[value=0]').prop('checked', true);
             });
             //ENDBlock Verifikasi PA check all & uncheck all
+
+            //Block Submit Verifikasi Persyaratan Administratif
+            $('#form-verifikasi-pa').on('submit', function(){
+                $('#btn-submit-ver-pa').prop('disabled', true);
+            });
+            //ENDBlock Submit Verifikasi Persyaratan Administratif
+
         //ENDBlock Verifikasi PA
+
+
+        //Block Verifikasi PT
+            //Block get verifikasi PT of permohonan
+            $.ajax({
+                type: 'GET',
+                url: '{{ url('permohonan') }}/{{ $permohonan->uid_permohonan }}/verifikasi-pt', 
+                success: function (response) {
+                    console.log('Get Verifikasi PT');
+                    console.log(response);
+                    if(response.data != null){
+                        //Data Verifikasi pt
+                        let dataVerPt = response.data;
+
+                        //---
+                        if(dataVerPt.hasil_ver_pt == true){
+                            $('#form-verifikasi-pt').find('input[name=hasil_ver_pt][value=1]').prop('checked', true);
+                        }else{
+                            $('#form-verifikasi-pt').find('input[name=hasil_ver_pt][value=0]').prop('checked', true);
+                        }
+                        $('#form-verifikasi-pt').find('textarea[name=catatan_ver_pt]').val(dataVerPt.catatan_ver_pt);
+                        //###
+                    }
+                },
+                error: function() { 
+                     console.log(response);
+                }
+            });
+            //ENDBlock get verifikasi PT of permohonan
+
+            //Block Verifikasi PT check all & uncheck all
+            $('#btn-check-all-ver-pt').on('click', function(event){
+                event.preventDefault();
+                $('#form-verifikasi-pt').find('.hasil_ver_pt_radio[value=1]').prop('checked', true);
+            });
+
+            $('#btn-uncheck-all-ver-pt').on('click', function(event){
+                event.preventDefault();
+                $('#form-verifikasi-pt').find('.hasil_ver_pt_radio[value=0]').prop('checked', true);
+            });
+            //ENDBlock Verifikasi PT check all & uncheck all
+
+            //Block Submit Verifikasi Persyaratan Teknis
+            $('#form-verifikasi-pt').on('submit', function(){
+                $('#btn-submit-ver-pt').prop('disabled', true);
+            });
+            //ENDBlock Submit Verifikasi Persyaratan Teknis
+
+        //ENDBlock Verifikasi PT
+
+
+        //Block Verifikasi Dewan Pengurus
+            //Block GET verifikasi Dewan Pengurus of permohonan
+            $.ajax({
+                type: 'GET',
+                url: '{{ url('permohonan') }}/{{ $permohonan->uid_permohonan }}/verifikasi-dp', 
+                success: function (response) {
+                    console.log('GET Verifikasi Dewan Pengurus');
+                    console.log(response);
+                    if(response.data != null){
+                        //Data Verifikasi Dewan Pengurus
+                        let dataVerDp = response.data;
+
+                        //---
+                        if(dataVerDp.hasil_ver_dp_dk == true){
+                            $('#form-verifikasi-dp').find('input[name=hasil_ver_dp_dk][value=1]').prop('checked', true);
+                        }else{
+                            $('#form-verifikasi-dp').find('input[name=hasil_ver_dp_dk][value=0]').prop('checked', true);
+                        }
+                        $('#form-verifikasi-dp').find('textarea[name=catatan_ver_dp_dk]').val(dataVerDp.catatan_ver_dp_dk);
+                        //###
+
+                        //---
+                        if(dataVerDp.hasil_ver_dp_dd == true){
+                            $('#form-verifikasi-dp').find('input[name=hasil_ver_dp_dd][value=1]').prop('checked', true);
+                        }else{
+                            $('#form-verifikasi-dp').find('input[name=hasil_ver_dp_dd][value=0]').prop('checked', true);
+                        }
+                        $('#form-verifikasi-dp').find('textarea[name=catatan_ver_dp_dd]').val(dataVerDp.catatan_ver_dp_dd);
+                        //###
+
+                        //---
+                        if(dataVerDp.hasil_ver_dp_ps == true){
+                            $('#form-verifikasi-dp').find('input[name=hasil_ver_dp_ps][value=1]').prop('checked', true);
+                        }else{
+                            $('#form-verifikasi-dp').find('input[name=hasil_ver_dp_ps][value=0]').prop('checked', true);
+                        }
+                        $('#form-verifikasi-dp').find('textarea[name=catatan_ver_dp_ps]').val(dataVerDp.catatan_ver_dp_ps);
+                        //###
+                    }
+                },
+                error: function() { 
+                     console.log(response);
+                }
+            });
+            //ENDBlock GET verifikasi Dewan Pengurus of permohonan
+
+            //Block Verifikasi Dewan Pengurus check all & uncheck all
+            $('#btn-check-all-ver-dp').on('click', function(event){
+                event.preventDefault();
+                $('#form-verifikasi-dp').find('.hasil_ver_dp_radio[value=1]').prop('checked', true);
+            });
+
+            $('#btn-uncheck-all-ver-dp').on('click', function(event){
+                event.preventDefault();
+                $('#form-verifikasi-dp').find('.hasil_ver_dp_radio[value=0]').prop('checked', true);
+            });
+            //ENDBlock Verifikasi Dewan Pengurus check all & uncheck all
+
+            //Block Submit Verifikasi Dewan Pengurus
+            $('#form-verifikasi-dp').on('submit', function(){
+                $('#btn-submit-ver-dp').prop('disabled', true);
+            });
+            //ENDBlock Submit Verifikasi Dewan Pengurus
+
+        //ENDBlock Verifikasi Dewan Pengurus
 
     });
 

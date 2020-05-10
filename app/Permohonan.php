@@ -144,6 +144,15 @@ class Permohonan extends Model
         return $this->hasOne('App\VerifikasiPa', 'uid_permohonan');
     }
 
+    public function verifikasi_pt()
+    {
+        return $this->hasOne('App\VerifikasiPt', 'uid_permohonan');
+    }
+
+    public function verifikasi_dp()
+    {
+        return $this->hasOne('App\VerifikasiDp', 'uid_permohonan');
+    }
 
     //custom medthods
     public static function counter()

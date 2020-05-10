@@ -980,13 +980,13 @@
         </div>
     </div>
     <div class="card-footer p-0 text-center">
-        <div class="card-footer-item card-footer-item-bordered">
+        
             @csrf
             <input type="hidden" name="uid_permohonan" value="{{ $permohonan->uid_permohonan }}">
-            <button type="submit" class="btn btn-block btn-primary">
+            <button type="submit" id="btn-submit-ver-pa" class="btn btn-block btn-primary">
                 <i class="fa fa-save"></i> Simpan Data Verifikasi
             </button>
-        </div>
+        
     </div>
     </form>
 </div>

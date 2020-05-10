@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Permohonan;
-use App\VerifikasiPa;
+use App\VerifikasiDp;
 
-class VerifikasiPaController extends Controller
+class VerifikasiDpController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -38,11 +38,7 @@ class VerifikasiPaController extends Controller
     public function store(Request $request)
     {
         $permohonan = Permohonan::findOrFail($request->uid_permohonan);
-
-        /*print_r($request->all());
-        return;*/
-
-        $verifikasi_pa = VerifikasiPa::updateOrCreate(
+        $verifikasi_dp = VerifikasiDp::updateOrCreate(
             [
                 'uid_permohonan'=>$permohonan->uid_permohonan
             ],
