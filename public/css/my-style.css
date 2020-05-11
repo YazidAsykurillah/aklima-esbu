@@ -6,3 +6,8 @@ body {
   position: absolute;
   bottom: 0;
 }
+
+/*align top datatable td*/
+table.dataTable tbody td {
+  vertical-align: top;
+}

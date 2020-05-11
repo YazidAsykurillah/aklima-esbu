@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
+use Carbon\Carbon;
+
 use App\Sertifikat;
 use App\PersyaratanTeknis;
 use App\PersyaratanTeknisPenanggungJawabTeknis;
@@ -18,7 +21,31 @@ class SertifikatController extends Controller
      */
     public function index()
     {
-        //
+        return view('sertifikat.index');
+    }
+
+    public function datatables(Request $request)
+    {
+        \DB::statement(\DB::raw('set @rownum=0'));
+        $sertifikat = Sertifikat::with(['permohonan', 'permohonan.badan_usaha', 'sub_bidang', 'sub_bidang.bidang', 'jenis_usaha'])
+            ->select(
+                [
+                \DB::raw('@rownum  := @rownum  + 1 AS rownum'),
+                'sertifikat.*',
+                ]
+            )
+            ->get();
+
+        $data_sertifikat = Datatables::of($sertifikat)
+            ->addColumn('nama_badan_usaha', function($sertifikat){
+                return $sertifikat->permohonan->badan_usaha->nama_badan_usaha;
+            });
+
+        if ($keyword = $request->get('search')['value']) {
+            $data_sertifikat->filterColumn('rownum', 'whereRaw', '@rownum  + 1 like ?', ["%{$keyword}%"]);
+        }
+
+        return $data_sertifikat->make(true);
     }
 
     /**

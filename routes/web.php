@@ -115,7 +115,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('permohonan/{uid_permohonan}/verifikasi-pt', 'PermohonanController@getVerifikasiPT');
 	Route::get('permohonan/{uid_permohonan}/verifikasi-dp', 'PermohonanController@getVerifikasiDP');
 
-	//Outline renderers
+		//Outline renderers
 		Route::get('permohonan/{uid_permohonan}/outline-persyaratan-administratif', 'PermohonanController@renderOutlinePersyaratanAdministratif');
 		Route::get('permohonan/{uid_permohonan}/outline-persyaratan-teknis', 'PermohonanController@renderOutlinePersyaratanTeknis');
 		Route::get('permohonan/{uid_permohonan}/outline-data-pengurus', 'PermohonanController@renderOutlineDataPengurus');
@@ -206,11 +206,13 @@ Route::group(['middleware' => 'auth'], function(){
 
 	//Sertifikat
 	Route::get('sertifikat/{id}/print-pdf', 'SertifikatController@printPdf');
+	Route::get('sertifikat/datatables', 'SertifikatController@datatables');
 	Route::resource('sertifikat', 'SertifikatController');
+
 	//Configuration
-		Route::post('configuration/service-integrator/generate-token', 'ConfigurationController@generateToken');
-		Route::post('configuration/service-integrator/test-connection', 'ConfigurationController@testConnection');
-		Route::get('configuration/service-integrator', 'ConfigurationController@renderServiceIntegratorView');
+	Route::post('configuration/service-integrator/generate-token', 'ConfigurationController@generateToken');
+	Route::post('configuration/service-integrator/test-connection', 'ConfigurationController@testConnection');
+	Route::get('configuration/service-integrator', 'ConfigurationController@renderServiceIntegratorView');
 
 	//Role
 	Route::post('role/update-permission', 'RoleController@updatePermission');

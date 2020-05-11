@@ -41,11 +41,6 @@
                                     </a>
                                 </li>
                                 @endif
-                                <!-- <li class="nav-item">
-                                     <a class="nav-link {{{ (Request::query('status') == '2' ? 'active' : '') }}}"  href="{{ url('permohonan/?status=2') }}">
-                                        <span class=""></span>Dokumen lengkap dan proses upload
-                                    </a>
-                                </li> -->
                                 @if(\Auth::user()->can('view-permohonan-4'))
                                 <li class="nav-item">
                                      <a class="nav-link {{{ (Request::query('status') == '4' ? 'active' : '') }}}" href="{{ url('permohonan/?status=4') }}">
@@ -60,13 +55,6 @@
                                     </a>
                                 </li>
                                 @endif
-                                <!-- @if(\Auth::user()->can('view-permohonan-6'))
-                                <li class="nav-item">
-                                     <a class="nav-link {{{ (Request::query('status') == '6' ? 'active' : '') }}}" href="{{ url('permohonan/?status=6') }}">
-                                        <span class=""></span>Validator
-                                    </a>
-                                </li>
-                                @endif -->
                                 @if(\Auth::user()->can('view-permohonan-7'))
                                 <li class="nav-item">
                                      <a class="nav-link {{{ (Request::query('status') == '7' ? 'active' : '') }}}" href="{{ url('permohonan/?status=7') }}">
@@ -74,37 +62,16 @@
                                     </a>
                                 </li>
                                 @endif
-                                <!-- @if(\Auth::user()->can('view-permohonan-10'))
-                                <li class="nav-item">
-                                     <a class="nav-link {{{ (Request::query('status') == '10' ? 'active' : '') }}}" href="{{ url('permohonan/?status=10') }}">
-                                        <span class=""></span>Top Approval
-                                    </a>
-                                </li>
-                                @endif
-                                @if(\Auth::user()->can('view-permohonan-11'))
-                                <li class="nav-item">
-                                     <a class="nav-link {{{ (Request::query('status') == '11' ? 'active' : '') }}}" href="{{ url('permohonan/?status=11') }}">
-                                        <span class=""></span>SBU sudah diregistrasi
-                                    </a>
-                                </li>
-                                @endif
-                                @if(\Auth::user()->can('view-permohonan-12'))
-                                <li class="nav-item">
-                                     <a class="nav-link {{{ (Request::query('status') == '12' ? 'active' : '') }}}" href="{{ url('permohonan/?status=12') }}">
-                                        <span class=""></span>SBU sudah dicetak
-                                    </a>
-                                </li>
-                                @endif
-                                @if(\Auth::user()->can('view-permohonan-14'))
-                                <li class="nav-item">
-                                     <a class="nav-link {{{ (Request::query('status') == '14' ? 'active' : '') }}}" href="{{ url('permohonan/?status=14') }}">
-                                        <span class=""></span>SBU sudah diterima pemohon
-                                    </a>
-                                </li>
-                                @endif -->
-                                
                             </ul>
                         </div>
+                    </li>
+                    @endif
+
+                    @if(\Auth::user()->can('view-sertifikat'))
+                    <li class="nav-item">
+                        <a class="nav-link {{{ (Request::is('sertifikat') ? 'active' : '') }}}" href="{{ url('sertifikat')}}">
+                            <i class="fa fa-fw fa-file-alt"></i>Sertifikat
+                        </a>
                     </li>
                     @endif
 
