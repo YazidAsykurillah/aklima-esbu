@@ -126,7 +126,10 @@ class SertifikatController extends Controller
         $permohonan = $sertifikat->permohonan;
         $penanggung_jawab_teknis = NULL;
         $tenaga_teknik = NULL;
-        $persyaratan_teknis = PersyaratanTeknis::where('uid_sub_bidang', '=', $sertifikat->uid_sub_bidang)->first();
+        //$persyaratan_teknis = PersyaratanTeknis::where('uid_sub_bidang', '=', $sertifikat->uid_sub_bidang)->first();
+        $persyaratan_teknis = PersyaratanTeknis::where('uid_sub_bidang', '=', $sertifikat->uid_sub_bidang)
+            ->where('uid_permohonan', '=', $sertifikat->uid_permohonan)->first();
+        //return $persyaratan_teknis;
         if($persyaratan_teknis){
             $penanggung_jawab_teknis = PersyaratanTeknisPenanggungJawabTeknis::where('uid_verifikasi_pt','=',$persyaratan_teknis->uid_verifikasi_pt)->get();
             $tenaga_teknik = PersyaratanTeknisTenagaTeknik::where('uid_verifikasi_pt','=',$persyaratan_teknis->uid_verifikasi_pt)->get();

@@ -26,6 +26,11 @@ class HomeController extends Controller
         //generate token
         \Artisan::call('integrator:generate-token');
 
+        //Tarik Permohonan
+        if(\Auth::user()->can('access-tarik-pendaftaran')){
+            \Artisan::call('service:tarik-permohonan');    
+        }
+        
         return view('home');
     }
 
