@@ -241,7 +241,6 @@ class PermohonanController extends Controller
         $sertifikat = $permohonan->sertifikat;
         $log_permohonan = $permohonan->log_permohonan;
         $status_djk = $permohonan->status_djk;
-        //return $status_djk;
 
         return view('permohonan.outline-identitas-badan-usaha')
             ->with('permohonan', $permohonan)

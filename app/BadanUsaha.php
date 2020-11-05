@@ -41,7 +41,8 @@ class BadanUsaha extends Model
     	return $this->belongsTo('App\Kota', 'kota_uid', 'uid_kota')->withDefault();
     }
 
-
+    
+    //Full Address attribute
     public function getFullAddressAttribute()
     {
         $full_address="";

@@ -72,7 +72,7 @@
                 { data: 'nomor_seri', name: 'nomor_seri' },
                 { data: 'nama_badan_usaha', name: 'permohonan.badan_usaha.nama_badan_usaha' },
                 { data: 'uid_jenis_usaha', name: 'jenis_usaha.nama_jenis_usaha', render:function(data, type, row, meta){
-                    return row.jenis_usaha.nama_jenis_usaha;
+                    return row.jenis_usaha ? row.jenis_usaha.nama_jenis_usaha : null;
                 }},
                 { data: 'uid_bidang', name: 'sub_bidang.bidang.nama_bidang', render:function(data, type, row, meta){
                     return row.sub_bidang.bidang.nama_bidang;

@@ -11,7 +11,7 @@ class JenisUsaha extends Model
     protected $primaryKey = 'uid_jenis_usaha';
 
     protected $fillable = [
-    	'uid_jenis_usaha', 'kode_jenis_usaha', 'nama_jenis_usaha', 'is_active'
+    	'uid_jenis_usaha', 'kode_jenis_usaha', 'nama_jenis_usaha', 'is_active', 'updated_at'
     ];
 
     public function matriks_kualifikasi()

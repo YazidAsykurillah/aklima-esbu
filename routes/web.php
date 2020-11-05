@@ -238,3 +238,5 @@ Route::group(['middleware' => 'auth'], function(){
 
 });
 
+//Verification Result
+Route::get('permohonan/{uid_permohonan}/verification-result', 'VerificationResultController@index');
